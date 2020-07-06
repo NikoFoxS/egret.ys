@@ -1,0 +1,37 @@
+# 使用说明：
+# ‘#’开头的条目不会进行解析。
+# 字段之间必须以;分割。属性和值必须以:分割。
+# 条目必须以‘id:资源名称’开头，以回车键结束。
+# 终端执行 node ui/view Test 就是将本配置自动生成 TestView 和 TestViewMediator;
+
+# id解析规则如下：
+# btn-开头解析为Button。如果只是图片，就不要用Button，只有图片+文本的才用Button。
+# input-开头解析为ys.TextInput.
+# label-开头解析为ys.Label
+# con-开头解析为egret.DisplayObjectContainer
+# rec-解析为矩形shape
+# 其他的解析为egret.Bitmap
+
+# 属性说明.
+# 先添加的属性，先解析。
+# 属性ax 解析为anchorOffsetX。取值0~1
+# 属性ay 解析为anchorOffsetY。取值0~1
+# 属性w 解析为width
+# 属性h 解析为height
+# 属性pid 解析为parent的id，pid指向的对象必须是容器。
+# 属性x middle+0 middle-10  left+10 left-10 right+30 right-30 top+20 top-20 bottom+40 bottom-40
+# 属性y middle+0 middle-10  left+10 left-10 right+30 right-30 top+20 top-20 bottom+40 bottom-40
+
+# 注意
+# btn 和 con 设置w,h无效。
+
+id:menu-bg_jpg;
+id:title_png; ax:0.5;ay:0.5; x:right-30; y:middle+0;w:30;
+id:btn-play_png; ax:0.5;ay:0.5; x:middle+0;y:middle+100;
+id:btn-start_png;
+id:con-ui;
+id:con-ui2;pid:con-ui;
+id:con-ui3;pid:con-ui2;
+id:input-name; pid:con-ui; x:0; y:0; w:400; h:50;
+id:input-email; pid:con-ui; x:0; y:0; w:400; h:50;
+# id:con-top;

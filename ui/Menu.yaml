@@ -1,0 +1,12 @@
+# 背景装饰
+id:menu-bg_jpg;ax:0.5;ay:0.5;x:center;y:center;
+id:head_png;
+id:foot_png;y:bottom;
+
+# 选车
+id:con-sel;
+id:menu-title_png;pid:con-sel;ax:0.5;x:center;y:124;
+id:menu-start_png;pid:con-sel;ax:0.5;x:center;y:bottom-72;
+id:menu-rule_png;pid:con-sel;x:right-30;y:146;
+id:menu-rank_png;pid:con-sel;x:right-30;y:254;
+id:back_png;pid:con-sel;x:30;y:57;

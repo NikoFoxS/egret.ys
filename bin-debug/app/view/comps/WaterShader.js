@@ -1,0 +1,23 @@
+var __reflect = (this && this.__reflect) || function (p, c, t) {
+    p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
+};
+var __extends = this && this.__extends || function __extends(t, e) { 
+ function r() { 
+ this.constructor = t;
+}
+for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
+r.prototype = e.prototype, t.prototype = new r();
+};
+var WaterShader = (function (_super) {
+    __extends(WaterShader, _super);
+    function WaterShader() {
+        var _this = this;
+        var vs = "\n\t\tattribute vec2 aVertexPosition;\n\t\tattribute vec2 aTextureCoord;\n\t\tattribute vec2 aColor;\n\t\tuniform vec2 projectionVector;\n\t\tvarying vec2 vTextureCoord;\n\t\tconst vec2 center = vec2(-1.0, 1.0);\n\t\tvoid main(void) {\n\t\t\tgl_Position = vec4( (aVertexPosition / projectionVector) + center , 0.0, 1.0);\n\t\t\tvTextureCoord = aTextureCoord;\n\t\t}\n\t\t";
+        var fs = "\n\t\tprecision mediump float;\n\t\tuniform sampler2D uSampler;\n\t\tvarying vec2 vTextureCoord;\n\t\tuniform vec3 uTime;\n\n\t\tvec3 mod289(vec3 x) {   \n\t\t\treturn x - floor(x * (1.0 / 289.0)) * 289.0;\n\t\t}\n\t\t\n\t\tvec4 mod289(vec4 x) {   \n\t\t\treturn x - floor(x * (1.0 / 289.0)) * 289.0;\n\t\t}\n\t\t\n\t\tvec4 permute(vec4 x) {   \n\t\t\treturn mod289(((x*34.0)+1.0)*x);\n\t\t}\n\t\t\n\t\tvec4 taylorInvSqrt(vec4 r) {   \n\t\t\treturn 1.79284291400159 - 0.85373472095314 * r;\n\t\t}\n\t\t\n\t\tfloat snoise(vec3 v) {   \n\t\t\tconst vec2  C = vec2(1.0/6.0, 1.0/3.0);\n\t\t\tconst vec4  D = vec4(0.0, 0.5, 1.0, 2.0);\n\t\t\tvec3 i  = floor(v + dot(v, C.yyy) );\n\t\t\tvec3 x0 =   v - i + dot(i, C.xxx);\n\t\t\tvec3 g = step(x0.yzx, x0.xyz);\n\t\t\tvec3 l = 1.0 - g;\n\t\t\tvec3 i1 = min( g.xyz, l.zxy );\n\t\t\tvec3 i2 = max( g.xyz, l.zxy );\n\t\t\tvec3 x1 = x0 - i1 + C.xxx;\n\t\t\tvec3 x2 = x0 - i2 + C.yyy;\n\t\t\tvec3 x3 = x0 - D.yyy;\n\t\t\ti = mod289(i);\n\t\t\tvec4 p = permute( permute( permute(   i.z + vec4(0.0, i1.z, i2.z, 1.0 ))   + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))   + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));\n\t\t\tfloat n_ = 0.142857142857;\n\t\t\tvec3  ns = n_ * D.wyz - D.xzx;\n\t\t\tvec4 j = p - 49.0 * floor(p * ns.z * ns.z);\n\t\t\tvec4 x_ = floor(j * ns.z);\n\t\t\tvec4 y_ = floor(j - 7.0 * x_ );\n\t\t\tvec4 x = x_ *ns.x + ns.yyyy;\n\t\t\tvec4 y = y_ *ns.x + ns.yyyy;\n\t\t\tvec4 h = 1.0 - abs(x) - abs(y);\n\t\t\tvec4 b0 = vec4( x.xy, y.xy );\n\t\t\tvec4 b1 = vec4( x.zw, y.zw );\n\t\t\tvec4 s0 = floor(b0)*2.0 + 1.0;\n\t\t\tvec4 s1 = floor(b1)*2.0 + 1.0;\n\t\t\tvec4 sh = -step(h, vec4(0.0));\n\t\t\tvec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;\n\t\t\tvec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;\n\t\t\tvec3 p0 = vec3(a0.xy,h.x);\n\t\t\tvec3 p1 = vec3(a0.zw,h.y);\n\t\t\tvec3 p2 = vec3(a1.xy,h.z);\n\t\t\tvec3 p3 = vec3(a1.zw,h.w);\n\t\t\tvec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));\n\t\t\tp0 *= norm.x;\n\t\t\tp1 *= norm.y;\n\t\t\tp2 *= norm.z;\n\t\t\tp3 *= norm.w;\n\t\t\tvec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);\n\t\t\tm = m * m;\n\t\t\treturn 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );\n\t\t}\n\t\t\n\t\tvec3 hsv2rgb(vec3 c){   \n\t\t\tvec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);\n\t\t\tvec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);\n\t\t\treturn c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);\n\t\t}\n\t\tvoid main(){  \n\t\t\tvec3 hsv = vec3(0.0, 0.5, 0.5);\n\t\t\tvec2 uv = vTextureCoord;\n\t\t\tvec3 v3 = vec3(uv.x,uv.y,2.0 * (fract(uTime.z/50.0) - 0.5) );\n\t\t\tfloat noise = snoise(vec3(v3 * 6.0 + uTime.z * 1.0));\n\t\t\tvec3 custom_color = hsv2rgb(vec3(hsv.x - noise / 2.0, hsv.y, hsv.z - noise / 2.0));\n\t\t\t// vec4 color = texture2D(uSampler,  uTime.z * 0.05 + 1.0 * (uv * 0.9 + 0.1 * custom_color.rb));\n\n\t\t\tvec4 color = texture2D(uSampler,  uv*0.999 + 0.01*vec2(noise*uv.x,noise*noise));\n\n\t\t\tvec4 color2 = texture2D(uSampler, uTime.z * 0.05 + uv * 0.1 * custom_color.bg);\n\t\t\t// color.rgb += color2.rgb*0.5;//color.rgb * 1.1 * color2.rbg * 1.1;\n\n\t\t\t// color += color2*0.1;\n\t\t\t\n\t\t\t// color.rgb += custom_color*.1;\n\t\t\tgl_FragColor = color;\n\t\t}\n\t\t";
+        _this = _super.call(this, vs, fs, { uTime: { x: 0, y: 0.3, z: 0.4 } }) || this;
+        return _this;
+    }
+    return WaterShader;
+}(egret.CustomFilter));
+__reflect(WaterShader.prototype, "WaterShader");
+//# sourceMappingURL=WaterShader.js.map
