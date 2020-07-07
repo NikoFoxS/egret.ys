@@ -8,7 +8,7 @@ module ys3d {
 			this[2] = 0;
 		}
 
-		public set(x = 0, y = 0, z = 0) {
+		public set(x = 0, y=0, z=0) {
 			this[0] = x;
 			this[1] = y;
 			this[2] = z;

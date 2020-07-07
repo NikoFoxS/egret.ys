@@ -10,6 +10,11 @@ module ys {
 			super.$setText(t);
 		}
 
+		public get text()
+		{
+			return super.$getText();
+		}
+
 		public set html(s: string) {
 			s = Label.getLocale(s);
 			this.textFlow = (new egret.HtmlTextParser).parser(s);

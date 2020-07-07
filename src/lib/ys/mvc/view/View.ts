@@ -73,15 +73,6 @@ module ys {
 		protected uiLayout(): void {
 
 		}
-
-		protected onAdded() {
-
-		}
-
-		protected onRemove() {
-
-		}
-
 	}
 
 

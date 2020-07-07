@@ -2,7 +2,7 @@ class UItest extends egret.DisplayObjectContainer {
 	public constructor() {
 		super();
 
-		let rec = GG.newRect(stageW, stageH, 0x000000, this);
+		// let rec = GG.newRect(stageW, stageH, 0x000000, this);
 
 
 		let la = new ys.Label();
