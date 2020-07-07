@@ -8,7 +8,8 @@ class Application extends ys.View {
 		//版本信息
 		console.log('与时互动 ' + Application.VERSION + " by niko@bytesuns.com" + "");
 
-		super(ApplicationMediator);
+		super();
+		this.addMediator(ApplicationMediator);
 		this.cfg = cfg;
 		this.loading = loading;
 	}

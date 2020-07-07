@@ -4,12 +4,38 @@
 module ys {
 
 	export class View extends egret.DisplayObjectContainer {
-		/**
-		 * @param mediatorClass 
-		 * @param resGroup 资源组
-		 * @param reporter 报告加载进度
-		 */
-		public constructor(mediatorClass, resGroup = '', reporter?: RES.PromiseTaskReporter) {
+		public constructor() {
+			super();
+			this.once(egret.Event.ADDED_TO_STAGE, this.onAdded, this);
+			this.once(egret.Event.REMOVED_FROM_STAGE, this.onRemove, this);
+		}
+
+		public addMediator(mediatorClass) {
+			if (mediatorClass) {
+				const m: ys.Mediator = new mediatorClass(this);
+				m.$addLogic();
+			}
+		}
+
+		protected onAdded() {
+
+		}
+
+		protected onRemove() {
+
+		}
+
+	}
+
+	export class PageChangeHandler {
+		public onChange(newView:egret.DisplayObject, oldView: egret.DisplayObject, next: Function): void {
+			//1 页面切换逻辑
+			//2 调用next();结束切换
+		}
+	}
+
+	export class Page extends View {
+		constructor(mediatorClass?: any, resGroup = '', reporter?: RES.PromiseTaskReporter) {
 			super();
 			if (resGroup != '') {
 				if (RES.isGroupLoaded(resGroup)) {
@@ -25,79 +51,11 @@ module ys {
 			}
 		}
 
-		public static newBitmap(res: string): egret.Bitmap {
-			const bm = new egret.Bitmap();
-			bm.texture = RES.getRes(res);
-			return bm;
-		}
-
-		public static newContainer(): egret.DisplayObjectContainer {
-			const con = new egret.DisplayObjectContainer();
-			return con;
-		}
-
-		public static newShape(): egret.Shape {
-			const s = new egret.Shape();
-			return s;
-		}
-
-		public static newTextInput(w, h): ys.TextInput {
-			const input = new ys.TextInput(w, h);
-			return input;
-		}
-
-		public static newLabel(): ys.Label {
-			const label = new ys.Label();
-			return label;
-		}
-
-		public static newImage(): ys.Image {
-			const img = new ys.Image();
-			return img;
-		}
-
-		public static newButton(res): ys.Button {
-			const btn = new ys.Button(res);
-			return btn;
-		}
-
-		public static newButtonMusic(res1, res2): ys.ButtonMusic {
-			const music = new ys.ButtonMusic(res1, res2);
-			return music;
-		}
-
-		public static newRect(w, h, color): egret.Shape {
-			const rec = new egret.Shape();
-			const g = rec.graphics;
-			g.beginFill(color);
-			g.drawRect(0, 0, w, h);
-			g.endFill();
-			return rec;
-		}
-
-		public static newCircle(r, color): egret.Shape {
-			const s: egret.Shape = new egret.Shape();
-			s.graphics.beginFill(color);
-			s.graphics.drawCircle(0, 0, r);
-			s.graphics.endFill();
-			return s;
-		}
-
-		public static newRectRound(w, h, color, cornerW, cornerH) {
-			const rec = new egret.Shape();
-			const g = rec.graphics;
-			g.beginFill(color);
-			g.drawRoundRect(0, 0, w, h, cornerW, cornerH);
-			g.endFill();
-			return rec;
-		}
+		public cache: boolean;
 
 		private resReady(mediatorClass) {
 			this.uiCreate();
-			if (mediatorClass) {
-				const m = new mediatorClass(this);
-				m.$addLogic();
-			}
+			mediatorClass && this.addMediator(mediatorClass);
 			this.once(egret.Event.ADDED_TO_STAGE, this.resize, this);
 		}
 
@@ -108,15 +66,23 @@ module ys {
 			stageHalfH = stageH >> 1;
 			this.uiLayout();
 		}
-		/**创建ui */
+
 		protected uiCreate(): void {
 
 		}
-		/**布局ui */
 		protected uiLayout(): void {
 
 		}
 
+		protected onAdded() {
+
+		}
+
+		protected onRemove() {
+
+		}
+
 	}
+
 
 }

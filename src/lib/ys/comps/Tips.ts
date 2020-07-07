@@ -4,7 +4,7 @@ module ys {
 		}
 
 		/**弱提示 */
-		public static showToast(msg: string,x:number, y: number, icon = '', duration = 1500) {
+		public static showToast(msg: string, x: number, y: number, icon = '', duration = 1500) {
 			msg = msg.trim().replace(/\n/ig, '');
 			if (msg == '') return;
 			const toast = new Toast({ msg: msg, icon: icon });
@@ -22,12 +22,12 @@ module ys {
 
 		/**显示加载提示 */
 		private static loading: Loading;
-		public static showLoading(txt = '加载中',step=true) {
+		public static showLoading(txt = '加载中', step = true) {
 			if (!Tips.loading) {
 				Tips.loading = new Loading();
 			}
 			const loading = Tips.loading;
-			loading.show(txt,step);
+			loading.show(txt, step);
 			stage.addChild(loading);
 			return loading;
 		}
@@ -40,10 +40,15 @@ module ys {
 		}
 	}
 
-	export  class Loading extends egret.DisplayObjectContainer {
+	export class Loading extends egret.DisplayObjectContainer {
 		constructor() {
 			super();
-			const block = GG.newRectBlock(0x000000,this);
+			const block = new egret.Shape();
+			block.graphics.beginFill(0x000000);
+			block.graphics.drawRect(0, 0, stageW, stageH);
+			block.graphics.endFill();
+			block.cacheAsBitmap = true;
+			this.addChild(block);
 			block.alpha = 0.5;
 			block.cacheAsBitmap = true;
 			this.block = block;
@@ -56,7 +61,7 @@ module ys {
 			const bg = GG.newRectRound(width, height, 0x000000, 40, ctn);
 			bg.alpha = 0.7;
 
-			const s = GG.newShape();
+			const s = new egret.Shape();
 			s.graphics.clear();
 			ctn.addChild(s);
 
@@ -79,7 +84,9 @@ module ys {
 			s.cacheAsBitmap = true;
 			this.flower = s;
 
-			const la = GG.newLabel(0xffffff, 25, ctn);
+			const la = GG.newLabel(ctn);
+			la.textColor = 0xffffff;
+			la.size = 25;
 			la.width = width;
 			la.textAlign = 'center';
 			la.y = height - 55;
@@ -91,9 +98,9 @@ module ys {
 		}
 		private label: ys.Label;
 		private flower: egret.Shape;
-		private ctn:egret.DisplayObjectContainer;
-		public block:egret.Shape;
-		
+		private ctn: egret.DisplayObjectContainer;
+		public block: egret.Shape;
+
 		public show(txt, step = true) {
 			const ctn = this.ctn;
 			GG.layoutCenter(ctn);
@@ -107,8 +114,7 @@ module ys {
 			flower.rotation = 0;
 			flower['r'] = 0;
 			let time = 1000;
-			if(!step)
-			{
+			if (!step) {
 				time = 2000;
 			}
 			egret.Tween.removeTweens(flower);
@@ -124,18 +130,17 @@ module ys {
 				}
 			}).to({ r: 360 }, time);
 
-			stage.addEventListener(egret.Event.RESIZE,this.resize,this);
+			stage.addEventListener(egret.Event.RESIZE, this.resize, this);
 		}
 
-		public resize()
-		{
+		public resize() {
 			const block = this.block;
-			block.scaleX = stageW/block.width;
-			block.scaleY = stageH/block.height;
+			block.scaleX = stageW / block.width;
+			block.scaleY = stageH / block.height;
 		}
 
 		public hide() {
-			stage.removeEventListener(egret.Event.RESIZE,this.resize,this);
+			stage.removeEventListener(egret.Event.RESIZE, this.resize, this);
 			egret.Tween.removeTweens(this.flower);
 			GG.removeDisplayObject(this);
 		}
@@ -148,7 +153,7 @@ module ys {
 			const ctn = this;// ys.View.newContainer();
 			// this.addChild(ctn);
 
-			const label = ys.View.newLabel();
+			const label = new ys.Label();
 			label.size = fontSize;
 			label.text = msg;
 			label.lineSpacing = fontSize * 0.5;
@@ -161,7 +166,7 @@ module ys {
 			label.x = label.y = padding;
 			this.content = label;
 
-			const bg = ys.View.newRectRound(bgw, bgh, 0xffffff, 40, 40);
+			const bg = GG.newRectRound(bgw, bgh, 0xffffff, 40, 40);
 			ctn.addChild(bg);
 
 			bg.graphics.lineStyle(1, 0x000000, 0.6);
@@ -214,17 +219,17 @@ module ys {
 		}
 
 		private newBtnLabel(txt, w, h, size) {
-			const btn = ys.View.newLabel();
-			btn.text = txt;
-			btn.width = w;
-			btn.height = h;
-			btn.size = size;
-			btn.textAlign = 'center';
-			btn.textColor = 0x000000;
-			btn.verticalAlign = "middle";
-			btn.touchEnabled = true;
-			btn.cacheAsBitmap = true;
-			return btn;
+			const label = new ys.Label();
+			label.text = txt;
+			label.width = w;
+			label.height = h;
+			label.size = size;
+			label.textAlign = 'center';
+			label.textColor = 0x000000;
+			label.verticalAlign = "middle";
+			label.touchEnabled = true;
+			label.cacheAsBitmap = true;
+			return label;
 		}
 
 		public content: ys.Label;
@@ -266,7 +271,7 @@ module ys {
 				icoH = ico.height + padding;
 			}
 			//圆角矩形
-			var bg = GG.newRectRound(t.width + padding2, t.height + padding2 + icoH, bgColor, padding) // new egret.Shape();
+			var bg = GG.newRectRound(t.width + padding2, t.height + padding2 + icoH, bgColor, padding,padding) // new egret.Shape();
 			bg.alpha = bgAlpha;
 			this.addChildAt(bg, 0);
 

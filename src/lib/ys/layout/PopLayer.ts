@@ -10,7 +10,12 @@ module ys {
 			}
 
 			if (!PopLayer.popblock) {
-				PopLayer.popblock = GG.newRectBlock(0x000000);
+				const s = new egret.Shape();
+				s.graphics.beginFill(0x000000);
+				s.graphics.drawRect(0,0,stageW,stageH);
+				s.graphics.endFill();
+				s.cacheAsBitmap = true;
+				PopLayer.popblock = s;
 				PopLayer.popblock.alpha = blockAlpha;
 				PopLayer.popblock.cacheAsBitmap = true;
 			}

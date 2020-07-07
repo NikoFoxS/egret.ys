@@ -19,8 +19,8 @@ module ys {
 			if (name) {
 				if(name == 'resize')
 				{
-					const v:ys.View = this.getView();
-					v.resize();
+					const v:ys.Page = this.getView();
+					v && v.resize && v.resize();
 					return;
 				}
 				var list = this.listenNotice();

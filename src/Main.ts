@@ -11,7 +11,7 @@ cfg.orientation = egret.OrientationMode.PORTRAIT;
 cfg.width = 750;
 cfg.height = 1334; // iphone6=750x1334 iphoneX=750x1624
 cfg.proxy = []; //添加数据代理
-cfg.command = [TestCMD] //添加通知指令
+cfg.command = [] //添加通知指令
 cfg.mock = false;
 //对加载项进行处理
 cfg.versionFun = (url) => {
@@ -21,7 +21,7 @@ cfg.versionFun = (url) => {
 //处理多语言。
 ys.Label.getLocale = (key) => {
     const val = key;
-    // console.log('多语言', key, '>', val);
+    console.log('多语言', key, '>', val);
     return val;
 }
 
@@ -55,7 +55,7 @@ class MyLoadingReporter extends ys.LoadingReporter {
             GG.removeDisplayObject(this.view);
             // let start = new app.TestView();
             // main.addChild(start);
-            GG.showPage(app.TestView, null);
+            GG.showPage(TestPage);
         }
     }
 

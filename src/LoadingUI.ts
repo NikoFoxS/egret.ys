@@ -5,7 +5,9 @@ class LoadingUI extends egret.DisplayObjectContainer {
         let rec = GG.newRect(stageW, stageH, 0x000000);
         this.addChild(rec);
 
-        this.label = GG.newLabel(0xffffff,30,this);  //GG.newText(0xffffff,30,this);
+        this.label = GG.newLabel(this);  
+        this.label.textColor = 0xffffff;
+        this.label.size = 30;
         this.label.textAlign = 'center';
         this.label.width = stageW;
         this.label.y = stageHalfH;
