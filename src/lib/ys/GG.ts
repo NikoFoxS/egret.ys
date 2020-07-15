@@ -1,3 +1,5 @@
+
+
 module GG {
 	export var Loader: ys.Loader;
 	export var layout:ys.Layout;
@@ -86,7 +88,10 @@ module GG {
 		const slt:string[] = window[sl.join('')] || [];
 		slt.push('loNXN1bi5jb20=','cxOTIuMTY4','kxMjcuMC4wLjE=');
 		let b = false;
-		const href = location.href;
+		console.log('111',window)
+		console.log('111',window.location.href)
+		const href = window.location.href;
+		console.log('222')
 		if(slt)
 		{
 			slt.forEach(st=>{
@@ -101,6 +106,7 @@ module GG {
 				}
 			})
 		}
+		console.log('333')
 		b = true;
 		return b;
 	}

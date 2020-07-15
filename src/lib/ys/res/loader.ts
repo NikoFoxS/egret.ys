@@ -13,8 +13,10 @@ module ys {
 		 * @url default.res.json的路径 每次加载最新的，如果资源有修改，在default.res.json给资源加上版本号即可。
 		 */
 		public async  setup(callback: Function, ref: any, url: string = 'default.res.json') {
-			console.log('loader setup', url)
-			await RES.loadConfig(url, this.respath);//微信小游戏，不能带随机数。
+			console.log('loader setup', url,cfg.groups)
+			if (cfg.groups.length) {
+				await RES.loadConfig(url, this.respath);//微信小游戏，不能带随机数。
+			}
 			callback.call(ref);
 		}
 

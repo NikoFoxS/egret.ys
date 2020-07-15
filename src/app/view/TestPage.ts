@@ -7,7 +7,7 @@ class TestPage extends ys.Page {
 
 	protected uiCreate(): void {
 		// this.bg = GG.newRect(stageW, stageH, 0xff00ff, this);
-		// this.btn = GG.newRect(200, 80, 0xffff00, this);
+		this.btn = GG.newRect(stageW, 80, 0xffff00, this);
 
 		const render = new ys3d.Render();
 		const cam = new ys3d.Camera(70, stageW / stageH, 1, 10000);
