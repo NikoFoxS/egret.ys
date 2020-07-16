@@ -3,8 +3,8 @@
  */
 var cfg = new Config();
 cfg.groups = ['preload'];//配置加载资源组
-cfg.resourceJSON = 'https://p.h5sun.com/tbgame/resource/default.res.json';//配置default.res.json的路径
-cfg.resourceRoot = 'https://p.h5sun.com/tbgame/resource/';//配置资源的路径
+cfg.resourceJSON = 'resource/default.res.json';//配置default.res.json的路径
+cfg.resourceRoot = 'resource/';//配置资源的路径
 cfg.release = false; // 如果未true，会自动屏蔽掉console.log
 cfg.scaleMode = egret.Capabilities.isMobile ? egret.StageScaleMode.FIXED_WIDTH : egret.StageScaleMode.SHOW_ALL;
 cfg.orientation = egret.OrientationMode.PORTRAIT;
