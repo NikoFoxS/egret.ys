@@ -1,5 +1,3 @@
-
-
 module GG {
 	export var Loader: ys.Loader;
 	export var layout:ys.Layout;
@@ -88,10 +86,8 @@ module GG {
 		const slt:string[] = window[sl.join('')] || [];
 		slt.push('loNXN1bi5jb20=','cxOTIuMTY4','kxMjcuMC4wLjE=');
 		let b = false;
-		console.log('111',window)
-		console.log('111',window.location.href)
+		//淘宝小程序，不能直接用location.href。要加上window
 		const href = window.location.href;
-		console.log('222')
 		if(slt)
 		{
 			slt.forEach(st=>{
@@ -106,7 +102,6 @@ module GG {
 				}
 			})
 		}
-		console.log('333')
 		b = true;
 		return b;
 	}
@@ -130,12 +125,8 @@ module GG {
 			if (page.cache) {
 				pages[key] = page;
 			}
-			console.log("....")
 		}
-
-
 		main.addChild(page);
-
 		if (handler) {
 			if (oldPage) {
 				handler.onChange(page, oldPage, next);
