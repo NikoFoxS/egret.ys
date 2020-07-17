@@ -1,6 +1,6 @@
 class Application extends ys.View {
 	private static VERSION = '2020-05-28'
-	public constructor(cfg: Config,loading:ys.LoadingReporter) {
+	public constructor(cfg: Config, loading: ys.LoadingReporter) {
 		//使用VConsole
 		if (window['VConsole']) {
 			new window['VConsole']();
@@ -14,7 +14,7 @@ class Application extends ys.View {
 		this.loading = loading;
 	}
 	public cfg: Config;
-	public loading:ys.LoadingReporter;
+	public loading: ys.LoadingReporter;
 	protected uiCreate(): void {
 
 	}
@@ -48,7 +48,6 @@ class ApplicationMediator extends ys.Mediator {
 
 		v.once(egret.Event.ADDED_TO_STAGE, () => {
 			const cfg = v.cfg;
-
 			//设置接口为mock数据
 			ys.Ajax.mock = cfg.mock;
 
@@ -61,8 +60,8 @@ class ApplicationMediator extends ys.Mediator {
 				this.registerCommand(cmd);
 			})
 
-			if(!GG.setup(v, cfg)) return;
-			
+			if (!GG.setup(v, cfg)) return;
+
 			RES.registerVersionController(new ys.VersionController(cfg.versionFun));
 			const reporter = v.loading;
 			reporter.onReady();

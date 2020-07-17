@@ -7,36 +7,26 @@ class TestPage extends ys.Page {
 
 	protected uiCreate(): void {
 		// this.bg = GG.newRect(stageW, stageH, 0xff00ff, this);
-		this.btn = GG.newRect(stageW, 80, 0xffff00, this);
+		this.btn = GG.newRect(stageW, stageHalfH, 0xffff00, this);
 
-		const render = new ys3d.Render();
-		const cam = new ys3d.Camera(70, stageW / stageH, 1, 10000);
-		cam.lookAt(0, 0, -1);
+		// RES.getResByUrl('resource/assets/bg.jpg', (tex: egret.Texture) => {
+		// 	var bm = new egret.Bitmap(tex);
+		// 	bm.y = 300;
+		// 	this.addChild(bm);
+		// })
 
-		const scene = new ys3d.Scene(stageW, stageH);
-		this.addChild(scene.display);
-		const faces = [];
-		let i = 6;
-		while (i--) {
-			faces.push(GG.newBitmap('headimg_jpg'));
-		}
-		const box = new ys3d.BoxNode(faces);
-		box.position.z = - 2000;
-		box.position.y = -500;
-		scene.addChild(box);
+		const img = GG.newBitmap('headimg_jpg', this);
+		img.touchEnabled = true;
+		img.addEventListener(egret.TouchEvent.TOUCH_TAP, () => { 
+			tb.log('click?')
+			// tb.getAuthUserInfo((info)=>{
+			// 	tb.log(JSON.stringify(info));
+			// },this)
 
-		const pl = new ys3d.PlaneNode(GG.newBitmap('headimg_jpg'));
-		pl.position.z = -2000;
-		pl.position.y = 500;
-		scene.addChild(pl);
-
-		this.addEventListener(egret.Event.ENTER_FRAME, () => {
-			box.rotation.y += 1;
-			box.rotation.z += 1;
-			pl.rotation.y += 1;
-			pl.rotation.z += 1;
-			render.render(scene, cam);
+			tb.addToCart();
+			
 		}, this);
+
 	}
 
 	protected uiLayout(): void {

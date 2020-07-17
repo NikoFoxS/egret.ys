@@ -15,7 +15,14 @@ cfg.command = [] //添加通知指令
 cfg.mock = false;
 //对加载项进行处理
 cfg.versionFun = (url) => {
-    console.log('加载', url); 
+    console.log('加载'+ url);
+   
+    if (url.indexOf('.json') == -1) {
+        url = 'https://p.h5sun.com/tbgame/' + url;
+    }
+
+     tb.log('加载',url)
+
     return url;
 }
 //处理多语言。
@@ -51,7 +58,7 @@ class MyLoadingReporter extends ys.LoadingReporter {
 
     public onLoaded(groupName): void {
         this.view.onLoaded(groupName);
-        console.log('groupName::',groupName)
+        console.log('groupName::', groupName)
         if (groupName == 'preload' || groupName == '') {
             GG.removeDisplayObject(this.view);
             // let start = new app.TestView();
@@ -68,6 +75,6 @@ class MyLoadingReporter extends ys.LoadingReporter {
 class Main extends Application {
 
     public constructor() {
-        super(cfg,new MyLoadingReporter);
+        super(cfg, new MyLoadingReporter);
     }
 }
