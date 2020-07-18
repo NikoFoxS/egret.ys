@@ -18,6 +18,7 @@ module ys {
 				PopLayer.popblock = s;
 				PopLayer.popblock.alpha = blockAlpha;
 				PopLayer.popblock.cacheAsBitmap = true;
+				PopLayer.popblock.touchEnabled = true;
 			}
 			const block = PopLayer.popblock;
 			block.scaleX = stageW / block.width;

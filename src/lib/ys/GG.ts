@@ -1,6 +1,6 @@
 module GG {
 	export var Loader: ys.Loader;
-	export var layout:ys.Layout;
+	let layout:ys.Layout;
 
 	export function setup($main: egret.DisplayObjectContainer, cfg: Config):boolean {
 		main = $main;
