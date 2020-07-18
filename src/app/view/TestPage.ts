@@ -6,32 +6,15 @@ class TestPage extends ys.Page {
 	public btn: egret.Shape;
 
 	protected uiCreate(): void {
-		// this.bg = GG.newRect(stageW, stageH, 0xff00ff, this);
 		this.btn = GG.newRect(stageW, stageHalfH, 0xffff00, this);
-
-		// RES.getResByUrl('resource/assets/bg.jpg', (tex: egret.Texture) => {
-		// 	var bm = new egret.Bitmap(tex);
-		// 	bm.y = 300;
-		// 	this.addChild(bm);
-		// })
-
 		const img = GG.newBitmap('headimg_jpg', this);
 		img.touchEnabled = true;
 		img.addEventListener(egret.TouchEvent.TOUCH_TAP, () => { 
-			tb.log('click?')
-			// tb.getAuthUserInfo((info)=>{
-			// 	tb.log(JSON.stringify(info));
-			// },this)
-
-			tb.addToCart();
-			
 		}, this);
 
 	}
 
 	protected uiLayout(): void {
-		// GG.layoutMiddleX(this.btn);
-		// GG.layoutBottom(this.btn, 100);
 	}
 
 	protected onAdded() {

@@ -1,3 +1,31 @@
+namespace ys {
+	let logTxt: egret.TextField;
+
+	export function log(...arg) {
+		if (stage) {
+			if (!logTxt) {
+				logTxt = new egret.TextField();
+				logTxt.background = true;
+				logTxt.width = 200;
+				logTxt.wordWrap = true;
+				logTxt.multiline = true;
+				logTxt.backgroundColor = 0x000000;
+				logTxt.size = 15;
+				logTxt.lineSpacing = 5;
+				logTxt.touchEnabled = true;
+				logTxt.addEventListener(egret.TouchEvent.TOUCH_TAP, () => { logTxt.alpha == 1 ? logTxt.alpha = 0 : logTxt.alpha = 1 }, null);
+			}
+			stage.addChild(logTxt);
+			var s = arg.join(',');
+			logTxt.text += s + '\n';
+		}
+	}
+
+	export function logClear() {
+		logTxt && (logTxt.text = '');
+	}
+}
+
 class Application extends ys.View {
 	private static VERSION = '2020-05-28'
 	public constructor(cfg: Config, loading: ys.LoadingReporter) {

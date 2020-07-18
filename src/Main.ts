@@ -16,13 +16,9 @@ cfg.mock = false;
 //对加载项进行处理
 cfg.versionFun = (url) => {
     console.log('加载'+ url);
-   
     if (url.indexOf('.json') == -1) {
         url = 'https://p.h5sun.com/tbgame/' + url;
     }
-
-     tb.log('加载',url)
-
     return url;
 }
 //处理多语言。
@@ -32,8 +28,6 @@ ys.Label.getLocale = (key) => {
     return val;
 }
 
-// console.log('??',location.href);
-
 //加载报告，只负责报告。显示需要另外处理。
 class MyLoadingReporter extends ys.LoadingReporter {
     public constructor() {
@@ -42,7 +36,6 @@ class MyLoadingReporter extends ys.LoadingReporter {
 
     private view: LoadingUI;
     public onReady(): void {
-        //
         this.view = new LoadingUI();
         stage.addChild(this.view);
     }
@@ -61,8 +54,6 @@ class MyLoadingReporter extends ys.LoadingReporter {
         console.log('groupName::', groupName)
         if (groupName == 'preload' || groupName == '') {
             GG.removeDisplayObject(this.view);
-            // let start = new app.TestView();
-            // main.addChild(start);
             GG.showPage(TestPage);
         }
     }

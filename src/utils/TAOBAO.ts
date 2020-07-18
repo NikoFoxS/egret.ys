@@ -1,30 +1,7 @@
 namespace tb {
     const my = (<any>window).my;
-    const logTxt: egret.TextField = new egret.TextField();
-    logTxt.background = true;
-    logTxt.width = 200;
-    logTxt.wordWrap = true;
-    logTxt.multiline = true;
-    logTxt.backgroundColor = 0x000000;
-    logTxt.size = 15;
-    logTxt.lineSpacing = 5;
-    logTxt.touchEnabled = true;
-    logTxt.addEventListener(egret.TouchEvent.TOUCH_TAP, () => { logTxt.alpha == 1 ? logTxt.alpha = 0 : logTxt.alpha = 1 }, null);
-
-    export function log(...arg) {
-        if (stage) {
-            stage.addChild(logTxt);
-            var s = arg.join(',');
-            logTxt.text += s + '\n';
-        }
-    }
-
     export function alert(content: string) {
         my && my.alert({ content: content });
-    }
-
-    export function logClear() {
-        logTxt.text = '';
     }
 
     export function exit() {

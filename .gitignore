@@ -1,0 +1,4 @@
+bin-release/
+bin-debug/
+.wing/
+libs/
