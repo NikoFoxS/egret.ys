@@ -32,11 +32,7 @@ class TestPageMediator extends ys.Mediator {
 	}
 
 	protected addLogic() {
-		//添加界面逻辑
-		//通过sendNotice发送通知
-		//通过getProxy获取数据
-		//通过listenNotice侦听感兴趣的通知
-		//通过onNotice处理感兴趣的通知
+		
 	}
 
 	protected listenNotice() {
