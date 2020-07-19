@@ -7,6 +7,9 @@ module ys {
 		public constructor(view:egret.DisplayObject) {
 			this._view = view;
 			MVC.GET.evt.addEventListener(MVC.MVC_NOTICE, this._onNotice, this);
+			view.once(egret.Event.REMOVED_FROM_STAGE, () => {
+				MVC.GET.evt.removeEventListener(MVC.MVC_NOTICE, this._onNotice, this);
+			}, this);
 		}
 		public name:string='Mediator';
 		private _view: any;
