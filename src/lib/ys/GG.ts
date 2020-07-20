@@ -190,7 +190,7 @@ module GG {
 
 	export function newBitmap(res: string,layer?: egret.DisplayObjectContainer): egret.Bitmap {
 			const bm = new egret.Bitmap();
-			bm.texture = RES.getRes(res);
+			res !='' && (bm.texture = RES.getRes(res));
 			layer && layer.addChild(bm);
 			return bm;
 		}
