@@ -58,7 +58,7 @@ module ys {
 
 			const width = 200;
 			const height = 200;
-			const bg = GG.newRectRound(width, height, 0x000000, 40, ctn);
+			const bg = GG.newRectRound(width, height, 0x000000, 40,40, ctn);
 			bg.alpha = 0.7;
 
 			const s = new egret.Shape();
