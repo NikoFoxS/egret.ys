@@ -103,11 +103,10 @@ module ys {
 
 		public show(txt, step = true) {
 			const ctn = this.ctn;
-			GG.layoutCenter(ctn);
-
 			const block = this.block;
 			block.alpha = 0.5;
 			this.resize();
+			GG.layoutCenter(ctn);
 
 			this.label.text = txt;
 			const flower = this.flower;
