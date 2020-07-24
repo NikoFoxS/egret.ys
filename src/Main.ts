@@ -16,9 +16,6 @@ cfg.mock = false;
 //对加载项进行处理
 cfg.versionFun = (url) => {
     console.log('加载'+ url);
-    if (url.indexOf('.json') == -1) {
-        url = 'https://p.h5sun.com/tbgame/' + url;
-    }
     return url;
 }
 //处理多语言。
