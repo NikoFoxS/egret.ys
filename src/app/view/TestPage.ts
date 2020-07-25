@@ -6,11 +6,17 @@ class TestPage extends ys.Page {
 	public btn: egret.Shape;
 
 	protected uiCreate(): void {
-		this.btn = GG.newRect(stageW, stageHalfH, 0xffff00, this);
+		this.btn = GG.newRect(stageW, stageH, 0x1099bb, this);
 		const img = GG.newBitmap('headimg_jpg', this);
 		img.touchEnabled = true;
-		img.addEventListener(egret.TouchEvent.TOUCH_TAP, () => { 
+		img.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+			let m = GG.showModal('click!', 'Ok','Cancel');
+			m.addEventListener('select', () => { 
+				console.log(m.selectLabel);
+			}, this);
 		}, this);
+
+		GG.layoutCenter(img);
 
 	}
 
@@ -32,7 +38,7 @@ class TestPageMediator extends ys.Mediator {
 	}
 
 	protected addLogic() {
-		
+
 	}
 
 	protected listenNotice() {
