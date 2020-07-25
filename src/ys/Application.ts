@@ -27,14 +27,14 @@ namespace ys {
 }
 
 class Application extends ys.View {
-	private static VERSION = '2020-05-28'
+	private static VERSION = '1.0.0'
 	public constructor(cfg: Config, loading: ys.LoadingReporter) {
 		//使用VConsole
 		if (window['VConsole']) {
 			new window['VConsole']();
 		}
 		//版本信息
-		console.log('与时互动 ' + Application.VERSION + " by niko@bytesuns.com" + "");
+		console.log('egret.ys: ' + Application.VERSION + " https://github.com/NikoFoxS/egret.ys.git" + "");
 
 		super();
 		this.addMediator(ApplicationMediator);
