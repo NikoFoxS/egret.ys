@@ -58,7 +58,7 @@ module ys {
 
 			const width = 200;
 			const height = 200;
-			const bg = GG.newRectRound(width, height, 0x000000, 40,40, ctn);
+			const bg = GG.newRectRound(width, height, 0x000000, 40, 40, ctn);
 			bg.alpha = 0.7;
 
 			const s = new egret.Shape();
@@ -149,8 +149,7 @@ module ys {
 		constructor({msg, confirm = '', cancel = '', fontSize = 50, txtWidth = 500}) {
 			super();
 
-			const ctn = this;// ys.View.newContainer();
-			// this.addChild(ctn);
+			const ctn = this;
 
 			const label = new ys.Label();
 			label.size = fontSize;
@@ -185,6 +184,9 @@ module ys {
 				if (confirm == '') {
 					can.width = bgw;
 				}
+				this.once(egret.Event.REMOVED_FROM_STAGE, () => {
+					can.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onClick, this);
+				}, this);
 			}
 
 			if (confirm != '') {
@@ -198,12 +200,12 @@ module ys {
 					cfm.x = 0;
 					cfm.width = bgw;
 				}
+				this.once(egret.Event.REMOVED_FROM_STAGE, () => {
+					cfm.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onClick, this);
+				}, this);
 			}
 
 			ctn.addChild(label);
-
-			// GG.layoutXcenter(ctn);
-			// GG.layoutYcenter(ctn);
 		}
 
 		private _select: string;
@@ -212,7 +214,7 @@ module ys {
 		}
 		private onClick(e: egret.TouchEvent) {
 			this._select = e.target.text;
-			console.log(this._select);
+			// console.log(this._select, e.target);
 			this.dispatchEventWith('select', false);
 			GG.removeDisplayObject(this);
 		}
@@ -270,7 +272,7 @@ module ys {
 				icoH = ico.height + padding;
 			}
 			//圆角矩形
-			var bg = GG.newRectRound(t.width + padding2, t.height + padding2 + icoH, bgColor, padding,padding) // new egret.Shape();
+			var bg = GG.newRectRound(t.width + padding2, t.height + padding2 + icoH, bgColor, padding, padding) // new egret.Shape();
 			bg.alpha = bgAlpha;
 			this.addChildAt(bg, 0);
 
