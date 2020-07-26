@@ -17,7 +17,6 @@ class TestPage extends ys.Page {
 		}, this);
 
 		GG.layoutCenter(img);
-
 	}
 
 	protected uiLayout(): void {
