@@ -39,6 +39,8 @@ module ys {
 		}
 		//选中的icon的放大比例
 		public static scale: number = 1.2;
+		//默认缩放
+		public static scaleDefault: number = 1;
 		//当缓动结束，选择某一个icon
 		public static SELECT_ONE: string = 'select_one_icon';
 		//当点击某一个icon
@@ -162,12 +164,13 @@ module ys {
 		public updateScale() {
 			let i = this.iconsCon.numChildren;
 			while (i--) {
+				let scaleDefault = ys.IconSelect.scaleDefault;
 				let icon = this.iconsCon.getChildAt(i);
 				let pt = icon.localToGlobal();
 				pt = this.globalToLocal(pt.x, pt.y);
-				let scale = (1 - Math.abs(pt.x) / (this.space)) * (IconSelect.scale - 1) + 1.0;
-				if (scale < 1.0) {
-					scale = 1.0;
+				let scale = (scaleDefault - Math.abs(pt.x) / (this.space)) * (IconSelect.scale - scaleDefault) + scaleDefault;
+				if (scale < scaleDefault) {
+					scale = scaleDefault;
 				}
 				icon.scaleX = icon.scaleY = scale;
 			}
