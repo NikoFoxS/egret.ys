@@ -1,34 +1,16 @@
 module ys {
-	export class IconSelect extends egret.DisplayObjectContainer {
+	export class Swiper extends egret.DisplayObjectContainer {
 		/**
-		 * @param icons 资源数组
+		 * @param items 显示对象数组
 		 * @param space icon与icon的距离。注意：是两个x坐标之间的距离。
 		 */
-		public constructor(icons: string[], space: number, loop: boolean = false) {
+		public constructor() {
 			super();
 
 			this.iconsCon = new egret.DisplayObjectContainer();
 			this.addChild(this.iconsCon);
 
-			let i = 0;
-			let len = icons.length;
-			while (i < len) {
-				let icon = new Icon(icons[i]);
-				if (i > 0) {
-					icon.x = space * i;
-				}
-				icon.index = i;
-				// icon.txt.text = 'icon' + i;
-				// icon.id = i;
-				icon.touchEnabled = true;
-				this.iconsCon.addChild(icon);
-				i++;
-			}
-			this.space = space;
-			this.loop = loop;
-			this.updateScale();
-			this.index = 0;
-			this.checkSelect();
+
 
 			this.addEventListener(egret.Event.ADDED_TO_STAGE, () => {
 				this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.checkTap, this);
@@ -37,10 +19,29 @@ module ys {
 				this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.checkTap, this);
 			}, this);
 		}
+
+		public show(items: egret.DisplayObject[], space: number, loop: boolean = false) {
+			this.iconsCon.removeChildren();
+			
+			items.forEach((item, index) => {
+				item['index'] = index;
+				if (index > 0) {
+					item.x = space * index;
+				}
+				item.touchEnabled = true;
+				this.iconsCon.addChild(item);
+			})
+
+			this.space = space;
+			this.loop = loop;
+			this.updateScale();
+			this.index = 0;
+			this.checkSelect();
+		}
+
 		//选中的icon的放大比例
-		public static scale: number = 1.2;
-		//默认缩放
-		public static scaleDefault: number = 1;
+		public static scaleSelect: number = 1.2;
+		public static scaleDefault: number = 1.0;
 		//当缓动结束，选择某一个icon
 		public static SELECT_ONE: string = 'select_one_icon';
 		//当点击某一个icon
@@ -56,10 +57,10 @@ module ys {
 		private tweenTime: number;
 
 		private checkTap(e: egret.TouchEvent) {
-			let icon = <Icon>e.target;
+			let icon = <any>e.target;
 			let index = this.getMoveIndex(icon);
 			this._moveIndex = index;
-			this.dispatchEventWith(ys.IconSelect.CLICK_ONE, false, { moveIndex: index });
+			this.dispatchEventWith(ys.Swiper.CLICK_ONE, false, { moveIndex: index });
 		}
 		/**
 		 * 选择的icon的index
@@ -68,7 +69,7 @@ module ys {
 			let i = this.iconsCon.numChildren;
 			let index = 0;
 			while (i--) {
-				let icon = <Icon>this.iconsCon.getChildAt(i);
+				let icon = <any>this.iconsCon.getChildAt(i);
 				let p = icon.localToGlobal();
 				p = this.globalToLocal(p.x, p.y);
 				if (p.x == 0) {
@@ -84,7 +85,7 @@ module ys {
 			let i = this.iconsCon.numChildren;
 			let index = 0;
 			while (i--) {
-				let icon = <Icon>this.iconsCon.getChildAt(i);
+				let icon = <any>this.iconsCon.getChildAt(i);
 				let p = icon.localToGlobal();
 				p = this.globalToLocal(p.x, p.y);
 				if (p.x == 0) {
@@ -92,14 +93,14 @@ module ys {
 					break;
 				}
 			}
-			this.dispatchEventWith(ys.IconSelect.SELECT_ONE, false, { index: index });
+			this.dispatchEventWith(ys.Swiper.SELECT_ONE, false, { index: index });
 		}
 
 		private checkLoop(idx) {
 			let i = this.iconsCon.numChildren;
 			let dis = this.space * this.iconsCon.numChildren;
 			while (i--) {
-				let icon = <Icon>this.iconsCon.getChildAt(i);
+				let icon = this.iconsCon.getChildAt(i);
 				let p = icon.localToGlobal();
 				p = this.globalToLocal(p.x, p.y);
 				if (idx < 0) {
@@ -141,7 +142,7 @@ module ys {
 				return;
 			}
 
-			this.dispatchEventWith(ys.IconSelect.MOVE_START);
+			this.dispatchEventWith(ys.Swiper.MOVE_START);
 
 			this.index = idx;
 
@@ -163,12 +164,14 @@ module ys {
 
 		public updateScale() {
 			let i = this.iconsCon.numChildren;
+			let scaleDefault = ys.Swiper.scaleDefault;
+			let scaleSelect = ys.Swiper.scaleSelect;
 			while (i--) {
-				let scaleDefault = ys.IconSelect.scaleDefault;
 				let icon = this.iconsCon.getChildAt(i);
-				let pt = icon.localToGlobal();
+				let pt = icon.localToGlobal(icon.anchorOffsetX, icon.anchorOffsetY);
 				pt = this.globalToLocal(pt.x, pt.y);
-				let scale = (scaleDefault - Math.abs(pt.x) / (this.space)) * (IconSelect.scale - scaleDefault) + scaleDefault;
+
+				let scale = (1 - Math.abs(pt.x) / (this.space)) * (scaleSelect - scaleDefault) + scaleDefault;
 				if (scale < scaleDefault) {
 					scale = scaleDefault;
 				}
@@ -177,18 +180,4 @@ module ys {
 		}
 	}
 
-	class Icon extends egret.DisplayObjectContainer {
-		constructor(res: string) {
-			super();
-			let bm = new egret.Bitmap(RES.getRes(res));
-			bm.anchorOffsetX = bm.width * 0.5;
-			bm.anchorOffsetY = bm.height * 0.5;
-			this.addChild(bm);
-			this.width = bm.width;
-			this.height = bm.height;
-
-		}
-		public index: number;
-
-	}
 }
