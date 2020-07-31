@@ -1,10 +1,10 @@
 namespace ys {
 	export class VideoOption {
-		scaleMode: string = 'fixedWidth';
+		scaleMode: string = 'fixedWidth';//主要用固定宽的模式
 		mute: boolean = false;
 		x: number;
 		y: number;
-		width: number;
+		width: number;//因为视频是等比缩放的。所以设置宽就好了，高会自动变。
 	}
 
 	export class Video extends egret.DisplayObject {
@@ -35,7 +35,6 @@ namespace ys {
 		public playInline(url, option: VideoOption, onStart, onEnded): HTMLElement {
 			//创建video
 			let v = this.video;
-
 			//设置无框播放
 			v.setAttribute('preload', 'auto');
 			v.setAttribute('webkit-playsinline', 'true');
@@ -63,9 +62,6 @@ namespace ys {
 			if (!egret.Capabilities.isMobile) {
 				v.style.height = "100%";
 			}
-			// v.style.top = "50%";
-			// v.style.left = "50%";
-			// v.style.transform = "translate(-50%,-50%)";
 			v.style.position = "absolute";
 			let x = option.x;
 			let y = option.y;
