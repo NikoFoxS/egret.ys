@@ -2,10 +2,14 @@ namespace ys {
 	export class VideoOption {
 		scaleMode: string = 'fixedWidth';
 		mute: boolean = false;
+		x: number;
+		y: number;
+		width: number;
 	}
 
-	export class Video {
+	export class Video extends egret.DisplayObject {
 		public constructor() {
+			super();
 			this.video = document.createElement('video');
 		}
 		private video: HTMLVideoElement;
@@ -21,20 +25,9 @@ namespace ys {
 			this.video = null;
 		}
 
-		public pause() {
-			if (this.video) {
-				!this.video.paused && this.video.pause();
-			}
-		}
-
-		public play()
-		{
-			this.video && this.video.play();
-		}
-
 		public close() {
 			if (this.video) {
-				this.pause();
+				!this.video.paused && this.video.pause();
 				this.remove();
 			}
 		}
@@ -70,10 +63,25 @@ namespace ys {
 			if (!egret.Capabilities.isMobile) {
 				v.style.height = "100%";
 			}
-			v.style.top = "50%";
-			v.style.left = "50%";
-			v.style.transform = "translate(-50%,-50%)";
+			// v.style.top = "50%";
+			// v.style.left = "50%";
+			// v.style.transform = "translate(-50%,-50%)";
 			v.style.position = "absolute";
+			let x = option.x;
+			let y = option.y;
+			let w = option.width;
+
+			let scale = 1;
+			if (option.scaleMode == 'fixedWidth') {
+				scale = innerWidth / stageW;
+			}
+			x *= scale;
+			y *= scale;
+			w *= scale;
+			this.video.style.left = x + 'px';
+			this.video.style.top = y + 'px';
+			this.video.style.width = w + 'px';
+
 			v.addEventListener('ended', closeFun);
 
 			v.src = url;
@@ -82,10 +90,10 @@ namespace ys {
 			var checkStart = () => {
 				if (v.currentTime > 0.01) {
 					onStart();
-					stage.removeEventListener(egret.Event.ENTER_FRAME, checkStart, this);
+					this.removeEventListener(egret.Event.ENTER_FRAME, checkStart, this);
 				}
 			}
-			stage.addEventListener(egret.Event.ENTER_FRAME, checkStart, this);
+			this.addEventListener(egret.Event.ENTER_FRAME, checkStart, this);
 
 			return v;
 		}
