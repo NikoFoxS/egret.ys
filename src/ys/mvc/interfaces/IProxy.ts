@@ -3,5 +3,6 @@ namespace ys.mvc {
         onRegister(): void;
         onRemove(): void;
         invoke(handler: string,data?:any): void;
+        getData<T>(name):T;
     }
 }

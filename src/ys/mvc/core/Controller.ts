@@ -7,11 +7,16 @@ module ys.mvc {
 		private m: Model;
 		private v: View;
 
-		
+
 
 		invokeProxy(handler, data, proxyName) {
 			const p = this.m.getProxy(proxyName);
 			p && p.invoke(handler, data);
+		}
+
+		getData<T>(key, proxyName) {
+			const p = this.m.getProxy(proxyName);
+			return p && p.getData<T>(key) || null;
 		}
 
 		invokeMediator(handler, data, mediatorName = '') {

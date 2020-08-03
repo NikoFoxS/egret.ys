@@ -9,8 +9,11 @@ namespace ys.mvc {
 		onRemove() {
 
 		}
-		invoke(handler: string,data:any): void {
+		invoke(handler: string, data: any): void {
 
+		}
+		getData<T>(name): T {
+			return null;
 		}
 
 	}
