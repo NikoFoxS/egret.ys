@@ -28,17 +28,31 @@ namespace ys.mvc {
 		private v: View;
 		private c: Controller;
 
-		// public get M() {
-		// 	return this.m;
-		// }
 
-		// public get V() {
-		// 	return this.v;
-		// }
 
-		// public get C() {
-		// 	return this.c;
-		// }
+		installMediator(medName, MediatorClass) {
+			this.v.installMediator(medName, MediatorClass);
+		}
+
+		uninstallMediator(medName) {
+			this.v.uninstallMediator(medName);
+		}
+
+		installService(serName, Serviceclass) {
+			this.c.installService(serName, Serviceclass);
+		}
+
+		uninstallService(serName) {
+			this.c.uninstallService(serName);
+		}
+
+		installBucket(bucName, BucketClass) {
+			this.m.installBucket(bucName, BucketClass);
+		}
+
+		uninstallBucket(bucName) {
+			this.m.uninstallBucket(bucName);
+		}
 
 		invokeMediator(handler: string, data: any) {
 			this.v.invokeMediator(handler, data);
@@ -48,6 +62,13 @@ namespace ys.mvc {
 			this.c.invokeService(handler, data, serName);
 		}
 
+		getData() {
+
+		}
+
+		setData() {
+
+		}
 
 	}
 }

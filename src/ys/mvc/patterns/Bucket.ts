@@ -15,7 +15,7 @@ namespace ys.mvc {
 			return;
 		}
 
-		SetData(key: string, val: any) {
+		SetData(origin:string,data:any) {
 
 		}
 	}
