@@ -1,15 +1,15 @@
 namespace ys.mvc {
 	export class Model {
 		public constructor() {
-			this.proxyMap = {};
+			this.bucketMap = {};
 		}
-		private proxyMap: any;
+		private bucketMap: any;
 
-		registerProxy<P extends ys.mvc.Proxy>(name, proxyClass: new () => P): boolean {
-			if (!this.proxyMap[name]) {
-				const proxy = new proxyClass();
-				this.proxyMap[name] = proxy;
-				proxy.onRegister();
+		installBucket<T extends ys.mvc.Bucket>(bucName, buClass: new () => T): boolean {
+			if (!this.bucketMap[bucName]) {
+				const b:IUnit = new buClass();
+				this.bucketMap[bucName] = b;
+				b.Install();
 				return true;
 			} else {
 				return false;
@@ -17,16 +17,16 @@ namespace ys.mvc {
 
 		}
 
-		removeProxy(name): void {
-			var proxy: Proxy = this.proxyMap[name];
-			if (proxy) {
-				delete this.proxyMap[name];
-				proxy.onRemove();
-			}
+		getBucket(bucName: string): Bucket {
+			return this.bucketMap[bucName];
 		}
 
-		getProxy(name): Proxy {
-			return this.proxyMap[name];
+		uninstallBucket(bucName): void {
+			var b: IUnit = this.bucketMap[bucName];
+			if (b) {
+				delete this.bucketMap[bucName];
+				b.Uninstall();
+			}
 		}
 
 	}

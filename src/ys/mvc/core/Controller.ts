@@ -1,34 +1,35 @@
 module ys.mvc {
 	export class Controller {
-		public constructor(m: Model, v: View) {
-			this.m = m;
-			this.v = v;
-		}
-		private m: Model;
-		private v: View;
-
-
-
-		invokeProxy(handler, data, proxyName) {
-			const p = this.m.getProxy(proxyName);
-			p && p.invoke(handler, data);
+		public constructor() {
+			this.serviceMap = {};
 		}
 
-		getData<T>(key, proxyName) {
-			const p = this.m.getProxy(proxyName);
-			return p && p.getData<T>(key) || null;
-		}
-
-		invokeMediator(handler, data, mediatorName = '') {
-			if (mediatorName == '') {
-				this.v.traverseMediators((m: Mediator) => {
-					m.invoke(handler, data);
-				})
+		private serviceMap: any;
+		installService<T extends ys.mvc.Service>(name, serClass: new () => T): boolean {
+			if (!this.serviceMap[name]) {
+				const s:IUnit = new serClass();
+				this.serviceMap[name] = s;
+				s.Install();
+				return true;
 			} else {
-				const m = this.v.getMediator(mediatorName);
-				m && m.invoke(handler, data)
+				return false;
+			}
+
+		}
+
+		uninstallService(name): void {
+			var s: Service = this.serviceMap[name];
+			if (s) {
+				delete this.serviceMap[name];
+				s.Uninstall();
 			}
 		}
+
+		invokeService(handler, data, serName) {
+			const s:IInvoked = this.serviceMap(serName);
+			s && s.OnInvoke(handler, data);
+		}
+
 
 	}
 
