@@ -6,14 +6,11 @@ namespace ys.mvc {
 		}
 
 		Install(): void {
-
 		}
 		Uninstall(): void {
-
 		}
 
 		OnInvoke(handler: string, data: any): void {
-
 		}
 
 	}

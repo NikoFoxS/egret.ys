@@ -4,9 +4,11 @@ namespace ys.mvc {
 		public constructor(bucName) {
 			super();
 			this.bucName = bucName;
+			this._data = {};
 		}
 
 		private bucName: string;
+		private _data: any;
 
 		Install(): void {
 
@@ -15,12 +17,17 @@ namespace ys.mvc {
 
 		}
 
-		GetData<T>(key: string): T {
-			return;
+		get data() {
+			let d = {};
+			(<any>Object).assign(d, this._data)
+			return d;
 		}
 
-		SetData(origin: string, data: any) {
-			this.InvokeMediator(this.bucName, data);
+		SetData(key: string, value: any) {
+			if (value != null) {
+				this._data[key] = value;
+				this.InvokeMediator(this.bucName, { key: key, value: value });
+			}
 		}
 	}
 }
