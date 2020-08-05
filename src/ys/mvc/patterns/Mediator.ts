@@ -23,6 +23,11 @@ namespace ys.mvc {
 			return this._v;
 		}
 
+		handlerInterest():string[]
+		{
+			return [];
+		}
+
 		OnInvoke(handler: string, data: any): void {
 
 		}

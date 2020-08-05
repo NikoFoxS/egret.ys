@@ -23,8 +23,10 @@ namespace ys.mvc {
 
 		invokeMediator(handler: string, data: any) {
 			for (let key in this.mediatorMap) {
-				const m: IInvoked = this.mediatorMap[key];
-				m.OnInvoke(handler, data);
+				const m: Mediator = this.mediatorMap[key];
+				if (m.handlerInterest().indexOf(handler) != -1) {
+					m.OnInvoke(handler, data);
+				}
 			}
 		}
 
