@@ -7,7 +7,7 @@ namespace ys.mvc {
 
 		installBucket<T extends ys.mvc.Bucket>(bucName, buClass: new () => T): boolean {
 			if (!this.bucketMap[bucName]) {
-				const b:IUnit = new buClass();
+				const b:IUnit = new buClass(bucName);
 				this.bucketMap[bucName] = b;
 				b.Install();
 				return true;
