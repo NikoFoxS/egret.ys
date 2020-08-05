@@ -29,7 +29,6 @@ namespace ys.mvc {
 		private c: Controller;
 
 
-
 		installMediator(medName, MediatorClass) {
 			this.v.installMediator(medName, MediatorClass);
 		}
