@@ -1,8 +1,12 @@
 namespace ys.mvc {
 	/**数据仓库，负责数据的储存和提取 */
-	export class Bucket implements IUnit,IBucket {
-		public constructor() {
+	export class Bucket extends Invoker implements IUnit, IBucket {
+		public constructor(bucName) {
+			super();
+			this.bucName = bucName;
 		}
+
+		private bucName: string;
 
 		Install(): void {
 
@@ -15,8 +19,8 @@ namespace ys.mvc {
 			return;
 		}
 
-		SetData(origin:string,data:any) {
-
+		SetData(origin: string, data: any) {
+			this.InvokeMediator(this.bucName, data);
 		}
 	}
 }
