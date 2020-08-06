@@ -26,7 +26,7 @@ namespace ys {
 	}
 }
 
-class Application extends ys.View {
+class Application extends ys.UI {
 	private static VERSION = '1.0.0'
 	public constructor(cfg: Config, loading: ys.LoadingReporter) {
 		//使用VConsole
@@ -37,7 +37,7 @@ class Application extends ys.View {
 		console.log('egret.ys: ' + Application.VERSION + " https://github.com/NikoFoxS/egret.ys.git" + "");
 
 		super();
-		this.addMediator(ApplicationMediator);
+		this.addMediator('Application', ApplicationMediator);
 		this.cfg = cfg;
 		this.loading = loading;
 	}
@@ -53,12 +53,15 @@ class Application extends ys.View {
 }
 
 
-class ApplicationMediator extends ys.Mediator {
-	constructor(view: egret.DisplayObject) {
-		super(view);
+class ApplicationMediator extends ys.mvc.Mediator {
+	constructor() {
+		super();
 	}
-	protected addLogic() {
-		let v = <Application>this.getView();
+
+	Install() {
+		let v = this.getView<Application>();
+
+		console.log("????",v);
 
 		egret.lifecycle.addLifecycleListener((context) => {
 			// custom lifecycle plugin
@@ -81,11 +84,12 @@ class ApplicationMediator extends ys.Mediator {
 
 			//注册数据代理
 			cfg.proxy && cfg.proxy.forEach(className => {
-				this.registerProxy(className);
+				// this.facade.M.registerProxy('name',new className);
+				// this.registerProxy(className);
 			})
 			//注册指令
 			cfg.command && cfg.command.forEach(cmd => {
-				this.registerCommand(cmd);
+				// this.registerCommand(cmd);
 			})
 
 			if (!GG.setup(v, cfg)) return;
@@ -109,7 +113,7 @@ class ApplicationMediator extends ys.Mediator {
 			}, this, cfg.resourceJSON);
 			//内置通知
 			stage.addEventListener(egret.Event.RESIZE, () => {
-				this.sendNotice('resize');
+				// this.sendNotice('resize');
 			}, this);
 
 		}, this);
@@ -118,13 +122,13 @@ class ApplicationMediator extends ys.Mediator {
 
 	}
 
-	protected listenNotice() {
-		return [];
-	}
+	// protected listenNotice() {
+	// 	return [];
+	// }
 
-	protected onNotice(no: ys.Notice) {
-		let name = no.name;
-		console.log(name);
-		let v = <Application>this.getView();
-	}
+	// protected onNotice(no: ys.Notice) {
+	// 	let name = no.name;
+	// 	console.log(name);
+	// 	let v = <Application>this.getView();
+	// }
 }
