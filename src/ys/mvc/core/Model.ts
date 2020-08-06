@@ -5,9 +5,10 @@ namespace ys.mvc {
 		}
 		private bucketMap: any;
 
-		installBucket<T extends ys.mvc.Bucket>(bucName, buClass: new (name) => T): boolean {
+		installBucket<T extends ys.mvc.Bucket>(bucName, buClass: new () => T): boolean {
 			if (!this.bucketMap[bucName]) {
-				const b: T = new buClass(bucName);
+				const b: T = new buClass();
+				b.name = bucName;
 				this.bucketMap[bucName] = b;
 				b.Install();
 				return true;

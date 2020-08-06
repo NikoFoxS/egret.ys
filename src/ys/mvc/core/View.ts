@@ -7,16 +7,14 @@ namespace ys.mvc {
 		private observerMap: any;
 		private mediatorMap: any;
 
-		installMediator<M extends ys.mvc.Mediator>(medName, MediatorClass: new () => M): boolean {
+		installMediator<M extends ys.mvc.Mediator>(medName, MediatorClass: new () => M): ys.mvc.Mediator {
 			let m: Mediator = this.mediatorMap[medName];
 			if (!m) {
 				m = new MediatorClass();
-				m.bind(this);
-				m.Install();
 				this.mediatorMap[medName] = m;
-				return true;
+				return m;
 			} else {
-				return false;
+				return null;
 			}
 
 		}
@@ -24,7 +22,7 @@ namespace ys.mvc {
 		invokeMediator(handler: string, data: any) {
 			for (let key in this.mediatorMap) {
 				const m: Mediator = this.mediatorMap[key];
-				if (m.handlerInterest().indexOf(handler) != -1) {
+				if (m.OnInvokeWatch().indexOf(handler) != -1) {
 					m.OnInvoke(handler, data);
 				}
 			}

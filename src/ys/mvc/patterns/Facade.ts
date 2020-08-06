@@ -29,24 +29,24 @@ namespace ys.mvc {
 		private c: Controller;
 
 
-		installMediator(medName, MediatorClass) {
-			this.v.installMediator(medName, MediatorClass);
+		installMediator(medName, MediatorClass): ys.mvc.Mediator {
+			return this.v.installMediator(medName, MediatorClass);
 		}
 
 		uninstallMediator(medName) {
 			this.v.uninstallMediator(medName);
 		}
 
-		installService(serName, Serviceclass) {
-			this.c.installService(serName, Serviceclass);
+		installService(serName, Serviceclass): boolean {
+			return this.c.installService(serName, Serviceclass);
 		}
 
 		uninstallService(serName) {
 			this.c.uninstallService(serName);
 		}
 
-		installBucket(bucName, BucketClass) {
-			this.m.installBucket(bucName, BucketClass);
+		installBucket(bucName, BucketClass): boolean {
+			return this.m.installBucket(bucName, BucketClass);
 		}
 
 		uninstallBucket(bucName) {

@@ -1,15 +1,8 @@
 namespace ys.mvc {
-	/**负责界面的管理,invoke service 及 update 界面上的数据 */
+	/**负责界面的管理 */
 	export class Mediator extends Invoker implements IUnit, IInvoked {
 		public constructor() {
 			super();
-		}
-
-		Install(): void {
-
-		}
-		Uninstall(): void {
-
 		}
 
 		bind(v: any) {
@@ -23,8 +16,14 @@ namespace ys.mvc {
 			return this._v;
 		}
 
-		handlerInterest():string[]
-		{
+		Install(): void {
+
+		}
+		Uninstall(): void {
+
+		}
+
+		OnInvokeWatch(): string[] {
 			return [];
 		}
 

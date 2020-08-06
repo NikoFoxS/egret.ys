@@ -5,31 +5,27 @@ module ys.mvc {
 		}
 
 		private serviceMap: any;
-		installService<T extends ys.mvc.Service>(name, serClass: new () => T): boolean {
+		installService(name: string, serClass: any): boolean {
 			if (!this.serviceMap[name]) {
-				const s:IUnit = new serClass();
-				this.serviceMap[name] = s;
-				s.Install();
+				this.serviceMap[name] = serClass;
 				return true;
 			} else {
 				return false;
 			}
-
 		}
 
 		uninstallService(name): void {
-			var s: Service = this.serviceMap[name];
-			if (s) {
-				delete this.serviceMap[name];
-				s.Uninstall();
-			}
+			this.serviceMap[name] = null;
+			delete this.serviceMap[name];
 		}
 
 		invokeService(handler, data, serName) {
-			const s:IInvoked = this.serviceMap(serName);
-			s && s.OnInvoke(handler, data);
+			const serClass = this.serviceMap(serName);
+			if (serClass) {
+				const s: Service = new serClass();
+				s && s.OnInvoke(handler, data);
+			}
 		}
-
 
 	}
 
