@@ -1,8 +1,8 @@
 # egret.ys
 
 ## 结构说明
-src
-|-- app
+src            
+|-- app        
   |-- bucket  数据bucket，不同的bucket存储不同的数据    
   |-- page        
   |  |-- behavior   通用行为      
