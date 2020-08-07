@@ -4,7 +4,7 @@ namespace ys.mvc {
 		public constructor() {
 			super();
 		}
-		OnInvoke(handler: string, data: any): void {
+		OnInvoke(handler: number | string, data: any): void {
 		}
 
 	}

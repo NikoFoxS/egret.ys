@@ -12,7 +12,7 @@ namespace ys.mvc {
 			this._v = null;
 		}
 		private _v: any;
-		getView<T>(): T {
+		GetView<T>(): T {
 			return this._v;
 		}
 
@@ -23,11 +23,11 @@ namespace ys.mvc {
 
 		}
 
-		OnInvokeWatch(): string[] {
+		OnInvokeWatch(): any[] {
 			return [];
 		}
 
-		OnInvoke(handler: string, data: any): void {
+		OnInvoke(handler: number | string, data: any): void {
 
 		}
 

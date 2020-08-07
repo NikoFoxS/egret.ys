@@ -29,12 +29,12 @@ namespace ys.mvc {
 		private c: Controller;
 
 
-		installMediator(medName, MediatorClass): ys.mvc.Mediator {
-			return this.v.installMediator(medName, MediatorClass);
+		installMediator(ui, MediatorClass): ys.mvc.Mediator {
+			return this.v.installMediator(ui, MediatorClass);
 		}
 
-		uninstallMediator(medName) {
-			this.v.uninstallMediator(medName);
+		uninstallMediator(mediator) {
+			this.v.uninstallMediator(mediator);
 		}
 
 		installService(serName, Serviceclass): boolean {
@@ -53,20 +53,16 @@ namespace ys.mvc {
 			this.m.uninstallBucket(bucName);
 		}
 
-		invokeMediator(handler: string, data: any) {
+		getBucket(bucName): ys.mvc.Bucket {
+			return this.m.getBucket(bucName);
+		}
+
+		invokeMediator(handler: any, data: any) {
 			this.v.invokeMediator(handler, data);
 		}
 
-		invokeService(handler: string, data: any, serName: string) {
+		invokeService(handler: any, data: any, serName: string) {
 			this.c.invokeService(handler, data, serName);
-		}
-
-		getData() {
-
-		}
-
-		setData() {
-
 		}
 
 	}
