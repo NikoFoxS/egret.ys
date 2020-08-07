@@ -2,7 +2,7 @@ module GG {
 	export var Loader: ys.Loader;
 	let layout:ys.Layout;
 
-	export function setup($main: egret.DisplayObjectContainer, cfg: Config):boolean {
+	export function setup($main: egret.DisplayObjectContainer, cfg: ys.Config):boolean {
 		main = $main;
 		stage = main.stage;
 		//跨域设置

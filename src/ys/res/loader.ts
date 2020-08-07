@@ -22,24 +22,6 @@ module ys {
 		}
 
 		/**
-		 * 加载界面
-		 */
-		public async loadGroup(name: string, preporter: LoadingReporter) {
-			try {
-				if (RES.isGroupLoaded(name)) {
-					preporter.onLoaded(name);
-				} else {
-					preporter.onStart(name);
-					await RES.loadGroup(name, 9999, preporter);
-					preporter.onLoaded(name);
-				}
-
-			} catch (e) {
-				console.warn(e);
-			}
-		}
-
-		/**
 		 * 分步加载
 		 */
 		public async loadGroupByStep(name, onLoaded: Function, ref) {

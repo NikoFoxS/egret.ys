@@ -26,29 +26,34 @@ namespace ys {
 	}
 }
 
-class Application extends ys.UI {
-	private static VERSION = '1.0.0'
-	public constructor(cfg: Config, loading: ys.LoadingReporter) {
+class Application extends ys.UI implements RES.PromiseTaskReporter {
+	private static VERSION = '2020.08.06'
+	public constructor(cfg: ys.Config) {
 		//使用VConsole
 		if (window['VConsole']) {
 			new window['VConsole']();
 		}
 		//版本信息
 		console.log('egret.ys: ' + Application.VERSION + " https://github.com/NikoFoxS/egret.ys.git" + "");
-
 		super();
-		this.addMediator('Application', ApplicationMediator);
 		this.cfg = cfg;
-		this.loading = loading;
+		this.addMediator(ApplicationMediator);
 	}
-	public cfg: Config;
-	public loading: ys.LoadingReporter;
-	protected uiCreate(): void {
+	public cfg: ys.Config;
+	onProgress?(current: number, total: number, resItem: RES.ResourceInfo | undefined): void {
+		this.onGroupProgress(current, total, resItem);
+	}
+	//--------------------------------
+	onGroupStart(name: string): void {
 
 	}
-	protected uiLayout(): void {
+	onGroupProgress(loaded: number, total: number, resItem: RES.ResourceInfo | undefined): void {
 
 	}
+	onGroupLoaded(name: string): void {
+
+	}
+	
 
 }
 
@@ -59,12 +64,9 @@ class ApplicationMediator extends ys.mvc.Mediator {
 	}
 
 	Install() {
-		let v = this.getView<Application>();
-
-		console.log("????",v);
+		let v = this.GetView<Application>();
 
 		egret.lifecycle.addLifecycleListener((context) => {
-			// custom lifecycle plugin
 			context.onUpdate = () => {
 			}
 		})
@@ -82,53 +84,51 @@ class ApplicationMediator extends ys.mvc.Mediator {
 			//设置接口为mock数据
 			ys.Ajax.mock = cfg.mock;
 
-			//注册数据代理
-			cfg.proxy && cfg.proxy.forEach(className => {
-				// this.facade.M.registerProxy('name',new className);
-				// this.registerProxy(className);
+			//安装服务
+			cfg.services && cfg.services.forEach(({k,v}) => {
+				ys.mvc.Facade.GET.installService(k,v);
 			})
-			//注册指令
-			cfg.command && cfg.command.forEach(cmd => {
-				// this.registerCommand(cmd);
+			//安装数据bucket
+			cfg.buckets && cfg.buckets.forEach(({k,v}) => {
+				ys.mvc.Facade.GET.installBucket(k,v);
 			})
 
 			if (!GG.setup(v, cfg)) return;
 
 			RES.registerVersionController(new ys.VersionController(cfg.versionFun));
-			const reporter = v.loading;
-			reporter.onReady();
 			GG.Loader.setRespath(cfg.resourceRoot);
 			GG.Loader.setup(async () => {
 				var i = 0;
 				var len = v.cfg.groups.length;
 				if (len) {
 					while (i < len) {
-						await GG.Loader.loadGroup(cfg.groups[i], reporter)
+						await this.loadGroup(cfg.groups[i]);
 						i++;
 					}
 				} else {
-					reporter.onLoaded('');
+					v.onGroupLoaded('');
 				}
 
 			}, this, cfg.resourceJSON);
-			//内置通知
-			stage.addEventListener(egret.Event.RESIZE, () => {
-				// this.sendNotice('resize');
-			}, this);
 
 		}, this);
 
-
-
 	}
 
-	// protected listenNotice() {
-	// 	return [];
-	// }
+	async loadGroup(name) {
+		try {
+			let v = this.GetView<Application>();
+			if (RES.isGroupLoaded(name)) {
+				v.onGroupLoaded(name);
+			} else {
+				v.onGroupStart(name);
+				await RES.loadGroup(name, 9999, v);
+				v.onGroupLoaded(name);
+			}
 
-	// protected onNotice(no: ys.Notice) {
-	// 	let name = no.name;
-	// 	console.log(name);
-	// 	let v = <Application>this.getView();
-	// }
+		} catch (e) {
+			console.warn(e);
+		}
+	}
+
 }
