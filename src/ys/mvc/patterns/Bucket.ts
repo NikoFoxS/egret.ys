@@ -4,26 +4,38 @@ namespace ys.mvc {
 		public constructor() {
 			super();
 			this._data = {};
+			this._origin = {};
 		}
 
 		private bucName: string;
-		private _data: any;
-		public set name(nm)
-		{
+		private _data: any;//get数据
+		private _origin: any;//set数据
+		public set name(nm) {
 			this.bucName = nm;
 		}
 
 		get data() {
-			//暂时用浅拷贝
-			let d = {};
-			(<any>Object).assign(d, this._data)
-			return d;
+			return this._data;
 		}
 
-		SetData(key: string, value: any) {
-			if (value != null) {
-				this._data[key] = value;
-				this.InvokeMediator(this.bucName, { key: key, value: value });
+		UpdateData() {
+			//深拷贝
+			this._data = JSON.parse(JSON.stringify(this._origin));
+		}
+
+		SetData(json: any, Mhandler, autoUpdate: boolean = true) {
+			if (json) {
+				//赋值
+				(<any>Object).assign(this._origin, json);
+				//更新 get
+				autoUpdate && this.UpdateData();
+				//通知
+				let arr=[];
+				for(let k in json)
+				{
+					arr.push(k);
+				}
+				this.MediatorInvoke(Mhandler, arr);
 			}
 		}
 
