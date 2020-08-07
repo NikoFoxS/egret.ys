@@ -11,6 +11,7 @@ namespace ys.mvc {
 				b.name = bucName;
 				this.bucketMap[bucName] = b;
 				b.Install();
+				console.log('安装',bucName,buClass)
 				return true;
 			} else {
 				return false;

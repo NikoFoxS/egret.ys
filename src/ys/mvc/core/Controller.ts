@@ -6,12 +6,15 @@ module ys.mvc {
 
 		private serviceMap: any;
 		installService(name: string, serClass: any): boolean {
+			console.log('安装',name,serClass);
 			if (!this.serviceMap[name]) {
 				this.serviceMap[name] = serClass;
+				console.log(this.serviceMap)
 				return true;
 			} else {
 				return false;
 			}
+			
 		}
 
 		uninstallService(name): void {
@@ -20,7 +23,8 @@ module ys.mvc {
 		}
 
 		invokeService(handler, data, serName) {
-			const serClass = this.serviceMap(serName);
+			console.log('invokeService',serName,data,this)
+			const serClass = this.serviceMap[serName];
 			if (serClass) {
 				const s: Service = new serClass();
 				s && s.OnInvoke(handler, data);
