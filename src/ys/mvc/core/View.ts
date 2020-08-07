@@ -1,40 +1,49 @@
 namespace ys.mvc {
+	class UIM {
+		ui: any;
+		mediator: ys.mvc.Mediator;
+	}
 	export class View {
 		public constructor() {
-			this.mediatorMap = {};
+			this.mediatorArr = [];
 		}
 
-		private observerMap: any;
-		private mediatorMap: any;
+		private mediatorArr: UIM[];
 
-		installMediator<M extends ys.mvc.Mediator>(medName, MediatorClass: new () => M): ys.mvc.Mediator {
-			let m: Mediator = this.mediatorMap[medName];
-			if (!m) {
-				m = new MediatorClass();
-				this.mediatorMap[medName] = m;
-				return m;
-			} else {
-				return null;
-			}
-
+		installMediator<M extends ys.mvc.Mediator>(ui, MediatorClass: new () => M): ys.mvc.Mediator {
+			let m = new MediatorClass();
+			let uim = new UIM();
+			uim.ui = ui;
+			uim.mediator = m;
+			this.mediatorArr.push(uim);
+			m.bind(ui);
+			m.Install();
+			console.log('installMediator', this.mediatorArr);
+			return m;
 		}
 
-		invokeMediator(handler: string, data: any) {
-			for (let key in this.mediatorMap) {
-				const m: Mediator = this.mediatorMap[key];
+		invokeMediator(handler: any, data: any) {
+			this.mediatorArr.forEach(uim => {
+				let m = uim.mediator;
 				if (m.OnInvokeWatch().indexOf(handler) != -1) {
 					m.OnInvoke(handler, data);
 				}
-			}
+			});
 		}
 
-		uninstallMediator(medName: string): void {
-			var m: Mediator = this.mediatorMap[medName];
-			if (!m)
-				return null;
-			delete this.mediatorMap[medName];
-			m.unbind();
-			m.Uninstall();
+		uninstallMediator(mediator: ys.mvc.Mediator): void {
+
+			let i = this.mediatorArr.length;
+			let uim:UIM;
+			while (i--) {
+				uim = this.mediatorArr[i];
+				if (uim.mediator == mediator) {
+					mediator.unbind();
+					mediator.Uninstall();
+					this.mediatorArr.splice(i, 1);
+				}
+			}
+			console.log(this.mediatorArr);
 		}
 
 	}
