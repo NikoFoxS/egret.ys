@@ -20,18 +20,18 @@ class TestPage extends ys.Page {
 		// this.addChild(a);
 		// a.x = stageHalfW;
 		// a.y = 800;
-		let a = GG.newBitmap('headimg_jpg', this);
-		a.x = 100;
-		a.y = 100;
-		let b = this.bindBehavior(a, DragerBehavior, { name: 'Drager' });
-		b.once('release', () => {
-			// GG.removeDisplayObject(a);
-		}, this)
+		// let a = GG.newBitmap('headimg_jpg', this);
+		// a.x = 100;
+		// a.y = 100;
+		// let b = this.bindBehavior(a, DragerBehavior, { name: 'Drager' });
+		// b.once('release', () => {
+		// 	// GG.removeDisplayObject(a);
+		// }, this)
 
-		let rb = this.bindBehavior(a, RotateBehavior, { name: 'rotate', ang: 10 });
+		// let rb = this.bindBehavior(a, RotateBehavior, { name: 'rotate', ang: 10 });
+
 	}
 	headimg: egret.Bitmap;
-
 	public txt: ys.Label;
 
 	OnAdd() {
