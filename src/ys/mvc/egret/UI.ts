@@ -1,5 +1,5 @@
 namespace ys {
-    class BindKV {
+    export class BindKV {
         display: egret.DisplayObject;
         behavior: ys.Behavior;
     }
@@ -53,12 +53,38 @@ namespace ys {
             if (this.arm) {
                 this.removeMediators();
             }
+
+            let i = this.behaviorBindPool.length;
+            while (i--) {
+                let bb = this.behaviorBindPool[i];
+                this.behaviorBindPool.splice(i, 1);
+                bb.behavior.Uninstall();
+                bb.behavior.unbind();
+                bb.display = null;
+                bb.behavior = null;
+                break;
+            }
             this.OnRemove();
+        }
+
+        unbindBehavior(b: ys.Behavior) {
+            let i = this.behaviorBindPool.length;
+            while (i--) {
+                let bb = this.behaviorBindPool[i];
+                if (bb.behavior == b) {
+                    this.behaviorBindPool.splice(i, 1);
+                    bb.behavior.Uninstall();
+                    bb.behavior.unbind();
+                    bb.display = null;
+                    bb.behavior = null;
+                    break;
+                }
+            }
         }
 
         bindBehavior(d: egret.DisplayObject, BehaviorClass: any, params: any): ys.Behavior {
             let behavior: ys.Behavior = new BehaviorClass();
-            (<any>Object).assign(behavior, params);
+            behavior.upateParams(params);
             behavior.bind(d);
             behavior.Install();
 
@@ -67,22 +93,6 @@ namespace ys {
             bind.behavior = behavior;
             this.behaviorBindPool.push(bind);
 
-            d.once(egret.Event.REMOVED_FROM_STAGE, () => {
-                let i = this.behaviorBindPool.length;
-                while (i--) {
-                    let bb = this.behaviorBindPool[i];
-                    if (bb.display == d && bb.behavior == behavior) {
-                        this.behaviorBindPool.splice(i, 1);
-                        bb.behavior.Uninstall();
-                        bb.behavior.unbind();
-                        bb.display = null;
-                        bb.behavior = null;
-                        break;
-                    }
-                }
-                console.log('behaviorBindPool:',this.behaviorBindPool);
-            }, this);
-            console.log('behaviorBindPool:',this.behaviorBindPool);
             return behavior;
         }
 
