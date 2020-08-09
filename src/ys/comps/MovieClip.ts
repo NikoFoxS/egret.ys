@@ -9,18 +9,8 @@ namespace ys {
 		public static PLAY_OVER: string = "play_over";
 		public static FRAME_UPDATE: string = "frame_update";
 
-		/**
-		 * @param clips 序列帧的数组
-		 * @param fps 帧频
-		 */
-		public constructor(clips: string[], fps: number) {
+		public constructor() {
 			super();
-
-			this._clips = clips;
-			this._fps = fps;
-			this._frame = 0;
-			this._totalFrame = clips.length;
-
 			this.once(egret.Event.REMOVED_FROM_STAGE, () => {
 				this.pause();
 			}, this);
@@ -40,6 +30,13 @@ namespace ys {
 			while (i--) {
 				RES.destroyRes(this._clips[i]);
 			}
+		}
+
+		public setFrames(clips: string[], fps: number,frame:number=0) {
+			this._clips = clips;
+			this._fps = fps;
+			this._totalFrame = clips.length;
+			this.frame = frame;
 		}
 
 		/**
@@ -87,15 +84,13 @@ namespace ys {
 
 			var frame = f % this._totalFrame;
 			frame = Math.floor(frame);
-			if(frame < 0)
-			{
+			if (frame < 0) {
 				frame += this._totalFrame;
-			}else if(frame > this._totalFrame-1)
-			{
+			} else if (frame > this._totalFrame - 1) {
 				frame -= this._totalFrame;
 			}
 
-			
+
 
 			if (frame != this._lastFrame) {
 				var res = RES.getRes(this._clips[frame]);
