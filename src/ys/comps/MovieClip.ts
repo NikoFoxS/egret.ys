@@ -82,12 +82,26 @@ namespace ys {
 		}
 
 		public set frame(f: number) {
+
 			this._frame = f;
-			var frame = Math.floor(this._frame);
+
+			var frame = f % this._totalFrame;
+			frame = Math.floor(frame);
+			if(frame < 0)
+			{
+				frame += this._totalFrame;
+			}else if(frame > this._totalFrame-1)
+			{
+				frame -= this._totalFrame;
+			}
+
+			
+
 			if (frame != this._lastFrame) {
 				var res = RES.getRes(this._clips[frame]);
 				if (res) {
 					this.texture = RES.getRes(this._clips[frame]);
+				} else {
 				}
 				this._lastFrame = frame;
 				this.dispatchEventWith(MovieClip.FRAME_UPDATE, false);
