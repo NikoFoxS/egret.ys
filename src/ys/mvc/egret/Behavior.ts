@@ -3,21 +3,24 @@ namespace ys {
 		public constructor() {
 			super();
 		}
-		name:string;
+		name: string;
 		bind(v: egret.DisplayObject) {
 			this._v = v;
-			console.log(this.name,' -bind- ',v)
+			console.log(this.name, ' -bind- ', v)
 		}
 
 		unbind() {
-			console.log(this.name,' -unbind- ',this.v)
+			console.log(this.name, ' -unbind- ', this.v)
 			this._v = null;
 		}
 
 		private _v: egret.DisplayObject;
-		public get v()
-		{
+		public get v() {
 			return this._v;
+		}
+
+		upateParams(params: any) {
+			(<any>Object).assign(this, params);
 		}
 
 		Install(): void {
