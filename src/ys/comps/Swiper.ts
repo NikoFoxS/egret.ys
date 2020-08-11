@@ -10,8 +10,6 @@ module ys {
 			this.iconsCon = new egret.DisplayObjectContainer();
 			this.addChild(this.iconsCon);
 
-
-
 			this.addEventListener(egret.Event.ADDED_TO_STAGE, () => {
 				this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.checkTap, this);
 			}, this);
@@ -70,7 +68,7 @@ module ys {
 			let index = 0;
 			while (i--) {
 				let icon = <any>this.iconsCon.getChildAt(i);
-				let p = icon.localToGlobal();
+				let p = icon.localToGlobal(icon.anchorOffsetX,icon.anchorOffsetY);
 				p = this.globalToLocal(p.x, p.y);
 				if (p.x == 0) {
 					index = icon.index;
@@ -82,17 +80,7 @@ module ys {
 
 		private _selectIndex: number;
 		private checkSelect() {
-			let i = this.iconsCon.numChildren;
-			let index = 0;
-			while (i--) {
-				let icon = <any>this.iconsCon.getChildAt(i);
-				let p = icon.localToGlobal();
-				p = this.globalToLocal(p.x, p.y);
-				if (p.x == 0) {
-					index = icon.index;
-					break;
-				}
-			}
+			let index = this.selectIndex;
 			this.dispatchEventWith(ys.Swiper.SELECT_ONE, false, { index: index });
 		}
 
@@ -176,6 +164,7 @@ module ys {
 					scale = scaleDefault;
 				}
 				icon.scaleX = icon.scaleY = scale;
+				icon['update'] && icon['update']();
 			}
 		}
 	}
