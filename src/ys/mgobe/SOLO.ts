@@ -1,25 +1,41 @@
 namespace ys {
-	export class PK extends egret.EventDispatcher {
-		private static _instance: ys.PK;
+	export class SOLO extends egret.EventDispatcher {
+		private static _instance: ys.SOLO;
 		public static get GET() {
-			if (!PK._instance) {
-				PK._instance = new PK();
+			if (!SOLO._instance) {
+				SOLO._instance = new SOLO();
 			}
-			return PK._instance;
+			return SOLO._instance;
 		}
 		constructor() {
 			super();
 			const room = new MGOBE.Room();
 			// 广播：房间有新玩家加入
-			room.onJoinRoom = event => console.log("新玩家加入", event.data);
+			room.onJoinRoom = event => {
+				console.log("新玩家加入", event.data);
+			}
 			// 广播：房间有玩家退出
-			room.onLeaveRoom = event => console.log("玩家退出", event.data);
+			room.onLeaveRoom = event => {
+				console.log("玩家退出", event.data);
+			}
 			// 广播：房间被解散
-			room.onDismissRoom = event => console.log("房间被解散");
+			room.onDismissRoom = event => {
+				console.log("房间被解散");
+			}
 			// 其他广播
-			this.room = room;
+			room.onUpdate = event => {
+				console.log('networkState:', room.networkState);
+			};
 
+			room.onChangePlayerNetworkState = event => {
+				if (event.data.networkState === MGOBE.ENUM.NetworkState.COMMON_OFFLINE)
+					console.log("玩家下线");
+			};
+
+			this.room = room;
 		}
+
+
 		static ON_CONNNECT: string = 'on_connect';
 		static ON_MATCH_OK: string = 'on_match_ok';
 		static ON_MATCH_KO: string = 'on_match_ko';
@@ -44,7 +60,7 @@ namespace ys {
 					if (event.code === 0) {
 						console.log('mgobe connected!')
 						MGOBE.Listener.add(this.room);
-						this.dispatchEventWith(ys.PK.ON_CONNNECT);
+						this.dispatchEventWith(ys.SOLO.ON_CONNNECT);
 					}
 				});
 		}
@@ -70,9 +86,9 @@ namespace ys {
 						console.log("匹配结果", event);
 						if (event.code == 0) {
 
-							this.dispatchEventWith(ys.PK.ON_MATCH_OK);
+							this.dispatchEventWith(ys.SOLO.ON_MATCH_OK);
 						} else {
-							this.dispatchEventWith(ys.PK.ON_MATCH_KO);
+							this.dispatchEventWith(ys.SOLO.ON_MATCH_KO);
 						}
 					});
 					return console.log("玩家不在房间内");
