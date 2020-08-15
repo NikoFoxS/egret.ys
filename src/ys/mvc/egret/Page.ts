@@ -16,14 +16,14 @@ namespace ys {
 			}
 		}
 
-		public cache:boolean;
+		public cache: boolean;
 
 		onProgress?(current: number, total: number, resItem: RES.ResourceInfo | undefined): void {
-
+			console.log(current, total);
 		}
 
 		OnStart() {
-
+			throw new Error('必须重写 OnStart()')
 		}
 	}
 

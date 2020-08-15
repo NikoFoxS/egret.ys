@@ -6,42 +6,24 @@ class TestPage extends ys.Page {
 	public btn: egret.Shape;
 
 	OnStart() {
-		// var a = new Avatar();
-		// this.addChild(a);
-		// a.x = stageHalfW;
-		// a.y = 100;
 
-		// var a = new Avatar();
-		// this.addChild(a);
-		// a.x = stageHalfW;
-		// a.y = 400;
+		// ys.SOLO.GET.addEventListener(ys.SOLO.ON_CONNNECT, () => {
+		// 	const playerInfo = {
+		// 		name: "user"+GG.randomInt(1000,9999),
+		// 		customPlayerStatus: 1,
+		// 		customProfile: "https://xxx.com/icon.png",
+		// 	};
 
-		// var a = new Avatar();
-		// this.addChild(a);
-		// a.x = stageHalfW;
-		// a.y = 800;
-		// let a = GG.newBitmap('headimg_jpg', this);
-		// a.x = 100;
-		// a.y = 100;
-		// let b = this.bindBehavior(a, DragerBehavior, { name: 'Drager' });
-		// b.once('release', () => {
-		// 	// GG.removeDisplayObject(a);
-		// }, this)
+		// 	ys.SOLO.GET.match(playerInfo, 2, '1');
+		// }, this);
+		// ys.SOLO.GET.addEventListener(ys.SOLO.ON_MATCH_OK, () => {
 
-		// let rb = this.bindBehavior(a, RotateBehavior, { name: 'rotate', ang: 10 });
-
+		// }, this);
+		// ys.SOLO.GET.setup('' + GG.randomInt(1000, 9999), 'obg-krwrque4', '6354b5a0d281657f3c796dbb842500b97280123e');
+		// ys.SOLO.GET.connect('krwrque4.wxlagame.com');
 	}
 	headimg: egret.Bitmap;
 	public txt: ys.Label;
-
-	OnAdd() {
-
-	}
-
-	OnRemove() {
-
-	}
-
 
 
 }
@@ -67,7 +49,7 @@ class TestPageMediator extends ys.mvc.Mediator {
 
 	}
 
-	OnInvokeWatch(): any[] {
+	OnInvokeList(): any[] {
 		return [
 			Mhandler.update_user_info
 		];

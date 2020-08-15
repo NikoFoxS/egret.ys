@@ -17,18 +17,18 @@ namespace ys.mvc {
 		}
 
 		Install(): void {
-
+			throw new Error('need override Install()')
 		}
 		Uninstall(): void {
-
+			throw new Error('need override Uninstall()')
 		}
-
-		OnInvokeWatch(): any[] {
+		/**列出需要关注的invoke */
+		OnInvokeList(): any[] {
 			return [];
 		}
-
+		/**处理 invoke*/
 		OnInvoke(handler: number | string, data: any): void {
-
+			throw new Error('need override Install()')
 		}
 
 	}

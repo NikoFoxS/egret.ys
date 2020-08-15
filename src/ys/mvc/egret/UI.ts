@@ -42,7 +42,7 @@ namespace ys {
         }
 
         private _onAdd() {
-            this.OnAdd();
+            // this.OnAdd();
         }
 
         private _onRemove() {
@@ -64,7 +64,7 @@ namespace ys {
                 bb.behavior = null;
                 break;
             }
-            this.OnRemove();
+            // this.OnRemove();
         }
 
         unbindBehavior(b: ys.Behavior) {
@@ -96,13 +96,13 @@ namespace ys {
             return behavior;
         }
 
-        OnAdd() {
+        // OnAdd() {
 
-        }
+        // }
 
-        OnRemove() {
+        // OnRemove() {
 
-        }
+        // }
 
     }
 }

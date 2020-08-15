@@ -27,7 +27,7 @@ class AvatarMediator extends ys.mvc.Mediator {
 
 	}
 
-	OnInvokeWatch(): any[] {
+	OnInvokeList(): any[] {
 		return [
 			Mhandler.avatar_rotate
 		];

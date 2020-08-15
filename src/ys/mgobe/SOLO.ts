@@ -35,7 +35,6 @@ namespace ys {
 			this.room = room;
 		}
 
-
 		static ON_CONNNECT: string = 'on_connect';
 		static ON_MATCH_OK: string = 'on_match_ok';
 		static ON_MATCH_KO: string = 'on_match_ko';
@@ -44,9 +43,9 @@ namespace ys {
 		private room: MGOBE.Room;
 		setup(openId, gameId, secretKey) {
 			this.gameInfo = {
-				openId: openId,
+				openId: openId,//唯一标识
 				gameId: gameId,// 替换为控制台上的“游戏ID”
-				secretKey: secretKey,// 替换为控制台上的“游戏key””
+				secretKey: secretKey,// 替换为控制台上的“游戏key”
 			}
 		}
 
@@ -85,7 +84,6 @@ namespace ys {
 					this.room.matchRoom(matchRoomPara, event => {
 						console.log("匹配结果", event);
 						if (event.code == 0) {
-
 							this.dispatchEventWith(ys.SOLO.ON_MATCH_OK);
 						} else {
 							this.dispatchEventWith(ys.SOLO.ON_MATCH_KO);
