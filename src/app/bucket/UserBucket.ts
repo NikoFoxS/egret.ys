@@ -1,20 +1,21 @@
-class UserBucket extends ys.mvc.Bucket {
-	public constructor() {
-		super();
+namespace app {
+	export class UserBucket extends ys.mvc.Bucket {
+		public constructor() {
+			super();
+		}
+
+		Install(): void {
+			this.SetData({ name: 'fox', sex: 'male' }, false);
+		}
+
+		Uninstall(): void {
+
+		}
 	}
 
-	Install(): void {
-		this.SetData({name:'fox',sex:'male'},false);
+	export declare class UserKV {
+		name: string
+		sex: string
+		coins: number
 	}
-
-	Uninstall(): void {
-		
-	}
-}
-
-declare class UserData
-{
-	name:string
-	sex:string
-	coins:number
 }
