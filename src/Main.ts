@@ -5,16 +5,16 @@ var cfg = new ys.Config();
 cfg.groups = ['preload'];//配置加载资源组
 cfg.resourceJSON = 'resource/default.res.json';//配置default.res.json的路径
 cfg.resourceRoot = 'resource/';//配置资源的路径
-cfg.release = false; // 如果未true，会自动屏蔽掉console.log
+cfg.log = true; //开启console.log
 cfg.scaleMode = egret.Capabilities.isMobile ? egret.StageScaleMode.FIXED_WIDTH : egret.StageScaleMode.SHOW_ALL;
 cfg.orientation = egret.OrientationMode.PORTRAIT;
 cfg.width = 750;
 cfg.height = 1334; // iphone6=750x1334 iphoneX=750x1624
 cfg.services = [
-    { k: "user", v: UserService }
+    ['user',app.UserService]
 ]; //添加数据代理
 cfg.buckets = [
-    { k: 'user', v: UserBucket }
+    ['user',app.UserBucket]
 ] //添加通知指令
 cfg.mock = false;
 //对加载项进行处理
@@ -25,7 +25,7 @@ cfg.versionFun = (url) => {
 //处理多语言。
 ys.Label.getLocale = (key) => {
     const val = key;
-    console.log('多语言', key, '>', val);
+    // console.log('多语言', key, '>', val);
     return val;
 }
 
@@ -46,7 +46,7 @@ class Main extends Application {
     }
     onGroupLoaded(name: string): void {
         if (name == 'preload' || name == '') {
-            GG.showPage(TestPage);
+            GG.showPage(app.TestPage);
         }
     }
 }

@@ -95,11 +95,11 @@ class ApplicationMediator extends ys.mvc.Mediator {
 			ys.Ajax.mock = cfg.mock;
 
 			//安装服务
-			cfg.services && cfg.services.forEach(({k, v}) => {
+			cfg.services && cfg.services.forEach(([k, v]) => {
 				ys.mvc.Facade.GET.installService(k, v);
 			})
 			//安装数据bucket
-			cfg.buckets && cfg.buckets.forEach(({k, v}) => {
+			cfg.buckets && cfg.buckets.forEach(([k, v]) => {
 				ys.mvc.Facade.GET.installBucket(k, v);
 			})
 
