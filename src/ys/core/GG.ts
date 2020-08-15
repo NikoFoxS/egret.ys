@@ -1,5 +1,4 @@
 module GG {
-	export var Loader: ys.Loader;
 	let layout:ys.Layout;
 
 	export function setup($main: egret.DisplayObjectContainer, cfg: ys.Config):boolean {
@@ -17,7 +16,7 @@ module GG {
 
 		//防止PC端，滚动鼠标时，引起H5跟随滑动。
 		if (!egret.Capabilities.isMobile) {
-			document.documentElement.style.overflow = 'hidden'
+			document.documentElement.style.overflow = 'hidden';
 		}
 
 		//并发加载数为4
@@ -78,7 +77,6 @@ module GG {
 			}, true);
 		}
 
-		Loader = new ys.Loader();
 		layout = new ys.Layout();
 
 		const sl = ["t", "s", "i", "l", "e", "t", "i", "s"];

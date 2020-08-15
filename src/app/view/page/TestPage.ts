@@ -40,15 +40,21 @@ namespace app {
 		Install(): void {
 			let v = this.GetView<TestPage>();
 			v.btn.touchEnabled = true;
-			v.btn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-				let m = GG.showModal('准备获取用户信息!', 'Ok');
-				m.addEventListener('select', () => {
-					this.ServiceInvoke(INVOKE.SERVICE_GET_USER_DATA, {}, 'user')
-				}, this);
+			v.btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getInfo, this);
+
+			v.bindBehavior(v.btn,DragerBehavior,{})
+		}
+
+		private getInfo() {
+			let m = GG.showModal('准备获取用户信息!', 'Ok');
+			m.addEventListener('select', () => {
+				this.ServiceInvoke(INVOKE.SERVICE_GET_USER_DATA, {}, 'user')
 			}, this);
 		}
 		Uninstall(): void {
-
+			let v = this.GetView<TestPage>();
+			v.btn.touchEnabled = false;
+			v.btn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.getInfo, this);
 		}
 
 		OnInvokeList(): any[] {
@@ -63,7 +69,6 @@ namespace app {
 					let buc = this.BucketGet('user');
 					let vo = buc.data as UserKV
 					let v = this.GetView<TestPage>();
-					// v.txt.text = vo.name + " - " + vo.sex + " - " + vo.coins;
 					console.log('更新数据', vo, data);
 					break;
 			}

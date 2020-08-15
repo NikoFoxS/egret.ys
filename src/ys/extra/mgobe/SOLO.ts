@@ -1,4 +1,7 @@
 namespace ys {
+	/**
+	 * 腾讯mgobe联机对战引擎
+	 */
 	export class SOLO extends egret.EventDispatcher {
 		private static _instance: ys.SOLO;
 		public static get GET() {

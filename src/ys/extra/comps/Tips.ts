@@ -51,6 +51,7 @@ module ys {
 			this.addChild(block);
 			block.alpha = 0.5;
 			block.cacheAsBitmap = true;
+			block.touchEnabled = true;
 			this.block = block;
 
 			const ctn = GG.newContainer();
