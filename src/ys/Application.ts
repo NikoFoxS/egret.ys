@@ -27,14 +27,24 @@ namespace ys {
 }
 
 class Application extends ys.UI implements RES.PromiseTaskReporter {
-	private static VERSION = '2020.08.06'
+	private static VERSION = '20200815'
 	public constructor(cfg: ys.Config) {
 		//使用VConsole
 		if (window['VConsole']) {
 			new window['VConsole']();
 		}
 		//版本信息
-		console.log('egret.ys: ' + Application.VERSION + " https://github.com/NikoFoxS/egret.ys.git" + "");
+		let hello = 'Egret.ys by NikoFoxS '+Application.VERSION;
+		if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1)
+		{
+			console.log('%c'+hello, 'font-size: 10px;font-weight: bold;text-decoration: underline;');
+		}else
+		{
+			console.log(hello);
+		}
+		if (!cfg.log) {
+			console.log = () => { };
+		}
 		super();
 		this.cfg = cfg;
 		this.addMediator(ApplicationMediator);
@@ -53,7 +63,7 @@ class Application extends ys.UI implements RES.PromiseTaskReporter {
 	onGroupLoaded(name: string): void {
 
 	}
-	
+
 
 }
 
@@ -85,12 +95,12 @@ class ApplicationMediator extends ys.mvc.Mediator {
 			ys.Ajax.mock = cfg.mock;
 
 			//安装服务
-			cfg.services && cfg.services.forEach(({k,v}) => {
-				ys.mvc.Facade.GET.installService(k,v);
+			cfg.services && cfg.services.forEach(({k, v}) => {
+				ys.mvc.Facade.GET.installService(k, v);
 			})
 			//安装数据bucket
-			cfg.buckets && cfg.buckets.forEach(({k,v}) => {
-				ys.mvc.Facade.GET.installBucket(k,v);
+			cfg.buckets && cfg.buckets.forEach(({k, v}) => {
+				ys.mvc.Facade.GET.installBucket(k, v);
 			})
 
 			if (!GG.setup(v, cfg)) return;

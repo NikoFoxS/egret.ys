@@ -3,7 +3,7 @@ namespace ys {
         public groups: string[]
         public resourceJSON: string
         public resourceRoot: string;
-        public release: boolean;
+        public log: boolean;
         public scaleMode: string;
         public orientation: string;
         public width: number;

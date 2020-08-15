@@ -6,7 +6,7 @@ module ys.mvc {
 
 		private serviceMap: any;
 		installService(name: string, serClass: any): boolean {
-			console.log('安装',name,serClass);
+			console.log('<C>安装Service:',name,egret.getQualifiedClassName(serClass)); 
 			if (!this.serviceMap[name]) {
 				this.serviceMap[name] = serClass;
 				console.log(this.serviceMap)
@@ -18,12 +18,13 @@ module ys.mvc {
 		}
 
 		uninstallService(name): void {
+			console.log('<C>卸载Service:',name);
 			this.serviceMap[name] = null;
 			delete this.serviceMap[name];
 		}
 
 		invokeService(handler, data, serName) {
-			console.log('invokeService',serName,data,this)
+			console.log('<C>触发Service:',serName,data,this)
 			const serClass = this.serviceMap[serName];
 			if (serClass) {
 				const s: Service = new serClass();

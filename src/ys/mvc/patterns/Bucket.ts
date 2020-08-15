@@ -13,17 +13,17 @@ namespace ys.mvc {
 		public set name(nm) {
 			this.bucName = nm;
 		}
-
+		/**获取数据的copy */
 		get data() {
 			return this._data;
 		}
-
+		/**更新数据 */
 		UpdateData() {
-			//深拷贝
+			//深拷贝parse和stringify会有一定的性能损失
 			this._data = JSON.parse(JSON.stringify(this._origin));
 		}
-
-		SetData(json: any, Mhandler, autoUpdate: boolean = true) {
+		/**设置数据 */
+		SetData(json: any, handler, autoUpdate: boolean = true) {
 			if (json) {
 				//赋值
 				(<any>Object).assign(this._origin, json);
@@ -35,7 +35,7 @@ namespace ys.mvc {
 				{
 					arr.push(k);
 				}
-				this.MediatorInvoke(Mhandler, arr);
+				this.MediatorInvoke(handler, arr);
 			}
 		}
 

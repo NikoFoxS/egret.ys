@@ -5,6 +5,7 @@ namespace ys.mvc {
 			super();
 		}
 		OnInvoke(handler: number | string, data: any): void {
+			throw new Error('need override OnInvoke()')
 		}
 
 	}
