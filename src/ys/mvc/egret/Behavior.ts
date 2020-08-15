@@ -3,14 +3,13 @@ namespace ys {
 		public constructor() {
 			super();
 		}
-		name: string;
 		bind(v: egret.DisplayObject) {
 			this._v = v;
-			console.log(this.name, ' -bind- ', v)
+			console.log('<Behavior>绑定', egret.getQualifiedClassName(this), ' - ', egret.getQualifiedClassName(v))
 		}
 
 		unbind() {
-			console.log(this.name, ' -unbind- ', this.v)
+			console.log('<Behavior>解绑', egret.getQualifiedClassName(this), ' - ', egret.getQualifiedClassName(this.v))
 			this._v = null;
 		}
 

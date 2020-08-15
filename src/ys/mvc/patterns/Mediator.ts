@@ -15,7 +15,9 @@ namespace ys.mvc {
 		GetView<T>(): T {
 			return this._v;
 		}
-
+		//---------------------------------
+		//以下方法需要被重写
+		//---------------------------------
 		Install(): void {
 			throw new Error('need override Install()')
 		}
@@ -28,7 +30,7 @@ namespace ys.mvc {
 		}
 		/**处理 invoke*/
 		OnInvoke(handler: number | string, data: any): void {
-			throw new Error('need override Install()')
+			
 		}
 
 	}
