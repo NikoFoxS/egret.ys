@@ -1,7 +1,7 @@
 module GG {
-	let layout:ys.Layout;
+	let layout: ys.Layout;
 
-	export function setup($main: egret.DisplayObjectContainer, cfg: ys.Config):boolean {
+	export function setup($main: egret.DisplayObjectContainer, cfg: ys.Config): boolean {
 		main = $main;
 		stage = main.stage;
 		//跨域设置
@@ -81,21 +81,19 @@ module GG {
 
 		const sl = ["t", "s", "i", "l", "e", "t", "i", "s"];
 		sl.reverse();
-		const slt:string[] = window[sl.join('')] || [];
-		slt.push('loNXN1bi5jb20=','cxOTIuMTY4','kxMjcuMC4wLjE=');
+		const slt: string[] = window[sl.join('')] || [];
+		slt.push('loNXN1bi5jb20=', 'cxOTIuMTY4', 'kxMjcuMC4wLjE=');
 		let b = false;
 		//淘宝小程序，不能直接用location.href。要加上window
 		const href = window.location.href;
-		if(slt)
-		{
-			slt.forEach(st=>{
-				const stt = 'AA'+st;
-				const bu  = egret.Base64Util.decode(stt);
+		if (slt) {
+			slt.forEach(st => {
+				const stt = 'AA' + st;
+				const bu = egret.Base64Util.decode(stt);
 				const ba = new egret.ByteArray(bu);
 				const sst = ba.readUTF();
 				// console.log('check',sst);
-				if(href.indexOf(sst)!=-1)
-				{
+				if (href.indexOf(sst) != -1) {
 					b = true;
 				}
 			})
@@ -144,6 +142,53 @@ module GG {
 			console.log('显示页面', oldPage.name)
 		}
 	}
+
+	//---------------------------
+	//显示对象创建 new开头
+	//---------------------------
+
+	export function newBitmap(res: string, layer?: egret.DisplayObjectContainer): egret.Bitmap {
+		const bm = new egret.Bitmap();
+		res != '' && (bm.texture = RES.getRes(res));
+		layer && layer.addChild(bm);
+		return bm;
+	}
+
+	export function newContainer(layer?: egret.DisplayObjectContainer): egret.DisplayObjectContainer {
+		const con = new egret.DisplayObjectContainer();
+		layer && layer.addChild(con);
+		return con;
+	}
+
+	export function newRect(w, h, color, layer?: egret.DisplayObjectContainer): egret.Shape {
+		const rec = new egret.Shape();
+		const g = rec.graphics;
+		g.beginFill(color);
+		g.drawRect(0, 0, w, h);
+		g.endFill();
+		layer && layer.addChild(rec);
+		return rec;
+	}
+
+	export function newCircle(r, color, layer?: egret.DisplayObjectContainer): egret.Shape {
+		const s: egret.Shape = new egret.Shape();
+		s.graphics.beginFill(color);
+		s.graphics.drawCircle(0, 0, r);
+		s.graphics.endFill();
+		layer && layer.addChild(s);
+		return s;
+	}
+
+	export function newRectRound(w, h, color, cornerW, cornerH, layer?: egret.DisplayObjectContainer): egret.Shape {
+		const rec = new egret.Shape();
+		const g = rec.graphics;
+		g.beginFill(color);
+		g.drawRoundRect(0, 0, w, h, cornerW, cornerH);
+		g.endFill();
+		layer && layer.addChild(rec);
+		return rec;
+	}
+
 	//---------------------------
 	//布局 layout开头
 	//---------------------------
@@ -178,87 +223,9 @@ module GG {
 		layoutMiddleY(d, offsetY);
 	}
 	/**摆放显示对象,自动log出所有的layout信息 */
-	export function layoutEdit(d)
-	{
+	export function layoutEdit(d) {
 		layout.edit(d);
 	}
-	//---------------------------
-	//显示对象创建 new开头
-	//---------------------------
-
-	export function newBitmap(res: string,layer?: egret.DisplayObjectContainer): egret.Bitmap {
-			const bm = new egret.Bitmap();
-			res !='' && (bm.texture = RES.getRes(res));
-			layer && layer.addChild(bm);
-			return bm;
-		}
-
-		export function newContainer(layer?: egret.DisplayObjectContainer): egret.DisplayObjectContainer {
-			const con = new egret.DisplayObjectContainer();
-			layer && layer.addChild(con);
-			return con;
-		}
-
-
-		export function newTextInput(w, h,layer?: egret.DisplayObjectContainer): ys.TextInput {
-			const input = new ys.TextInput(w, h);
-			layer && layer.addChild(input);
-			return input;
-		}
-
-		export function newLabel(layer?: egret.DisplayObjectContainer): ys.Label {
-			const label = new ys.Label();
-			layer && layer.addChild(label);
-			return label;
-		}
-
-		export function newImage(layer?: egret.DisplayObjectContainer): ys.Image {
-			const img = new ys.Image();
-			layer && layer.addChild(img);
-			return img;
-		}
-
-		export function newButton(res,layer?: egret.DisplayObjectContainer): ys.Button {
-			const btn = new ys.Button(res);
-			layer && layer.addChild(btn);
-			return btn;
-		}
-
-		export function newButtonMusic(res1, res2,layer?: egret.DisplayObjectContainer): ys.ButtonMusic {
-			const music = new ys.ButtonMusic(res1, res2);
-			layer && layer.addChild(music);
-			return music;
-		}
-
-		export function newRect(w, h, color,layer?: egret.DisplayObjectContainer): egret.Shape {
-			const rec = new egret.Shape();
-			const g = rec.graphics;
-			g.beginFill(color);
-			g.drawRect(0, 0, w, h);
-			g.endFill();
-			layer && layer.addChild(rec);
-			return rec;
-		}
-
-		export function newCircle(r, color,layer?: egret.DisplayObjectContainer): egret.Shape {
-			const s: egret.Shape = new egret.Shape();
-			s.graphics.beginFill(color);
-			s.graphics.drawCircle(0, 0, r);
-			s.graphics.endFill();
-			layer && layer.addChild(s);
-			return s;
-		}
-
-		export function newRectRound(w, h, color, cornerW, cornerH,layer?: egret.DisplayObjectContainer) {
-			const rec = new egret.Shape();
-			const g = rec.graphics;
-			g.beginFill(color);
-			g.drawRoundRect(0, 0, w, h, cornerW, cornerH);
-			g.endFill();
-			layer && layer.addChild(rec);
-			return rec;
-		}
-
 
 	//---------------------
 	//其他工具类
@@ -302,31 +269,6 @@ module GG {
 	/**数组随机 */
 	export function randomArr(arr: any[]): any {
 		return arr[Math.random() * arr.length | 0];
-	}
-	/**弱提示 */
-	export function showToast(msg, y = stageH * 0.6, icon = '', block = false) {
-		const t = ys.Tips.showToast(msg, stageHalfW, y, icon);
-		if (block) {
-			GG.popUp(t);
-		} else {
-			stage.addChild(t);
-		}
-
-	}
-	/**模态提示 */
-	export function showModal(msg, confirmTxt = '确定', cancelTxt = '取消', size = 40): ys.Modal {
-		const m = ys.Tips.showModal(msg, confirmTxt, cancelTxt, size);
-		GG.layoutCenter(m);
-		GG.popUp(m);
-		return m;
-	}
-
-	export function showLoading(txt = '加载中', step = true) {
-		return ys.Tips.showLoading(txt, step)
-	}
-
-	export function hideLoading() {
-		ys.Tips.hideLoading();
 	}
 
 	/**只负责弹层，会自动添加隔离遮罩 */
