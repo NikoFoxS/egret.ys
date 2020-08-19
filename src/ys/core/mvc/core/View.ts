@@ -39,8 +39,8 @@ namespace ys.mvc {
 				uim = this.mediatorArr[i];
 				if (uim.mediator == mediator) {
 					console.log('<V>卸载Mediator:',egret.getQualifiedClassName(mediator))
-					mediator.unbind();
 					mediator.Uninstall();
+					mediator.unbind();
 					this.mediatorArr.splice(i, 1);
 				}
 			}
