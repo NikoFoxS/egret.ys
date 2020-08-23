@@ -1,8 +1,10 @@
 module ys {
+	
 	/**封装ajax */
 	export class Ajax {
 		constructor() {
 		}
+		/**如果为true，ajax不会真正执行，会截断直接callback */
 		public static mock: boolean;
 		private xhr() {
 			if (typeof XMLHttpRequest !== 'undefined') {
@@ -27,15 +29,29 @@ module ys {
 			return xhr;
 		}
 
+		private _status:number=200;
+		public get status()
+		{
+			return this._status;
+		}
+		private _responseText:string='';
+		public get responseText()
+		{
+			return this._responseText;
+		}
+
 		private send(url, callback, method, data, async) {
 			if (async === undefined) {
 				async = true;
 			}
+			const self = this;
 			var x = this.xhr();
 			x.open(method, url, async);
 			x.onreadystatechange = function () {
 				if (x.readyState == 4) {
-					callback(x.status, x.responseText);
+					self._status = x.status;
+					self._responseText = x.responseText;
+					callback();
 				}
 			};
 			if (method == 'POST') {
