@@ -1,5 +1,5 @@
-/** 对core里面GG.ts进行扩展 */
-namespace GG {
+/** 对core里面ys.ts进行扩展 */
+namespace ys {
 
 	export function newTextInput(w, h, layer?: egret.DisplayObjectContainer): ys.TextInput {
 		const input = new ys.TextInput(w, h);
@@ -32,20 +32,20 @@ namespace GG {
 	}
 
 	/**弱提示 */
-	export function showToast(msg, y = stageH * 0.6, icon = '', block = false) {
-		const t = ys.Tips.showToast(msg, stageHalfW, y, icon);
-		if (block) {
-			GG.popUp(t);
-		} else {
-			stage.addChild(t);
-		}
+	export function showToast(msg, y , icon = '', block = false) {
+		// const t = ys.Tips.showToast(msg, stageHalfW, y, icon);
+		// if (block) {
+		// 	ys.popUp(t);
+		// } else {
+		// 	ys.Context.STAGE.addChild(t);
+		// }
 
 	}
 	/**模态提示 */
 	export function showModal(msg, confirmTxt = '确定', cancelTxt = '取消', size = 40): ys.Modal {
 		const m = ys.Tips.showModal(msg, confirmTxt, cancelTxt, size);
-		GG.layoutCenter(m);
-		GG.popUp(m);
+		ys.layoutCenter(m);
+		ys.popUp(m);
 		return m;
 	}
 

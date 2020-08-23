@@ -30,6 +30,13 @@ namespace ys {
 			return player && player.getElementsByTagName('canvas')[0] || null;
 		}
 
+		/**设计坐标缩放到DOM坐标的大小，只支持固定宽和固定高 */
+		static get SCALE() {
+			return Context.STAGE.scaleMode == egret.StageScaleMode.FIXED_WIDTH ?
+				window.innerWidth / Context.STAGE_W : window.innerHeight / Context.STAGE_H;
+		}
+
+
 	}
 
 	export let showlogger: boolean;
@@ -63,7 +70,6 @@ namespace ys {
 		}
 	}
 
-	let layout: ys.Layout;
 	export function setup(cfg: ys.Config) {
 		const stage = ys.Context.STAGE;
 		//跨域设置
@@ -229,41 +235,38 @@ namespace ys {
 	//---------------------------
 	//布局 layout开头
 	//---------------------------
-	/**靠左 */
-	export function layoutLeft(d, left) {
-		layout.left(d, left);
-	}
-	/**靠右 */
-	export function layoutRight(d, right) {
-		layout.right(d, right);
-	}
-	/**靠顶 */
-	export function layoutTop(d, top) {
-		layout.top(d, top);
-	}
-	/**靠底 */
-	export function layoutBottom(d, bottom) {
-		layout.bottom(d, bottom);
+	export function layoutLeft(d: egret.DisplayObject, left) {
+		d.x = left + d.anchorOffsetX;
 	}
 
-	/**横向居中 */
-	export function layoutMiddleX(d, offset = 0) {
-		layout.middleX(d, offset);
+	export function layoutRight(d: egret.DisplayObject, right) {
+		d.x = ys.Context.STAGE_W - d.width + d.anchorOffsetX - right;
 	}
-	/**纵向居中 */
-	export function layoutMiddleY(d, offset = 0) {
-		layout.middleY(d, offset);
+
+	export function layoutMiddleX(d: egret.DisplayObject, offset = 0) {
+		d.x = ys.Context.STAGE_W_HALF - d.width * 0.5 + d.anchorOffsetX + offset;
+	}
+
+	export function layoutMiddleY(d: egret.DisplayObject, offset = 0) {
+		d.y = ys.Context.STAGE_H_HALF - d.height * 0.5 + d.anchorOffsetY + offset;
+	}
+
+	export function layoutTop(d: egret.DisplayObject, top) {
+		d.y = top + d.anchorOffsetY;
+	}
+
+	export function layoutBottom(d: egret.DisplayObject, bottom) {
+		d.y = ys.Context.STAGE_H - d.height + d.anchorOffsetY - bottom;
+	}
+
+	export function layoutVH(d: egret.DisplayObject, vh) {
+		d.y = ys.Context.STAGE_H * vh;
 	}
 	/**横向纵向同时居中 */
 	export function layoutCenter(d, offsetX = 0, offsetY = 0) {
 		layoutMiddleX(d, offsetX);
 		layoutMiddleY(d, offsetY);
 	}
-	/**摆放显示对象,自动log出所有的layout信息 */
-	export function layoutEdit(d) {
-		layout.edit(d);
-	}
-
 
 	//---------------------------
 	//random
@@ -291,10 +294,62 @@ namespace ys {
 	//---------------------------
 	//popup
 	//---------------------------
+	let popblock: egret.Shape;
+	let popLayer: egret.DisplayObjectContainer;
 	/**只负责弹层，会自动添加隔离遮罩 */
-	export function popUp(displayObject, maskAlpha = 0.7) {
-		ys.PopLayer.popUp(displayObject, maskAlpha);
+	export function popUp(d: egret.DisplayObject, blockAlpha = 0.7, blockTween: boolean = true, blockTweeTime = 300) {
+		if (!popLayer) {
+			popLayer = new egret.DisplayObjectContainer();
+		}
+
+		if (!popblock) {
+			const s = new egret.Shape();
+			s.graphics.beginFill(0x000000);
+			s.graphics.drawRect(0, 0, ys.Context.STAGE_W, ys.Context.STAGE_H);
+			s.graphics.endFill();
+			s.cacheAsBitmap = true;
+			popblock = s;
+			popblock.alpha = blockAlpha;
+			popblock.cacheAsBitmap = true;
+			popblock.touchEnabled = true;
+		}
+		const block = popblock;
+		block.scaleX = ys.Context.STAGE_W / block.width;
+		block.scaleY = ys.Context.STAGE_H / block.height;
+		const layer = popLayer;
+		ys.Context.STAGE.addChild(layer);
+
+		layer.addChild(block);
+		layer.addChild(d);
+
+		block.alpha = blockAlpha;
+		blockAlpha == 0 && (blockTween = false);
+
+		if (layer.numChildren == 2 && blockTween) {
+			egret.Tween.removeTweens(block);
+			block.alpha = 0;
+			egret.Tween.get(block).to({ alpha: blockAlpha }, blockTweeTime);
+		}
+
+		d.once(egret.Event.REMOVED_FROM_STAGE, () => {
+			//remove后，numChildren不会马上-1
+			if (layer.numChildren == 2) {
+				if (blockTween) {
+					egret.Tween.get(block).to({ alpha: 0 }, blockTweeTime).call(() => {
+						ys.removeDisplayObject(layer);
+					});
+				} else {
+					ys.removeDisplayObject(layer);
+				}
+
+
+			} else {
+				layer.addChildAt(block, layer.numChildren - 3);
+			}
+		}, this);
 	}
+
+
 
 	//---------------------
 	//others
