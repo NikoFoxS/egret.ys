@@ -1,9 +1,71 @@
-module GG {
-	let layout: ys.Layout;
+namespace ys {
+	export class Context {
 
-	export function setup($main: egret.DisplayObjectContainer, cfg: ys.Config): boolean {
-		main = $main;
-		stage = main.stage;
+		static get STAGE() {
+			return egret.MainContext.instance.stage;
+		}
+
+		static get MAIN() {
+			return egret.MainContext.instance.stage.getChildAt(0) as egret.DisplayObjectContainer;
+		}
+
+		static get STAGE_W() {
+			return Context.STAGE.stageWidth;
+		}
+
+		static get STAGE_H() {
+			return Context.STAGE.stageHeight;
+		}
+
+		static get STAGE_W_HALF() {
+			return Context.STAGE.stageWidth * 0.5;
+		}
+
+		static get STAGE_H_HALF() {
+			return Context.STAGE.stageHeight * 0.5;
+		}
+
+		static get CANVAS() {
+			var player = <HTMLDivElement>document.querySelector(".egret-player");
+			return player && player.getElementsByTagName('canvas')[0] || null;
+		}
+
+	}
+
+	export let showlogger: boolean;
+	export function logger_log(msg: string, ...arg: any[]) {
+		if (showlogger) {
+			if (arg.length) {
+				console.log(msg, arg);
+			} else {
+				console.log(msg);
+			}
+		}
+	}
+
+	export function logger_warn(msg: string, ...arg: any[]) {
+		if (showlogger) {
+			if (arg.length) {
+				console.warn(msg, arg);
+			} else {
+				console.warn(msg);
+			}
+		}
+	}
+
+	export function logger_error(msg: string, ...arg: any[]) {
+		if (showlogger) {
+			if (arg.length) {
+				console.error(msg, arg);
+			} else {
+				console.error(msg);
+			}
+		}
+	}
+
+	let layout: ys.Layout;
+	export function setup(cfg: ys.Config) {
+		const stage = ys.Context.STAGE;
 		//跨域设置
 		egret.ImageLoader.crossOrigin = 'anonymous';
 		//如果是PC
@@ -23,17 +85,8 @@ module GG {
 		RES.setMaxLoadingThread(4);
 		//加载重试次数为1
 		RES.setMaxRetryTimes(1);
-
-		stageW = stage.stageWidth;
-		stageH = stage.stageHeight;
-		stageHalfW = stageW >> 1;
-		stageHalfH = stageH >> 1;
+		//设置帧频
 		stage.frameRate = cfg.fps;
-		//获取配置的舞台宽高
-		var player = <HTMLDivElement>document.querySelector(".egret-player");
-		if (player) {
-			egretCanvas = player.getElementsByTagName('canvas')[0];
-		}
 
 		//如果是安卓的话，特殊处理输入框不能自动弹出问题
 		if (egret.Capabilities.os == "Android") {
@@ -77,29 +130,6 @@ module GG {
 			}, true);
 		}
 
-		layout = new ys.Layout();
-
-		const sl = ["t", "s", "i", "l", "e", "t", "i", "s"];
-		sl.reverse();
-		const slt: string[] = window[sl.join('')] || [];
-		slt.push('loNXN1bi5jb20=', 'cxOTIuMTY4', 'kxMjcuMC4wLjE=');
-		let b = false;
-		//淘宝小程序，不能直接用location.href。要加上window
-		const href = window.location.href;
-		if (slt) {
-			slt.forEach(st => {
-				const stt = 'AA' + st;
-				const bu = egret.Base64Util.decode(stt);
-				const ba = new egret.ByteArray(bu);
-				const sst = ba.readUTF();
-				// console.log('check',sst);
-				if (href.indexOf(sst) != -1) {
-					b = true;
-				}
-			})
-		}
-		b = true;
-		return b;
 	}
 
 	let pages: any;
@@ -122,7 +152,7 @@ module GG {
 				pages[key] = page;
 			}
 		}
-		main.addChild(page);
+		ys.Context.MAIN.addChild(page);
 		if (handler) {
 			if (oldPage) {
 				handler.onChange(page, oldPage, next);
@@ -137,7 +167,7 @@ module GG {
 			if (oldPage) {
 				console.log('删除页面', oldPage.name)
 			}
-			GG.removeDisplayObject(oldPage);
+			ys.removeDisplayObject(oldPage);
 			oldPage = page;
 			console.log('显示页面', oldPage.name)
 		}
@@ -146,7 +176,6 @@ module GG {
 	//---------------------------
 	//显示对象创建 new开头
 	//---------------------------
-
 	export function newBitmap(res: string, layer?: egret.DisplayObjectContainer): egret.Bitmap {
 		const bm = new egret.Bitmap();
 		res != '' && (bm.texture = RES.getRes(res));
@@ -189,6 +218,14 @@ module GG {
 		return rec;
 	}
 
+	export function newTextField(color, size, layer?: egret.DisplayObjectContainer): egret.TextField {
+		const t = new egret.TextField();
+		t.textColor = color;
+		t.size = size;
+		layer && layer.addChild(t);
+		return t;
+	}
+
 	//---------------------------
 	//布局 layout开头
 	//---------------------------
@@ -227,9 +264,41 @@ module GG {
 		layout.edit(d);
 	}
 
-	//---------------------
-	//其他工具类
 
+	//---------------------------
+	//random
+	//---------------------------
+	/** ≥min ＜max */
+	export function randomNumber(min: number, max: number): number {
+		if (max < min) {
+			var t = max;
+			max = min;
+			min = t;
+		}
+		return min + Math.random() * (max - min);
+	}
+	/** ≥min ＜max */
+	export function randomInt(min: number, max: number): number {
+		var num = randomNumber(min, max);
+		return parseInt(num + "");
+	}
+	/**数组随机 */
+	export function randomArr(arr: any[]): any {
+		return arr[Math.random() * arr.length | 0];
+	}
+
+
+	//---------------------------
+	//popup
+	//---------------------------
+	/**只负责弹层，会自动添加隔离遮罩 */
+	export function popUp(displayObject, maskAlpha = 0.7) {
+		ys.PopLayer.popUp(displayObject, maskAlpha);
+	}
+
+	//---------------------
+	//others
+	//---------------------
 	export function setAnchor(d: egret.DisplayObject, ax: number = 0.5, ay: number = 0.5, fix: boolean = false): void {
 		if (d) {
 			if (d.width && d.height) {
@@ -252,35 +321,7 @@ module GG {
 	export function removeDisplayObject(d: egret.DisplayObject): void {
 		d && d.parent && d.parent.removeChild(d);
 	}
-	/** ≥min ＜max */
-	export function randomNumber(min: number, max: number): number {
-		if (max < min) {
-			var t = max;
-			max = min;
-			min = t;
-		}
-		return min + Math.random() * (max - min);
-	}
-	/** ≥min ＜max */
-	export function randomInt(min: number, max: number): number {
-		var num = randomNumber(min, max);
-		return parseInt(num + "");
-	}
-	/**数组随机 */
-	export function randomArr(arr: any[]): any {
-		return arr[Math.random() * arr.length | 0];
-	}
-
-	/**只负责弹层，会自动添加隔离遮罩 */
-	export function popUp(displayObject, maskAlpha = 0.7) {
-		ys.PopLayer.popUp(displayObject, maskAlpha);
-	}
 
 }
-var stage: egret.Stage;
-var stageW: number;
-var stageH: number;
-var stageHalfW: number;
-var stageHalfH: number;
-var main: egret.DisplayObjectContainer;
-var egretCanvas: any;
+
+
