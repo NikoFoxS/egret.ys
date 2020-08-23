@@ -30,7 +30,7 @@ namespace ys {
 				new window['VConsole']();
 			}
 			//版本信息
-			let hello = 'Egret.ys by NikoFoxS ' + Application.VERSION;
+			let hello = 'Egret.ys by NikoFoxS | update:' + Application.VERSION;
 			if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
 				console.log('%c' + hello, 'font-size: 10px;font-weight: bold;text-decoration: underline;');
 			} else {
@@ -97,13 +97,12 @@ namespace ys {
 					ys.mvc.Facade.GET.installBucket(k, v);
 				})
 
-				if (!GG.setup(v, cfg)) return;
+				ys.setup(cfg);
 
 				RES.registerVersionController(new ys.VersionController(cfg.versionFun));
 				(async () => {
 
 					await RES.loadConfig(cfg.resourceJSON, cfg.resourceRoot);//微信小游戏，不能带随机数。
-
 					var i = 0;
 					var len = v.cfg.groups.length;
 					if (len) {
