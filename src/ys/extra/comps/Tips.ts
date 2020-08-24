@@ -28,7 +28,7 @@ module ys {
 			}
 			const loading = Tips.loading;
 			loading.show(txt, step);
-			stage.addChild(loading);
+			ys.Context.STAGE.addChild(loading);
 			return loading;
 		}
 
@@ -45,7 +45,7 @@ module ys {
 			super();
 			const block = new egret.Shape();
 			block.graphics.beginFill(0x000000);
-			block.graphics.drawRect(0, 0, stageW, stageH);
+			block.graphics.drawRect(0, 0, ys.Context.STAGE_W, ys.Context.STAGE_H);
 			block.graphics.endFill();
 			block.cacheAsBitmap = true;
 			this.addChild(block);
@@ -54,12 +54,12 @@ module ys {
 			block.touchEnabled = true;
 			this.block = block;
 
-			const ctn = GG.newContainer();
+			const ctn = ys.newContainer();
 			this.addChild(ctn);
 
 			const width = 200;
 			const height = 200;
-			const bg = GG.newRectRound(width, height, 0x000000, 40, 40, ctn);
+			const bg = ys.newRectRound(width, height, 0x000000, 40, 40, ctn);
 			bg.alpha = 0.7;
 
 			const s = new egret.Shape();
@@ -85,7 +85,7 @@ module ys {
 			s.cacheAsBitmap = true;
 			this.flower = s;
 
-			const la = GG.newLabel(ctn);
+			const la = ys.newLabel(ctn);
 			la.textColor = 0xffffff;
 			la.size = 25;
 			la.width = width;
@@ -107,7 +107,7 @@ module ys {
 			const block = this.block;
 			block.alpha = 0.5;
 			this.resize();
-			GG.layoutCenter(ctn);
+			ys.layoutCenter(ctn);
 
 			this.label.text = txt;
 			const flower = this.flower;
@@ -130,19 +130,19 @@ module ys {
 				}
 			}).to({ r: 360 }, time);
 
-			stage.addEventListener(egret.Event.RESIZE, this.resize, this);
+			ys.Context.STAGE.addEventListener(egret.Event.RESIZE, this.resize, this);
 		}
 
 		public resize() {
 			const block = this.block;
-			block.scaleX = stageW / block.width;
-			block.scaleY = stageH / block.height;
+			block.scaleX = ys.Context.STAGE_W / block.width;
+			block.scaleY = ys.Context.STAGE_H / block.height;
 		}
 
 		public hide() {
-			stage.removeEventListener(egret.Event.RESIZE, this.resize, this);
+			ys.Context.STAGE.removeEventListener(egret.Event.RESIZE, this.resize, this);
 			egret.Tween.removeTweens(this.flower);
-			GG.removeDisplayObject(this);
+			ys.removeDisplayObject(this);
 		}
 	}
 
@@ -165,7 +165,7 @@ module ys {
 			label.x = label.y = padding;
 			this.content = label;
 
-			const bg = GG.newRectRound(bgw, bgh, 0xffffff, 40, 40);
+			const bg = ys.newRectRound(bgw, bgh, 0xffffff, 40, 40);
 			ctn.addChild(bg);
 
 			bg.graphics.lineStyle(1, 0x000000, 0.6);
@@ -217,7 +217,7 @@ module ys {
 			this._select = e.target.text;
 			// console.log(this._select, e.target);
 			this.dispatchEventWith('select', false);
-			GG.removeDisplayObject(this);
+			ys.removeDisplayObject(this);
 		}
 
 		private newBtnLabel(txt, w, h, size) {
@@ -248,8 +248,8 @@ module ys {
 			t.text = msg;
 			t.size = 35;
 			t.textColor = color;
-			if (t.textWidth > stageW - padding) {
-				t.width = stageW - padding;
+			if (t.textWidth > ys.Context.STAGE_W - padding) {
+				t.width = ys.Context.STAGE_W - padding;
 			} else {
 				t.width = t.textWidth;
 			}
@@ -262,8 +262,8 @@ module ys {
 
 			let icoH = 0;
 			if (icon != '') {
-				var ico = GG.newBitmap(icon, this);
-				GG.setAnchor(ico, 0.5, 0);
+				var ico = ys.newBitmap(icon, this);
+				ys.setAnchor(ico, 0.5, 0);
 				if (ico.width > t.width) {
 					t.width = ico.width;
 				}
@@ -273,7 +273,7 @@ module ys {
 				icoH = ico.height + padding;
 			}
 			//圆角矩形
-			var bg = GG.newRectRound(t.width + padding2, t.height + padding2 + icoH, bgColor, padding, padding) // new egret.Shape();
+			var bg = ys.newRectRound(t.width + padding2, t.height + padding2 + icoH, bgColor, padding, padding) // new egret.Shape();
 			bg.alpha = bgAlpha;
 			this.addChildAt(bg, 0);
 
@@ -287,7 +287,7 @@ module ys {
 		public show(duration = 1500) {
 			this.alpha = 0;
 			egret.Tween.get(this).to({ alpha: 1 }, 300).wait(duration).to({ alpha: 0 }, 300).call(() => {
-				GG.removeDisplayObject(this);
+				ys.removeDisplayObject(this);
 			});
 		}
 	}

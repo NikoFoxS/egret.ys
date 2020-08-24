@@ -69,7 +69,7 @@ namespace ys {
 
 			let scale = 1;
 			if (option.scaleMode == 'fixedWidth') {
-				scale = innerWidth / stageW;
+				scale = window.innerWidth / ys.Context.STAGE_W;
 			}
 			x *= scale;
 			y *= scale;

@@ -41,15 +41,15 @@ module ys3d {
 			p1.x /= size;
 			p1.y /= size;
 			//因为裁剪空间是 -1~1，长度为2.所以映射到白鹭的空间要乘以半宽和半高。
-			p1.x = p1.x * stageHalfW;
-			p1.y = -p1.y * stageHalfH;//y轴反向
+			p1.x = p1.x * ys.Context.STAGE_W_HALF;
+			p1.y = -p1.y * ys.Context.STAGE_H_HALF;//y轴反向
 
 			d.x = p1.x;
 			d.y = p1.y;
 
 			// console.log('---');
 
-			const scale = stageH/p1.w; //这个地方还要调整。
+			const scale = ys.Context.STAGE_H/p1.w; //这个地方还要调整。
 			// console.log('scale',scale);
 			d.scaleX = scale * this.scale.x;
 			d.scaleY = scale * this.scale.y;

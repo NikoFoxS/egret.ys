@@ -2,8 +2,8 @@ module ys {
 	export class ProgressBar extends egret.DisplayObjectContainer {
 		public constructor(bg, bar) {
 			super();
-			this.bg = GG.newBitmap(bg, this);
-			this.bar = GG.newBitmap(bar, this);
+			this.bg = ys.newBitmap(bg, this);
+			this.bar = ys.newBitmap(bar, this);
 			this.rec = new egret.Rectangle(0, 0, this.bar.width, this.bar.height);
 		}
 

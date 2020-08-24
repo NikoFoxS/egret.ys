@@ -39,7 +39,7 @@ namespace ys {
 
 	}
 
-	export let showlogger: boolean;
+	let showlogger: boolean;
 	export function logger_log(msg: string, ...arg: any[]) {
 		if (showlogger) {
 			if (arg.length) {
@@ -93,6 +93,8 @@ namespace ys {
 		RES.setMaxRetryTimes(1);
 		//设置帧频
 		stage.frameRate = cfg.fps;
+
+		showlogger = cfg.log;
 
 		//如果是安卓的话，特殊处理输入框不能自动弹出问题
 		if (egret.Capabilities.os == "Android") {
