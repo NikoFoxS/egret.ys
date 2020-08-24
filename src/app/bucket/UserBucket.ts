@@ -5,7 +5,8 @@ namespace app {
 		}
 
 		Install(): void {
-			this.SetData({ name: 'fox', sex: 'male' }, false);
+			this.SetData({ name: 'fox', sex: 'male', coins: 200 });
+			this.UpdateData();
 		}
 
 		Uninstall(): void {

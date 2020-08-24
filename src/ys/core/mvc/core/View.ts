@@ -18,7 +18,7 @@ namespace ys.mvc {
 			this.mediatorArr.push(uim);
 			m.bind(ui);
 			m.Install();
-			console.log('<V>安装Mediator:', egret.getQualifiedClassName(MediatorClass));
+			ys.logger_log('<V>安装Mediator:', egret.getQualifiedClassName(MediatorClass));
 			return m;
 		}
 
@@ -38,7 +38,7 @@ namespace ys.mvc {
 			while (i--) {
 				uim = this.mediatorArr[i];
 				if (uim.mediator == mediator) {
-					console.log('<V>卸载Mediator:',egret.getQualifiedClassName(mediator))
+					ys.logger_log('<V>卸载Mediator:',egret.getQualifiedClassName(mediator))
 					mediator.Uninstall();
 					mediator.unbind();
 					this.mediatorArr.splice(i, 1);

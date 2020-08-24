@@ -27,7 +27,7 @@ namespace ys.mvc {
 
 		}
 		/**设置数据 */
-		SetData(json: any, handler, autoUpdate: boolean = true) {
+		SetData(json: any) {
 			if (json) {
 				//赋值
 				(<any>Object).assign(this._origin, json);

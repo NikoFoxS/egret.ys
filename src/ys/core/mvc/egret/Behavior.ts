@@ -5,11 +5,11 @@ namespace ys {
 		}
 		bind(v: egret.DisplayObject) {
 			this._v = v;
-			console.log('<Behavior>绑定', egret.getQualifiedClassName(this), ' - ', egret.getQualifiedClassName(v))
+			ys.logger_log('<Behavior>绑定', egret.getQualifiedClassName(this), ' - ', egret.getQualifiedClassName(v))
 		}
 
 		unbind() {
-			console.log('<Behavior>解绑', egret.getQualifiedClassName(this), ' - ', egret.getQualifiedClassName(this.v))
+			ys.logger_log('<Behavior>解绑', egret.getQualifiedClassName(this), ' - ', egret.getQualifiedClassName(this.v))
 			this._v = null;
 		}
 

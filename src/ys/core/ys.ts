@@ -40,7 +40,7 @@ namespace ys {
 	}
 
 	let showlogger: boolean;
-	export function logger_log(msg: string, ...arg: any[]) {
+	export function logger_log(msg: any, ...arg: any[]) {
 		if (showlogger) {
 			if (arg.length) {
 				console.log(msg, arg);
@@ -50,7 +50,7 @@ namespace ys {
 		}
 	}
 
-	export function logger_warn(msg: string, ...arg: any[]) {
+	export function logger_warn(msg: any, ...arg: any[]) {
 		if (showlogger) {
 			if (arg.length) {
 				console.warn(msg, arg);
@@ -60,7 +60,7 @@ namespace ys {
 		}
 	}
 
-	export function logger_error(msg: string, ...arg: any[]) {
+	export function logger_error(msg: any, ...arg: any[]) {
 		if (showlogger) {
 			if (arg.length) {
 				console.error(msg, arg);

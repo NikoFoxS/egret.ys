@@ -1,5 +1,5 @@
 module app {
-	export enum INVOKE
+	export enum CONST
 	{
 		//service
 		SERVICE_GET_USER_DATA,

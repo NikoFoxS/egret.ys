@@ -42,7 +42,7 @@ class Main extends ys.Application {
     }
     onGroupLoaded(name: string): void {
         if (name == 'preload' || name == '') {
-            GG.showPage(app.TestPage);
+            ys.showPage(app.TestPage);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ys.mvc {
 				b.name = bucName;
 				this.bucketMap[bucName] = b;
 				b.Install();
-				console.log('<M>安装Bucket:', bucName, egret.getQualifiedClassName(buClass))
+				ys.logger_log('<M>安装Bucket:', bucName, egret.getQualifiedClassName(buClass))
 				return true;
 			} else {
 				return false;
@@ -26,7 +26,7 @@ namespace ys.mvc {
 		uninstallBucket(bucName): void {
 			var b: IUnit = this.bucketMap[bucName];
 			if (b) {
-				console.log('<M>卸载Bucket:', bucName);
+				ys.logger_log('<M>卸载Bucket:', bucName);
 				delete this.bucketMap[bucName];
 				b.Uninstall();
 			}

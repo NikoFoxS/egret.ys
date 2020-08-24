@@ -23,8 +23,8 @@ class DragerBehavior extends ys.Behavior {
 			this.tx = e.stageX;
 			this.ty = e.stageY;
 			display.parent.addChild(display)
-			stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.checkTouch, this);
-			stage.addEventListener(egret.TouchEvent.TOUCH_END, this.checkTouch, this);
+			ys.Context.STAGE.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.checkTouch, this);
+			ys.Context.STAGE.addEventListener(egret.TouchEvent.TOUCH_END, this.checkTouch, this);
 		} else if (type == egret.TouchEvent.TOUCH_MOVE) {
 			const dx = e.stageX - this.tx;
 			const dy = e.stageY - this.ty;
@@ -33,8 +33,8 @@ class DragerBehavior extends ys.Behavior {
 			this.tx = e.stageX;
 			this.ty = e.stageY;
 		} else if (type == egret.TouchEvent.TOUCH_END) {
-			stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.checkTouch, this);
-			stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.checkTouch, this);
+			ys.Context.STAGE.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.checkTouch, this);
+			ys.Context.STAGE.removeEventListener(egret.TouchEvent.TOUCH_END, this.checkTouch, this);
 			this.dispatchEventWith('release');
 		}
 	}

@@ -19,7 +19,7 @@ namespace ys {
 		public cache: boolean;
 
 		onProgress?(current: number, total: number, resItem: RES.ResourceInfo | undefined): void {
-			console.log(current, total);
+			ys.logger_log(current, total);
 		}
 
 		OnStart() {
