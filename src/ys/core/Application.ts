@@ -41,13 +41,19 @@ namespace ys {
 			}
 			super();
 			this.cfg = cfg;
+
+		}
+		
+		run() {
 			this.addMediator(ApplicationMediator);
 		}
 		public cfg: ys.Config;
+
 		onProgress?(current: number, total: number, resItem: RES.ResourceInfo | undefined): void {
 			this.onGroupProgress(current, total, resItem);
 		}
 		//--------------------------------
+
 		onGroupStart(name: string): void {
 
 		}
