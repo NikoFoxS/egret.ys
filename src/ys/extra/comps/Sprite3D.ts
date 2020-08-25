@@ -1,109 +1,154 @@
-// module ys {
+module ys {
+	/**
+	 * 简单的3D模拟，摄像机只能平移，不能旋转。
+	 */
+	export class Sprite3D extends egret.DisplayObjectContainer {
+		public constructor(type = 'Sprite3D') {
+			super();
+			this.position = new Point();
+			this.worldPosition = new Point();
+			this.scale = new Point(1, 1, 1);
+			this._type = type;
+			this.childArr = [];
+		}
 
-// 	export class Sprite3DRenderer {
-// 		static render(sp3d: Sprite3D) {
-// 			let i = sp3d.numChildren;
-// 			let arr: Sprite3D[] = [];
+		private _type: string;
+		public get type() {
+			return this._type;
+		}
 
-// 			//更新位置
-// 			sp3d.update(arr);
-// 			//排序
-// 			arr.sort((a, b) => { return a.worldPosition.z - b.worldPosition.z });
-// 			arr.forEach(a=>{
-// 				a.parent.addChild(a);
-// 			})
-// 			//透视投影渲染
-// 			sp3d.render();
+		public worldPosition: ys.Point;
+		public position: ys.Point;
+		public scale: Point;
+		public childArr: Sprite3D[];
+		public add(sp3d: Sprite3D) {
+			this.childArr.push(sp3d);
+		}
 
-// 		}
-// 	}
-// 	export class Sprite3D extends egret.DisplayObjectContainer {
-// 		public constructor() {
-// 			super();
-// 			this.position = new Point();
-// 			this.scale = new Point(1, 1, 1);
-// 		}
+		public remove(sp3d: Sprite3D) {
+			let i = this.childArr.length;
+			while (i--) {
+				let sp = this.childArr[i];
+				if (sp == sp3d) {
+					this.childArr.splice(i, 1);
+					break;
+				}
+			}
+		}
 
-// 		static camera_focalLength: number = 200;
-// 		static camera_far: number = 2000;
-// 		// static camera_position: Point;
-// 		public worldPosition: ys.Point;
-// 		public position: ys.Point;
-// 		public scale: Point;
-// 		public childArr: Sprite3D[];
-// 		public add(sp3d: Sprite3D) {
-// 			this.addChild(sp3d);
-// 		}
+		public update(arr: any[], camera: Sprite3DCamera) {
+			let pos: Point = this.position;
+			this.worldPosition.x = pos.x - camera.position.x;
+			this.worldPosition.y = pos.y - camera.position.y;
+			this.worldPosition.z = pos.z - camera.position.z;
+			if (this.type == 'Sprite3D') {
+				arr.push(this);
+			}
 
-// 		public update(arr: any[]) {
-// 			let pos: Point = this.position;
-// 			let pa: Sprite3D = this.parent as Sprite3D;
-// 			if (pa.position) {
-// 				pos = Math3D.localToWorld(this.position, pa.position);
-// 			}
-// 			this.worldPosition = pos;
-// 			arr.push(this);
+			let i = this.childArr.length;
+			while (i--) {
+				let sp3d: Sprite3D = this.childArr[i];
+				if (sp3d instanceof ys.Sprite3D) {
+					sp3d.update(arr, camera);
+				}
+			}
 
-// 			let i = this.numChildren;
-// 			while (i--) {
-// 				let sp3d: Sprite3D = this.getChildAt(i) as Sprite3D;
-// 				if (sp3d instanceof ys.Sprite3D) {
-// 					sp3d.update(arr);
-// 				}
-// 			}
+		}
 
-// 			// console.log('upate?',pos,this.name);
-// 		}
+		public render(camera: Sprite3DCamera) {
 
-// 		public render() {
-// 			if (!this.visible) {
-// 				return
-// 			}
+			let pos: Point = this.worldPosition;
 
-// 			// console.log('render?',this.name);
+			let focalLength = camera.focal;
+			let far = camera.far;
 
-// 			let pos: Point = this.worldPosition;
+			if (this.type == 'Sprite3D') {
+				var z = pos.z;
+				if (z > 0 && z < far) {
+					this.visible = true;
+				} else {
+					this.visible = false;
+				}
 
-// 			let focalLength = Sprite3D.camera_focalLength;
-// 			let far = Sprite3D.camera_far;
+				if (this.visible) {
 
-// 			var z = pos.z;
-// 			if (z < focalLength && z > -far) {
-// 				this.visible = true;
-// 			} else {
-// 				this.visible = false;
-// 			}
+					var p2 = camera.projectTo2D(pos);
+					this.x = p2.x;
+					this.y = p2.y;
 
-// 			// var pt = Math3D.rotatePoint3D(this.position, new Point(), new Point() );
-// 			var p2 = Math3D.projectTo2D(pos, new Point(), focalLength);
-// 			this.x = p2.x;
-// 			this.y = p2.y;
+					this.scaleX = p2.z * this.scale.x;
+					this.scaleY = p2.z * this.scale.y;
+				}
+			} else {
+				let i = this.childArr.length;
+				while (i--) {
+					let sp3d: Sprite3D = this.childArr[i];
+					if (sp3d instanceof ys.Sprite3D) {
+						sp3d.render(camera);
+					}
+				}
+			}
 
-// 			this.scaleX = p2.z * this.scale.x;
-// 			this.scaleY = p2.z * this.scale.y;
 
-// 			let i = this.numChildren;
-// 			while (i--) {
-// 				let sp3d: Sprite3D = this.getChildAt(i) as Sprite3D;
-// 				if (sp3d instanceof ys.Sprite3D) {
-// 					sp3d.render();
-// 				}
-// 			}
-// 		}
-// 	}
+		}
+	}
 
-// 	export class Point {
-// 		public x: number;
-// 		public y: number;
-// 		public z: number;
-// 		constructor(x = 0, y = 0, z = 0) {
-// 			this.x = x;
-// 			this.y = y;
-// 			this.z = z;
-// 		}
+	export class Sprite3DScene extends Sprite3D {
+		constructor() {
+			super('Sprite3DContainer');
+		}
 
-// 		public clone() {
-// 			return new Point(this.x, this.y, this.z);
-// 		}
-// 	}
-// }
+		updateAndRender(camera: Sprite3DCamera) {
+			let i = this.childArr.length;
+			let arr: Sprite3D[] = [];
+
+			//更新位置
+			this.update(arr, camera);
+			this.removeChildren();
+			//排序
+			arr.sort((a, b) => { return b.worldPosition.z - a.worldPosition.z });
+			arr.forEach(a => {
+				this.addChild(a);
+			})
+			//透视投影渲染
+			this.render(camera);
+		}
+	}
+
+	export class Sprite3DCamera extends Sprite3D {
+		constructor() {
+			super('Sprite3DCamera');
+		}
+
+		public focal: number;
+		public far: number;
+
+		projectTo2D(p3: Point) {
+			var x = p3.x;
+			var y = p3.y;
+			var z = p3.z;
+			if (z > 0) {
+				var scaleFactor = this.focal / z;
+				x = x * scaleFactor;
+				y = y * scaleFactor;
+			}
+			return new Point(x, -y, scaleFactor);
+		}
+	}
+
+	export class Point {
+		public x: number;
+		public y: number;
+		public z: number;
+		constructor(x = 0, y = 0, z = 0) {
+			this.x = x;
+			this.y = y;
+			this.z = z;
+		}
+
+		public clone() {
+			return new Point(this.x, this.y, this.z);
+		}
+	}
+
+}
