@@ -55,16 +55,19 @@ namespace ys {
 		private onRecvFromClient(event: MGOBE.types.BroadcastEvent<MGOBE.types.RecvFromClientBst>) {
 			// console.log('onRecvFromClient', event);
 			let data = event.data as MGOBE.types.RecvFromClientBst;
-			console.log('onRecvFromClient::', data); 
+			console.log('onRecvFromClient::', data);
 		}
 
 		private onRecvFromGameSvr(event: MGOBE.types.BroadcastEvent<MGOBE.types.RecvFromGameSvrBst>) {
-			
+
 		}
 
 		static ON_CONNNECT: string = 'on_connect';
 		static ON_MATCH_OK: string = 'on_match_ok';
 		static ON_MATCH_KO: string = 'on_match_ko';
+
+		static ON_JOIN_OK: string = 'on_join_ok';
+		static ON_JOIN_KO: string = 'on_join_ko';
 
 		private gameInfo;
 		private room: MGOBE.Room;
@@ -76,7 +79,7 @@ namespace ys {
 			}
 		}
 
-		private _serverTime:number;
+		private _serverTime: number;
 		connect(url: string, reconnectMaxTimes = 5, reconnectInterval = 1000, resendInterval = 1000, resendTimeout = 10000, ) {
 			console.log('连接服务器...')
 			MGOBE.Listener.init(this.gameInfo,
@@ -86,7 +89,7 @@ namespace ys {
 					resendTimeout: resendTimeout
 				}, event => {
 					if (event.code === 0) {
-						console.log('MGOBE 连接成功!',event)
+						console.log('MGOBE 连接成功!', event)
 						this._serverTime = event.data.serverTime;
 						MGOBE.Listener.add(this.room);
 						this.dispatchEventWith(ys.VS.ON_CONNNECT);
@@ -127,7 +130,8 @@ namespace ys {
 			this.room.sendToClient(sendToClientPara, event => console.log(event));
 		}
 
-		match(playerInfo, maxPlayers: number, roomType: string) {
+		/**io类快速游戏 */
+		joinPlay(playerInfo, maxPlayers: number, roomType: string) {
 			console.log('检查玩家是否已经加房')
 			MGOBE.Room.getMyRoom(event => {
 				if (event.code === 0) {
@@ -148,10 +152,10 @@ namespace ys {
 
 						if (event.code == 0) {
 							console.log("加房成功", event);
-							this.dispatchEventWith(ys.VS.ON_MATCH_OK);
+							this.dispatchEventWith(ys.VS.ON_JOIN_OK,false,event.data.roomInfo.playerList);
 						} else {
 							console.log("匹配失败", event);
-							this.dispatchEventWith(ys.VS.ON_MATCH_KO);
+							this.dispatchEventWith(ys.VS.ON_JOIN_KO);
 						}
 					});
 
@@ -161,5 +165,22 @@ namespace ys {
 
 
 		}
+		/**匹配类游戏 */
+		matchPlay() {
+
+		}
+
+		leaveRoom() {
+			this.room.leaveRoom({}, event => {
+				if (event.code === 0) {
+					// 退房成功
+					console.log("退房成功", event.data.roomInfo);
+					// 可以使用 initRoom 清除 roomInfo
+					this.room.initRoom();
+				}
+			});
+		}
+
+
 	}
 }
