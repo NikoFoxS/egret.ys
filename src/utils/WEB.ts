@@ -86,4 +86,8 @@ module WEB {
 		return location.protocol + '//' + location.host + location.pathname;
 	}
 
+	export function disableContextmenu() {
+		document.oncontextmenu = ()=>{return false;};
+	}
+
 }
