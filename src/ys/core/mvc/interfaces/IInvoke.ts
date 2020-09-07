@@ -6,10 +6,10 @@ namespace ys.mvc {
 
     export interface IInvoker {
         /**触发Service */
-        ServiceInvoke(handler:any, data:any, proxyName:string): void;
+        InvokeService(handler: any, data: any, proxyName: string): void;
         /**触发Mediator */
-        MediatorInvoke(handler:any, data: any): void;
+        InvokeMediator(handler: any, data: any): void;
         /**获取Bucket */
-        BucketGet(name): ys.mvc.Bucket;
+        GetBucket(name): ys.mvc.Bucket;
     }
 }

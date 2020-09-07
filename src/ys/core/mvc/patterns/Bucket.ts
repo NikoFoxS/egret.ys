@@ -17,14 +17,11 @@ namespace ys.mvc {
 		get data() {
 			return this._data;
 		}
+		
 		/**更新数据 */
-		UpdateData(handler = null) {
+		UpdateData() {
 			//深拷贝parse和stringify会有一定的性能损失,所以等SetData都执行完了，再UpdateData。
 			this._data = JSON.parse(JSON.stringify(this._origin));
-			if (handler != null) {
-				this.MediatorInvoke(handler, null);
-			}
-
 		}
 		/**设置数据 */
 		SetData(json: any) {

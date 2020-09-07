@@ -25,7 +25,7 @@ namespace ys.mvc {
 		invokeMediator(handler: any, data: any) {
 			this.mediatorArr.forEach(uim => {
 				let m = uim.mediator;
-				if (m.OnInvokeList().indexOf(handler) != -1) {
+				if (m.ListInvoke().indexOf(handler) != -1) {
 					m.OnInvoke(handler, data);
 				}
 			});

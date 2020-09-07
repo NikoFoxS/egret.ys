@@ -3,15 +3,15 @@ namespace ys.mvc {
 		public constructor() {
 		}
 
-		ServiceInvoke(handler: any, data: any, serName: string) {
+		InvokeService(handler: any, data: any, serName: string) {
 			Facade.GET.invokeService(handler, data, serName);
 		}
 
-		MediatorInvoke(handler: any, data: any) {
+		InvokeMediator(handler: any, data: any) {
 			Facade.GET.invokeMediator(handler, data);
 		}
 
-		BucketGet(bucName): ys.mvc.Bucket {
+		GetBucket(bucName): ys.mvc.Bucket {
 			return Facade.GET.getBucket(bucName);
 		}
 

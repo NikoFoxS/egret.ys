@@ -25,7 +25,7 @@ namespace ys.mvc {
 			throw new Error('need override Uninstall()')
 		}
 		/**列出需要关注的invoke */
-		OnInvokeList(): any[] {
+		ListInvoke(): any[] {
 			return [];
 		}
 		/**处理 invoke*/
