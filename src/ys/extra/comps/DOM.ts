@@ -75,7 +75,7 @@ module ys {
 
 		public set src(url) {
 			const el = this.el as HTMLImageElement;
-			el.src = url;
+			el.src = RES.getVirtualUrl(url);
 		}
 	}
 
