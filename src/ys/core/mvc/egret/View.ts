@@ -1,5 +1,5 @@
 namespace ys {
-	export class Page extends ys.UI implements RES.PromiseTaskReporter {
+	export class View extends ys.UI implements RES.PromiseTaskReporter {
 		/**
 		 * @param resGroup 资源组
 		 */

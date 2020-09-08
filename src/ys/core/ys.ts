@@ -142,20 +142,16 @@ namespace ys {
 
 	let pages: any;
 	let oldPage;
-	/**
-	 * @param PageClass ys.Page
-	 * @param cache 是否缓存
-	 * @param handler
-	 */
-	export function showPage(PageClass: any, handler?: ys.PageChangeHandler) {
+	
+	export function showView(PageClass: any, handler?: ys.PageChangeHandler) {
 		if (pages == null) {
 			pages = {};
 		}
 
 		var key: string = egret.getQualifiedClassName(PageClass);
-		var page: ys.Page = <ys.Page>pages[key];
+		var page: ys.View = <ys.View>pages[key];
 		if (!page) {
-			page = <ys.Page>new PageClass();
+			page = <ys.View>new PageClass();
 			if (page.cache) {
 				pages[key] = page;
 			}
