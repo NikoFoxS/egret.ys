@@ -1,6 +1,9 @@
 namespace ys {
 	export class Page extends ys.UI implements RES.PromiseTaskReporter {
-		public constructor(resGroup: string = '') {
+		/**
+		 * @param resGroup 资源组
+		 */
+		public constructor(resGroup: string) {
 			super();
 			if (resGroup != '') {
 				if (RES.isGroupLoaded(resGroup)) {

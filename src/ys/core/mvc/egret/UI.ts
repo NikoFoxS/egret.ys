@@ -96,13 +96,5 @@ namespace ys {
             return behavior;
         }
 
-        // OnAdd() {
-
-        // }
-
-        // OnRemove() {
-
-        // }
-
     }
 }
