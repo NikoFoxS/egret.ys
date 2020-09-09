@@ -7,16 +7,10 @@ namespace ys {
 		return input;
 	}
 
-	export function newLabel(layer?: egret.DisplayObjectContainer): ys.Label {
-		const label = new ys.Label();
+	export function newLabel(layer?: egret.DisplayObjectContainer): ys.TextField {
+		const label = new ys.TextField();
 		layer && layer.addChild(label);
 		return label;
-	}
-
-	export function newImage(layer?: egret.DisplayObjectContainer): ys.Image {
-		const img = new ys.Image();
-		layer && layer.addChild(img);
-		return img;
 	}
 
 	export function newButton(res, layer?: egret.DisplayObjectContainer): ys.Button {

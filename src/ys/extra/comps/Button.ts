@@ -6,7 +6,7 @@ module ys {
 		}
 
 		protected bg: egret.DisplayObject;
-		private _label: ys.Label;
+		private _label: ys.TextField;
 		/**
 		 * @param t 字符
 		 * @param size 字体大小
@@ -18,7 +18,7 @@ module ys {
 		public setLabel(t: string, size: number, color: number, offsetWidth = 0, offsetX = 0, offsetY = 0) {
 			if (this.bg) {
 				if (!this._label) {
-					this._label = new ys.Label();
+					this._label = new ys.TextField();
 					this.addChild(this._label);
 				}
 				let label = this._label;

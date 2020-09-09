@@ -1,15 +1,15 @@
 module app {
-	export class WarShips extends ys.Page {
+	export class WarShips extends ys.View {
 		public constructor() {
-			super();
+			super('');
 		}
 
 		public scene: egret.DisplayObjectContainer;
 
 		OnStart() {
 
-			mouse.enable(ys.Context.STAGE);
-			mouse.setMouseMoveEnabled(true);
+			// mouse.enable(ys.Context.STAGE);
+			// mouse.setMouseMoveEnabled(true);
 
 			let rec = ys.newRect(ys.Context.STAGE_W, ys.Context.STAGE_H, 0xcccccc, this);
 
@@ -151,7 +151,7 @@ module app {
 		initEvt() {
 			let stage = ys.Context.STAGE;
 			stage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.click, this);
-			stage.addEventListener(mouse.MouseEvent.MOUSE_MOVE, this.mouseMove, this);
+			// stage.addEventListener(mouse.MouseEvent.MOUSE_MOVE, this.mouseMove, this);
 			let self = this;
 			document.body.onmousedown = function (e) {
 				// if (e.button == 2) {

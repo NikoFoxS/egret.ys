@@ -97,7 +97,7 @@ module ys {
 
 			this.show('加载中');
 		}
-		private label: ys.Label;
+		private label: ys.TextField;
 		private flower: egret.Shape;
 		private ctn: egret.DisplayObjectContainer;
 		public block: egret.Shape;
@@ -152,7 +152,7 @@ module ys {
 
 			const ctn = this;
 
-			const label = new ys.Label();
+			const label = new ys.TextField();
 			label.size = fontSize;
 			label.text = msg;
 			label.lineSpacing = fontSize * 0.5;
@@ -221,7 +221,7 @@ module ys {
 		}
 
 		private newBtnLabel(txt, w, h, size) {
-			const label = new ys.Label();
+			const label = new ys.TextField();
 			label.text = txt;
 			label.width = w;
 			label.height = h;
@@ -234,9 +234,9 @@ module ys {
 			return label;
 		}
 
-		public content: ys.Label;
-		public confirm: ys.Label;
-		public cancel: ys.Label;
+		public content: ys.TextField;
+		public confirm: ys.TextField;
+		public cancel: ys.TextField;
 	}
 
 	export class Toast extends egret.DisplayObjectContainer {

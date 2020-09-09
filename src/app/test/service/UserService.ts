@@ -15,10 +15,10 @@ namespace app {
 		getInfo(data) {
 			let a = new ys.Ajax();
 			a.get('', null, () => {
-				let b = this.BucketGet('user');
+				let b = this.GetBucket('user');
 				if (b) {
 					b.SetData({ name: 'username', sex: 'haha', age: 25 });
-					b.UpdateData(CONST.HANDLER_UPDATE_USER_DATA);
+					b.UpdateData();
 				}
 			})
 		}

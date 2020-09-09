@@ -28,8 +28,8 @@ namespace app {
 		}
 
 		private connect(openid) {
-			// ys.VS.GET.setup(openid, 'obg-krwrque4', '6354b5a0d281657f3c796dbb842500b97280123e');
-			// ys.VS.GET.connect('krwrque4.wxlagame.com');
+			ys.VS.GET.setup(openid, 'obg-krwrque4', '6354b5a0d281657f3c796dbb842500b97280123e');
+			ys.VS.GET.connect('krwrque4.wxlagame.com');
 		}
 
 		joinPlay() {

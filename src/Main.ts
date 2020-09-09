@@ -26,7 +26,7 @@ class Main extends ys.Application {
             return url;
         }
         //一般处理多语言。
-        ys.Label.getLocale = (key) => {
+        ys.TextField.getLocale = (key) => {
             const val = key;
             return val;
         }
@@ -44,7 +44,7 @@ class Main extends ys.Application {
     }
     onGroupLoaded(name: string): void {
         if (name == 'preload' || name == '') {
-            ys.showPage(app.TestPage);
+            ys.showView(app.BattleView);
         }
     }
 }
