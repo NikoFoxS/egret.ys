@@ -15,27 +15,27 @@
 	}
 */
 	"public bitmap": {
-		"prefix": "ysBitmapPublic",
+		"prefix": "ysPublicBitmap",
 		"body":[
 			"public bm_$1:ys.Bitmap=null;"
 		]
 	},
 	"public textfield": {
-		"prefix": "ysTextFiledPublic",
+		"prefix": "ysPublicTextFiled",
 		"body":[
 			"public txt_$1:ys.TextFiled=null;"
 		]
 	},
 	"public shape": {
-		"prefix": "ysShapePublic",
+		"prefix": "ysPublicShape",
 		"body":[
 			"public shape_$1:ys.Shape=null;"
 		]
 	},
 	"public container": {
-		"prefix": "ysContainerPublic",
+		"prefix": "ysPublicContainer",
 		"body":[
-			"public txt_$1:ys.Container=null;"
+			"public con_$1:ys.Container=null;"
 		]
 	},
 	"page": {
@@ -52,10 +52,14 @@
 
 			"		OnStart()",
 			"		{",
-			"			//构建界面",
+			"			this.create(this, () => {",
+			"				this.OnReay();",
+			"				this.addMediator($1Mediator);",
+			"			}, this);",
+			"		}",
+			"		OnReay()",
+			"		{",
 			"			$0",
-			"			//添加界面管理器",
-			"			this.addMediator($1Mediator);",
 			"		}",
 			"	}",
 			"",
@@ -67,79 +71,25 @@
 			"			super();",
 			"		}",
 			"		private v:$1;",
-			"		/**当被按照*/",
+			"		/**当被安装*/",
 			"		Install(): void {",
 			"			this.v = this.GetView<$1>();",	
 			"			//添加界面管理逻辑",
 			"		}",
 			"		/**当被卸载*/",
 			"		Uninstall(): void {",
-						
 			"		}",
 			"		/**列出需要关注的invoke */",
 			"		ListInvoke(): any[] {",
 			"			return [];",
 			"		}",
-			"		/**处理 invoke*/",
+			"		/**处理invoke*/",
 			"		OnInvoke(handler: number | string, data: any): void {",
-			"			switch(handler)",
-			"			{",
-			"				",
-			"			}",
-			"		}",
-			"	}",
-			"}"
-		]
-	},
-
-	"ui": {
-		"prefix": "ysUI",
-		"body":[
-			"namespace app{",
-			"	/**界面$1*/",
-			"	export class $1 extends ys.UI",
-			"	{",
-			"		constructor()",
-			"		{",
-			"			super();",
-			"			//构建界面",
-			"			$0",
-			"			//添加界面管理器",
-			"			this.addMediator($1Mediator);",
-			"		}",
-			"	}",
-			"",
-			"	/**界面管理器*/",
-			"	export class $1Mediator extends ys.mvc.Mediator",
-			"	{",
-			"		constructor()",
-			"		{",
-			"			super();",
-			"		}",
-			"		private v:$1;",
-			"		/**当被按照*/",
-			"		Install(): void {",
-			"			this.v = this.GetView<$1>();",	
-			"			//添加界面管理逻辑",
-			"		}",
-			"		/**当被卸载*/",
-			"		Uninstall(): void {",
-						
-			"		}",
-			"		/**列出需要关注的invoke */",
-			"		ListInvoke(): any[] {",
-			"			return [];",
-			"		}",
-			"		/**处理 invoke*/",
-			"		OnInvoke(handler: number | string, data: any): void {",
-			"			switch(handler)",
-			"			{",
-			"				",
-			"			}",
 			"		}",
 			"	}",
 			"}"
 		]
 	}
+	
 
 }
