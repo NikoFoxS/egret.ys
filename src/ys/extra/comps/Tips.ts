@@ -59,7 +59,7 @@ module ys {
 
 			const width = 200;
 			const height = 200;
-			const bg = ys.newRectRound(width, height, 0x000000, 40, 40, ctn);
+			const bg = ys.newRect(width, height, 0x000000, 40, ctn);
 			bg.alpha = 0.7;
 
 			const s = new egret.Shape();
@@ -165,7 +165,7 @@ module ys {
 			label.x = label.y = padding;
 			this.content = label;
 
-			const bg = ys.newRectRound(bgw, bgh, 0xffffff, 40, 40);
+			const bg = ys.newRect(bgw, bgh, 0xffffff, 40);
 			ctn.addChild(bg);
 
 			bg.graphics.lineStyle(1, 0x000000, 0.6);
@@ -273,7 +273,7 @@ module ys {
 				icoH = ico.height + padding;
 			}
 			//圆角矩形
-			var bg = ys.newRectRound(t.width + padding2, t.height + padding2 + icoH, bgColor, padding, padding) // new egret.Shape();
+			var bg = ys.newRect(t.width + padding2, t.height + padding2 + icoH, bgColor, padding) // new egret.Shape();
 			bg.alpha = bgAlpha;
 			this.addChildAt(bg, 0);
 

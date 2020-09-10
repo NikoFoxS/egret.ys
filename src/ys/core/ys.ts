@@ -166,50 +166,44 @@ namespace ys {
 	//---------------------------
 	//显示对象创建 new开头
 	//---------------------------
-	export function newBitmap(res: string, layer?: egret.DisplayObjectContainer): egret.Bitmap {
-		const bm = new egret.Bitmap();
-		res != '' && (bm.texture = RES.getRes(res));
+	export function newBitmap(res: string='', layer?: egret.DisplayObjectContainer): ys.Bitmap {
+		const bm = new ys.Bitmap(res);
 		layer && layer.addChild(bm);
 		return bm;
 	}
 
-	export function newContainer(layer?: egret.DisplayObjectContainer): egret.DisplayObjectContainer {
-		const con = new egret.DisplayObjectContainer();
+	export function newContainer(layer?: egret.DisplayObjectContainer): ys.Container {
+		const con = new ys.Container();
 		layer && layer.addChild(con);
 		return con;
 	}
 
-	export function newRect(w, h, color, layer?: egret.DisplayObjectContainer): egret.Shape {
-		const rec = new egret.Shape();
-		const g = rec.graphics;
-		g.beginFill(color);
-		g.drawRect(0, 0, w, h);
-		g.endFill();
+	export function newRect(w, h, color,radius=0, layer?: egret.DisplayObjectContainer): ys.Shape {
+		const rec = new ys.Shape();
+		rec.drawRec(w,h,color,radius);
 		layer && layer.addChild(rec);
 		return rec;
 	}
 
-	export function newCircle(r, color, layer?: egret.DisplayObjectContainer): egret.Shape {
-		const s: egret.Shape = new egret.Shape();
-		s.graphics.beginFill(color);
-		s.graphics.drawCircle(0, 0, r);
-		s.graphics.endFill();
+	export function newCircle(r, color, layer?: egret.DisplayObjectContainer): ys.Shape {
+		const s = new ys.Shape();
+		s.drawCirle(r,color);
 		layer && layer.addChild(s);
 		return s;
 	}
 
-	export function newRectRound(w, h, color, cornerW, cornerH, layer?: egret.DisplayObjectContainer): egret.Shape {
-		const rec = new egret.Shape();
-		const g = rec.graphics;
-		g.beginFill(color);
-		g.drawRoundRect(0, 0, w, h, cornerW, cornerH);
-		g.endFill();
-		layer && layer.addChild(rec);
-		return rec;
-	}
+	// export function newRectRound(w, h, color, cornerW, cornerH, layer?: egret.DisplayObjectContainer): ys.Shape {
+	// 	const rec = new ys.Shape();
+	// 	const g = rec.graphics;
+	// 	g.beginFill(color);
+	// 	g.drawRoundRect(0, 0, w, h, cornerW, cornerH);
+	// 	g.endFill();
+	// 	layer && layer.addChild(rec);
+	// 	return rec;
+	// }
 
-	export function newTextField(color, size, layer?: egret.DisplayObjectContainer): egret.TextField {
-		const t = new egret.TextField();
+	export function newTextField(color, size, layer?: egret.DisplayObjectContainer): ys.TextField {
+		const t = new ys.TextField();
 		t.textColor = color;
 		t.size = size;
 		layer && layer.addChild(t);

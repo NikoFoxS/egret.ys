@@ -80,7 +80,7 @@ namespace ys {
             }
         }
 
-        protected createUI(ui: ys.View, callback: Function, ref: any) {
+        protected create(ui: ys.View, callback: Function, ref: any) {
             setTimeout(function () {
                 //遍历可枚举的属性
                 Object.getOwnPropertyNames(ui).forEach(val => {
