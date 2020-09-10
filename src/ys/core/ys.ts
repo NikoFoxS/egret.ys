@@ -50,26 +50,6 @@ namespace ys {
 		}
 	}
 
-	// export function logger_warn(msg: any, ...arg: any[]) {
-	// 	if (showlogger) {
-	// 		if (arg.length) {
-	// 			console.warn(msg, arg);
-	// 		} else {
-	// 			console.warn(msg);
-	// 		}
-	// 	}
-	// }
-
-	// export function logger_error(msg: any, ...arg: any[]) {
-	// 	if (showlogger) {
-	// 		if (arg.length) {
-	// 			console.error(msg, arg);
-	// 		} else {
-	// 			console.error(msg);
-	// 		}
-	// 	}
-	// }
-
 	export function setup(cfg: ys.Config) {
 		const stage = ys.Context.STAGE;
 		//跨域设置
