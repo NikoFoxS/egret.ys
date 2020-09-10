@@ -50,25 +50,25 @@ namespace ys {
 		}
 	}
 
-	export function logger_warn(msg: any, ...arg: any[]) {
-		if (showlogger) {
-			if (arg.length) {
-				console.warn(msg, arg);
-			} else {
-				console.warn(msg);
-			}
-		}
-	}
+	// export function logger_warn(msg: any, ...arg: any[]) {
+	// 	if (showlogger) {
+	// 		if (arg.length) {
+	// 			console.warn(msg, arg);
+	// 		} else {
+	// 			console.warn(msg);
+	// 		}
+	// 	}
+	// }
 
-	export function logger_error(msg: any, ...arg: any[]) {
-		if (showlogger) {
-			if (arg.length) {
-				console.error(msg, arg);
-			} else {
-				console.error(msg);
-			}
-		}
-	}
+	// export function logger_error(msg: any, ...arg: any[]) {
+	// 	if (showlogger) {
+	// 		if (arg.length) {
+	// 			console.error(msg, arg);
+	// 		} else {
+	// 			console.error(msg);
+	// 		}
+	// 	}
+	// }
 
 	export function setup(cfg: ys.Config) {
 		const stage = ys.Context.STAGE;
@@ -140,10 +140,16 @@ namespace ys {
 
 	}
 
+	export class PageChangeHandler {
+		public onChange(newView: egret.DisplayObject, oldView: egret.DisplayObject, next: Function): void {
+			//1 页面切换逻辑
+			//2 调用next();结束切换
+		}
+	}
+
 	let pages: any;
 	let oldPage;
-	
-	export function showView(PageClass: any, handler?: ys.PageChangeHandler) {
+	export function showPageView(PageClass: any, handler?: ys.PageChangeHandler) {
 		if (pages == null) {
 			pages = {};
 		}

@@ -22,7 +22,7 @@ namespace ys {
 		}
 	}
 
-	export class Application extends ys.UI implements RES.PromiseTaskReporter {
+	export class Application extends ys.View implements RES.PromiseTaskReporter {
 		private static VERSION = '20200815'
 		public constructor(cfg: ys.Config) {
 			//使用VConsole

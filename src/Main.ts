@@ -44,7 +44,7 @@ class Main extends ys.Application {
     }
     onGroupLoaded(name: string): void {
         if (name == 'preload' || name == '') {
-            ys.showView(app.BattleView);
+            ys.showPageView(app.BattleView);
         }
     }
 }

@@ -48,7 +48,7 @@ namespace app {
 			v.btn.touchEnabled = true;
 			v.btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getInfo, this);
 
-			v.bindBehavior(v.btn, DragerBehavior, {})
+			// v.bindBehavior(v.btn, DragerBehavior, {})
 		}
 
 		private getInfo() {

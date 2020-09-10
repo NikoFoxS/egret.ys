@@ -1,8 +1,25 @@
-module ys {
+namespace ys {
+	let txtPool: ys.TextField[] = [];
 	export class TextField extends egret.TextField {
+
+		//-----------------------------
+		public static release(t: ys.TextField): void {
+			if (!t) {
+				return;
+			}
+			txtPool.push(t);
+		}
+
+		public static create(): ys.TextField {
+			let t = txtPool.pop();
+			if (!t) {
+				t = new ys.TextField;
+			}
+			return t;
+		}
 		//多语言
 		public static getLocale: Function = (t) => {
-			console.log('key:',t,'value:',t);
+			console.log('key:', t, 'value:', t);
 			return t;
 		};
 		//--------------------------------
@@ -16,8 +33,7 @@ module ys {
 			super.$setText(t);
 		}
 
-		public get text()
-		{
+		public get text() {
 			return super.$getText();
 		}
 
@@ -26,6 +42,6 @@ module ys {
 			this.textFlow = (new egret.HtmlTextParser).parser(s);
 		}
 
-		
+
 	}
 }

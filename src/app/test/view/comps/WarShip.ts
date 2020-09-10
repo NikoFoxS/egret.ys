@@ -1,5 +1,5 @@
 module app {
-	export class WarShip extends ys.UI {
+	export class WarShip extends ys.View {
 		constructor(name, res) {
 			super();
 
