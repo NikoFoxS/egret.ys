@@ -14,21 +14,36 @@
 		"description": "Log output to console"
 	}
 */
-	"bitmap": {
-		"prefix": "ysNewBitmap",
+	"public bitmap": {
+		"prefix": "ysBitmapPublic",
 		"body":[
-			"public $1:egret.Bitmap;",
-			"let $1:egret.Bitmap = ys.newBitmap('$1',this);",
-			"this.$1 = $1;"
+			"public bm_$1:ys.Bitmap=null;"
 		]
 	},
-
+	"public textfield": {
+		"prefix": "ysTextFiledPublic",
+		"body":[
+			"public txt_$1:ys.TextFiled=null;"
+		]
+	},
+	"public shape": {
+		"prefix": "ysShapePublic",
+		"body":[
+			"public shape_$1:ys.Shape=null;"
+		]
+	},
+	"public container": {
+		"prefix": "ysContainerPublic",
+		"body":[
+			"public txt_$1:ys.Container=null;"
+		]
+	},
 	"page": {
-		"prefix": "ysNewPage",
+		"prefix": "ysView",
 		"body":[
 			"namespace app{",
 			"	/**界面$1*/",
-			"	export class $1 extends ys.Page",
+			"	export class $1 extends ys.View",
 			"	{",
 			"		constructor()",
 			"		{",
@@ -54,7 +69,7 @@
 			"		private v:$1;",
 			"		/**当被按照*/",
 			"		Install(): void {",
-			"			this.v = this.GetView<MyPage>();",	
+			"			this.v = this.GetView<$1>();",	
 			"			//添加界面管理逻辑",
 			"		}",
 			"		/**当被卸载*/",
@@ -78,7 +93,7 @@
 	},
 
 	"ui": {
-		"prefix": "ysNewUI",
+		"prefix": "ysUI",
 		"body":[
 			"namespace app{",
 			"	/**界面$1*/",
@@ -104,7 +119,7 @@
 			"		private v:$1;",
 			"		/**当被按照*/",
 			"		Install(): void {",
-			"			this.v = this.GetView<MyPage>();",	
+			"			this.v = this.GetView<$1>();",	
 			"			//添加界面管理逻辑",
 			"		}",
 			"		/**当被卸载*/",
