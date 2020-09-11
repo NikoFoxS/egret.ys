@@ -11,7 +11,7 @@ module app {
 			// mouse.enable(ys.Context.STAGE);
 			// mouse.setMouseMoveEnabled(true);
 
-			let rec = ys.newRect(ys.Context.STAGE_W, ys.Context.STAGE_H, 0xcccccc, this);
+			let rec = ys.newRect(ys.Context.STAGE_W, ys.Context.STAGE_H, 0xcccccc, 0,this);
 
 			let scene = ys.newContainer(this);
 			scene.x = ys.Context.STAGE_W_HALF;

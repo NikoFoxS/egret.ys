@@ -20,7 +20,7 @@ namespace app {
 			// }, this);
 			// ys.SOLO.GET.setup('' + GG.randomInt(1000, 9999), 'obg-krwrque4', '6354b5a0d281657f3c796dbb842500b97280123e');
 			// ys.SOLO.GET.connect('krwrque4.wxlagame.com');
-			let rec = ys.newRect(200, 80, 0xff0000, this);
+			let rec = ys.newRect(200, 80, 0xff0000, 0,this);
 			ys.layoutCenter(rec);
 			this.btn = rec;
 
