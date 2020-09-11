@@ -13,7 +13,8 @@ class Main extends ys.Application {
         cfg.height = 1334; 
         //添加服务Service
         cfg.services = [
-            ['user', app.UserService]
+            ['UserService', app.UserService],
+            ['BattleService', app.BattleService]
         ]; 
         //添加数据Bucket
         cfg.buckets = [

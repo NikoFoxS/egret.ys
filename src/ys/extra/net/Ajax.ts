@@ -1,5 +1,5 @@
 module ys {
-	
+
 	/**封装ajax */
 	export class Ajax {
 		constructor() {
@@ -29,15 +29,21 @@ module ys {
 			return xhr;
 		}
 
-		private _status:number=200;
-		public get status()
+		public get mock()
 		{
+			return Ajax.mock;
+		}
+
+		private _status: number = 200;
+		public get status() {
 			return this._status;
 		}
-		private _responseText:string='';
-		public get responseText()
-		{
+		private _responseText: string = '';
+		public get responseText() {
 			return this._responseText;
+		}
+		public get responseJson() {
+			return JSON.parse(this._responseText);
 		}
 
 		private send(url, callback, method, data, async) {
@@ -51,7 +57,9 @@ module ys {
 				if (x.readyState == 4) {
 					self._status = x.status;
 					self._responseText = x.responseText;
-					callback();
+					callback(x.status, x.responseText);
+				} else {
+					callback('error',{});
 				}
 			};
 			if (method == 'POST') {
@@ -62,7 +70,7 @@ module ys {
 
 		public post(url, data, callback, async = true) {
 			if (Ajax.mock) {
-				callback(null);
+				callback(null,{});
 				return;
 			}
 			var query = [];

@@ -14,9 +14,10 @@ namespace app {
 		}
 	}
 
-	export declare class UserKV {
+	export declare class UserSchema {
 		name: string
 		sex: string
 		coins: number
+		shipType: number
 	}
 }

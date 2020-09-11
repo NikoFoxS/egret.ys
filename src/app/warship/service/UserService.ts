@@ -14,13 +14,19 @@ namespace app {
 
 		getInfo(data) {
 			let a = new ys.Ajax();
-			a.get('', null, () => {
+			const api = ``;
+			a.get(api, null, () => {
 				let b = this.GetBucket('user');
 				if (b) {
 					b.SetData({ name: 'username', sex: 'haha', age: 25 });
 					b.UpdateData();
 				}
 			})
+		}
+
+		login()
+		{
+			
 		}
 	}
 }
