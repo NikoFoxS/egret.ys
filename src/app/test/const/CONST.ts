@@ -12,9 +12,9 @@ module app {
 	export function config()
 	{
 		return {
-			gameId:"obg-krwrque4",
-			secretKey:"6354b5a0d281657f3c796dbb842500b97280123e",
-			url:"krwrque4.wxlagame.com"
+			gameId:"",
+			secretKey:"",
+			url:""
 		}
 	}
 }
