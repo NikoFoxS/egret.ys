@@ -1,16 +1,5 @@
 namespace ys {
 
-	export let stage: egret.Stage = ys.Context.STAGE;
-	export let stageW: number = stage.stageWidth;
-	export let stageHalfW: number = stage.stageWidth >> 1;
-	export let stageH: number = stage.stageHeight;
-	export let stageHalfH: number = stage.stageHeight >> 1;
-	export function getDomScale(scaleMode:string)
-	{
-		return stage.scaleMode == egret.StageScaleMode.FIXED_WIDTH ?
-				window.innerWidth / stageW : window.innerHeight / stageH;
-	}
-	
 	export class Context {
 
 		static get STAGE() {
@@ -178,7 +167,7 @@ namespace ys {
 	//---------------------------
 	//显示对象创建 new开头
 	//---------------------------
-	export function newBitmap(res: string='', layer?: egret.DisplayObjectContainer): ys.Bitmap {
+	export function newBitmap(res: string = '', layer?: egret.DisplayObjectContainer): ys.Bitmap {
 		const bm = new ys.Bitmap(res);
 		layer && layer.addChild(bm);
 		return bm;
@@ -190,16 +179,16 @@ namespace ys {
 		return con;
 	}
 
-	export function newRect(w, h, color,radius=0, layer?: egret.DisplayObjectContainer): ys.Shape {
+	export function newRect(w, h, color, radius = 0, layer?: egret.DisplayObjectContainer): ys.Shape {
 		const rec = new ys.Shape();
-		rec.drawRec(w,h,color,radius);
+		rec.drawRec(w, h, color, radius);
 		layer && layer.addChild(rec);
 		return rec;
 	}
 
 	export function newCircle(r, color, layer?: egret.DisplayObjectContainer): ys.Shape {
 		const s = new ys.Shape();
-		s.drawCirle(r,color);
+		s.drawCirle(r, color);
 		layer && layer.addChild(s);
 		return s;
 	}
@@ -226,31 +215,27 @@ namespace ys {
 	//布局 layout开头
 	//---------------------------
 	export function layoutLeft(d: egret.DisplayObject, left) {
-		d.x = left + d.anchorOffsetX;
+		d.x = left + d.anchorOffsetX * d.scaleX;
 	}
 
 	export function layoutRight(d: egret.DisplayObject, right) {
-		d.x = ys.Context.STAGE_W - d.width + d.anchorOffsetX - right;
+		d.x = ys.Context.STAGE_W - d.width * d.scaleX + d.anchorOffsetX * d.scaleX - right;
 	}
 
 	export function layoutMiddleX(d: egret.DisplayObject, offset = 0) {
-		d.x = ys.Context.STAGE_W_HALF - d.width * 0.5 + d.anchorOffsetX + offset;
+		d.x = ys.Context.STAGE_W_HALF - d.width * 0.5 * d.scaleX + d.anchorOffsetX * d.scaleX + offset;
 	}
 
 	export function layoutMiddleY(d: egret.DisplayObject, offset = 0) {
-		d.y = ys.Context.STAGE_H_HALF - d.height * 0.5 + d.anchorOffsetY + offset;
+		d.y = ys.Context.STAGE_H_HALF - d.height * 0.5 * d.scaleY + d.anchorOffsetY * d.scaleY + offset;
 	}
 
 	export function layoutTop(d: egret.DisplayObject, top) {
-		d.y = top + d.anchorOffsetY;
+		d.y = top + d.anchorOffsetY * d.scaleY;
 	}
 
 	export function layoutBottom(d: egret.DisplayObject, bottom) {
-		d.y = ys.Context.STAGE_H - d.height + d.anchorOffsetY - bottom;
-	}
-
-	export function layoutVH(d: egret.DisplayObject, vh) {
-		d.y = ys.Context.STAGE_H * vh;
+		d.y = ys.Context.STAGE_H - d.height * d.scaleY + d.anchorOffsetY * d.scaleY - bottom;
 	}
 	/**横向纵向同时居中 */
 	export function layoutCenter(d, offsetX = 0, offsetY = 0) {
