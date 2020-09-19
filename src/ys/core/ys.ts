@@ -1,4 +1,16 @@
 namespace ys {
+
+	export let stage: egret.Stage = ys.Context.STAGE;
+	export let stageW: number = stage.stageWidth;
+	export let stageHalfW: number = stage.stageWidth >> 1;
+	export let stageH: number = stage.stageHeight;
+	export let stageHalfH: number = stage.stageHeight >> 1;
+	export function getDomScale(scaleMode:string)
+	{
+		return stage.scaleMode == egret.StageScaleMode.FIXED_WIDTH ?
+				window.innerWidth / stageW : window.innerHeight / stageH;
+	}
+	
 	export class Context {
 
 		static get STAGE() {
