@@ -11,7 +11,9 @@ namespace ys {
             this.arm = autoRemoveMediator;
             this.addEventListener(egret.Event.ADDED_TO_STAGE, this._onAdd, this);
             this.addEventListener(egret.Event.REMOVED_FROM_STAGE, this._onRemove, this);
+        }
 
+        Init(resGroup = '') {
             if (resGroup != '') {
                 if (RES.isGroupLoaded(resGroup)) {
                     this.OnStart();
@@ -25,6 +27,7 @@ namespace ys {
                 this.OnStart();
             }
         }
+
         private arl: boolean;
         private arm: boolean;
         set autoRemoveMediator(b) {
@@ -81,40 +84,40 @@ namespace ys {
         }
 
         protected create(ui: ys.View, callback: Function, ref: any) {
-            setTimeout(function () {
+            // setTimeout(function () {
                 //遍历可枚举的属性
                 Object.getOwnPropertyNames(ui).forEach(val => {
                     //当前实例的属性
                     // console.log(ui, val, ui.hasOwnProperty(val));
                     if (ui.hasOwnProperty(val)) {
-                       
+
                         if (val.indexOf('bm_') == 0) {
                             const res = val.replace('bm_', '');
                             const bm = ys.Bitmap.create(res);
                             ui.addChild(bm);
                             ui[val] = bm;
-                             console.log('创建',val,bm);
+                            console.log('创建', val, bm);
                         } else if (val.indexOf('txt_') == 0) {
                             const txt = ys.TextField.create();
                             ui.addChild(txt);
                             ui[val] = txt;
-                            console.log('创建TextField',val,txt);
+                            console.log('创建TextField', val, txt);
                         } else if (val.indexOf('shape_') == 0) {
                             const s = ys.Shape.create();
                             ui.addChild(s);
                             ui[val] = s;
-                            console.log('创建Shape',val,s);
+                            console.log('创建Shape', val, s);
                         } else if (val.indexOf('con_') == 0) {
                             const con = ys.Container.create();
                             ui.addChild(con);
                             ui[val] = con;
-                            console.log('创建Container',val,con);
+                            console.log('创建Container', val, con);
                         }
                     }
                 });
 
                 callback.call(ref);
-            }, 1);
+            // }, 1);
 
         }
 
