@@ -130,29 +130,14 @@ namespace ys {
 
 	let pages: any;
 	let oldPage;
-	export function showPageView(PageClass: any, handler?: ys.PageChangeHandler) {
+
+	export function showPage(PageClass: any, callback?:Function) {
 		if (pages == null) {
 			pages = {};
 		}
 
-		var key: string = egret.getQualifiedClassName(PageClass);
-		var page: ys.View = <ys.View>pages[key];
-		if (!page) {
-			page = <ys.View>new PageClass();
-			if (page.cache) {
-				pages[key] = page;
-			}
-		}
+		const page = <ys.Page>new PageClass();
 		ys.Context.MAIN.addChild(page);
-		if (handler) {
-			if (oldPage) {
-				handler.onChange(page, oldPage, next);
-			} else {
-				next();
-			}
-		} else {
-			next();
-		}
 
 		function next(): void {
 			if (oldPage) {
@@ -162,6 +147,50 @@ namespace ys {
 			oldPage = page;
 			console.log('显示页面', oldPage.name)
 		}
+
+		if(callback)
+		{
+			callback(next);
+		}else
+		{
+			next();
+		}
+		
+	}
+
+
+	export function showPageView(PageClass: any, handler?: ys.PageChangeHandler) {
+		// if (pages == null) {
+		// 	pages = {};
+		// }
+
+		// var key: string = egret.getQualifiedClassName(PageClass);
+		// var page: ys.View = <ys.View>pages[key];
+		// if (!page) {
+		// 	page = <ys.View>new PageClass();
+		// 	if (page.cache) {
+		// 		pages[key] = page;
+		// 	}
+		// }
+		// ys.Context.MAIN.addChild(page);
+		// if (handler) {
+		// 	if (oldPage) {
+		// 		handler.onChange(page, oldPage, next);
+		// 	} else {
+		// 		next();
+		// 	}
+		// } else {
+		// 	next();
+		// }
+
+		// function next(): void {
+		// 	if (oldPage) {
+		// 		console.log('删除页面', oldPage.name)
+		// 	}
+		// 	ys.removeDisplayObject(oldPage);
+		// 	oldPage = page;
+		// 	console.log('显示页面', oldPage.name)
+		// }
 	}
 
 	//---------------------------

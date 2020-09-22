@@ -1,11 +1,11 @@
-namespace ys.mvc {
+namespace ys {
 	export class Model {
 		public constructor() {
 			this.bucketMap = {};
 		}
 		private bucketMap: any;
 
-		installBucket<T extends ys.mvc.Bucket>(bucName, buClass: new () => T): boolean {
+		installBucket<T extends ys.Bucket>(bucName, buClass: new () => T): boolean {
 			if (!this.bucketMap[bucName]) {
 				const b: T = new buClass();
 				b.name = bucName;

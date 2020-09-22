@@ -1,6 +1,5 @@
 module app {
-	export enum CONST
-	{
+	export enum CONST {
 		//service
 		SERVICE_GET_USER_DATA,
 		SERVICE_GET_LEVEL_INFO,
@@ -9,12 +8,11 @@ module app {
 		HANDLER_UPDATE_USER_DATA
 	}
 
-	export function config()
-	{
+	export function config() {
 		return {
-            gameId:"",
-            secretKey:"",
-            url:""
-        }
+			gameId: "obg-krwrque4",
+			secretKey: "6354b5a0d281657f3c796dbb842500b97280123e",
+			url: "krwrque4.wxlagame.com"
+		}
 	}
 }

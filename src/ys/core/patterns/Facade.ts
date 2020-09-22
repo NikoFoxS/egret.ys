@@ -1,4 +1,4 @@
-namespace ys.mvc {
+namespace ys {
 	/**
 	 * 简化的puremvc.
 	 * 由于puremvc会创建过多的command，导致代码过多。
@@ -29,12 +29,21 @@ namespace ys.mvc {
 		private c: Controller;
 
 
-		installMediator(ui, MediatorClass): ys.mvc.Mediator {
-			return this.v.installMediator(ui, MediatorClass);
+		// installMediator(ui, MediatorClass): ys.mvc.Mediator {
+		// 	return this.v.installMediator(ui, MediatorClass);
+		// }
+
+		// uninstallMediator(mediator) {
+		// 	this.v.uninstallMediator(mediator);
+		// }
+		addView(ui:ys.UI)
+		{
+			this.v.addView(ui)
 		}
 
-		uninstallMediator(mediator) {
-			this.v.uninstallMediator(mediator);
+		removeView(ui:ys.UI)
+		{
+			this.v.removeView(ui);
 		}
 
 		installService(serName, Serviceclass): boolean {
@@ -53,12 +62,16 @@ namespace ys.mvc {
 			this.m.uninstallBucket(bucName);
 		}
 
-		getBucket(bucName): ys.mvc.Bucket {
+		getBucket(bucName): ys.Bucket {
 			return this.m.getBucket(bucName);
 		}
 
-		invokeMediator(handler: any, data: any) {
-			this.v.invokeMediator(handler, data);
+		// invokeMediator(handler: any, data: any) {
+		// 	this.v.invokeMediator(handler, data);
+		// }
+		invokeScript(handler: any, data: any)
+		{
+			this.v.invokeScript(handler,data);
 		}
 
 		invokeService(handler: any, data: any, serName: string) {

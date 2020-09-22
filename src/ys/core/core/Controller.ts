@@ -1,4 +1,4 @@
-module ys.mvc {
+module ys {
 	export class Controller {
 		public constructor() {
 			this.serviceMap = {};

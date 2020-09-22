@@ -1,17 +1,18 @@
 namespace app{
 	/**界面BattleView*/
-	export class BattleView extends ys.View
+	export class BattleView extends ys.Page
 	{
 		constructor()
 		{
-			super('');
+			super();
+			this.Init()
 		}
 		OnStart()
 		{
-			this.create(this, () => {
-				this.OnReay();
-				this.addMediator(BattleViewMediator);
-			}, this);
+			// this.create(this, () => {
+			// 	this.OnReay();
+			// 	this.addMediator(BattleViewMediator);
+			// }, this);
 		}
 		async OnReay()
 		{
@@ -33,27 +34,28 @@ namespace app{
 	}
 
 	/**界面管理器*/
-	export class BattleViewMediator extends ys.mvc.Mediator
-	{
-		constructor()
-		{
-			super();
-		}
-		private v:BattleView;
-		/**当被安装*/
-		Install(): void {
-			this.v = this.GetView<BattleView>();
-			//添加界面管理逻辑
-		}
-		/**当被卸载*/
-		Uninstall(): void {
-		}
-		/**列出需要关注的invoke */
-		ListInvoke(): any[] {
-			return [];
-		}
-		/**处理invoke*/
-		OnInvoke(handler: number | string, data: any): void {
-		}
-	}
+	// export class BattleViewMediator extends ys.mvc.Mediator
+	// {
+	// 	constructor()
+	// 	{
+	// 		super();
+	// 	}
+	// 	private v:BattleView;
+	// 	/**当被安装*/
+	// 	Install(): void {
+	// 		this.v = this.GetView<BattleView>();
+	// 		//添加界面管理逻辑
+	// 		this.InvokeService('connect',{},'ColyseusService');
+	// 	}
+	// 	/**当被卸载*/
+	// 	Uninstall(): void {
+	// 	}
+	// 	/**列出需要关注的invoke */
+	// 	ListInvoke(): any[] {
+	// 		return [];
+	// 	}
+	// 	/**处理invoke*/
+	// 	OnInvoke(handler: number | string, data: any): void {
+	// 	}
+	// }
 }

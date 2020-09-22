@@ -1,5 +1,5 @@
 namespace app {
-	export class UserService extends ys.mvc.Service {
+	export class UserService extends ys.Service {
 		public constructor() {
 			super();
 		}

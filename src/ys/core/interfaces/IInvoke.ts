@@ -1,4 +1,4 @@
-namespace ys.mvc {
+namespace ys {
     export interface IInvoked {
         /**被触发 */
         OnInvoke(handler: number | string, data?: any): void;
@@ -8,8 +8,8 @@ namespace ys.mvc {
         /**触发Service */
         InvokeService(handler: any, data: any, proxyName: string): void;
         /**触发Mediator */
-        InvokeMediator(handler: any, data: any): void;
+        InvokeScript(handler: any, data: any): void;
         /**获取Bucket */
-        GetBucket(name): ys.mvc.Bucket;
+        GetBucket(name): ys.Bucket;
     }
 }

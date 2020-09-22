@@ -1,4 +1,4 @@
-namespace ys.mvc {
+namespace ys {
     export interface IUnit {
         /**当被安装 */
         Install(): void;

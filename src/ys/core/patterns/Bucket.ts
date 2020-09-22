@@ -1,4 +1,4 @@
-namespace ys.mvc {
+namespace ys {
 	/**数据仓库，负责数据的储存和提取 */
 	export class Bucket extends Invoker implements IUnit, IBucket {
 		public constructor() {

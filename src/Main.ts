@@ -10,16 +10,17 @@ class Main extends ys.Application {
         cfg.scaleMode = egret.Capabilities.isMobile ? egret.StageScaleMode.FIXED_WIDTH : egret.StageScaleMode.SHOW_ALL;
         cfg.orientation = egret.OrientationMode.PORTRAIT;
         cfg.width = 750;
-        cfg.height = 1334; 
+        cfg.height = 1334;
         //添加服务Service
         cfg.services = [
             ['UserService', app.UserService],
-            ['BattleService', app.BattleService]
-        ]; 
+            ['BattleService', app.BattleService],
+            ['ColyseusService', app.ColyseusService]
+        ];
         //添加数据Bucket
         cfg.buckets = [
             ['user', app.UserBucket]
-        ] 
+        ]
         cfg.mock = false;
         //对加载项进行处理
         cfg.versionFun = (url) => {
@@ -37,15 +38,31 @@ class Main extends ys.Application {
         this.run();
     }
 
-    onGroupStart(name: string): void {
-        console.log(name, 'start')
+    // onGroupStart(name: string): void {
+    // }
+    // onGroupProgress(loaded: number, total: number, resItem: RES.ResourceInfo | undefined): void {
+    //     console.log(loaded, '/', total, resItem)
+    // }
+    // onGroupLoaded(name: string): void {
+    //     if (name == 'preload' || name == '') {
+    //         ys.showPage(OpenPage);
+    //     }
+    // }
+
+    OnStart() {
+        ys.showPage(OpenPage);
+        this.RemoveScript();
     }
-    onGroupProgress(loaded: number, total: number, resItem: RES.ResourceInfo | undefined): void {
-        console.log(loaded, '/',total, resItem)
+
+    OnLoadStart(name: string) {
+
     }
-    onGroupLoaded(name: string): void {
-        if (name == 'preload' || name == '') {
-            ys.showPageView(app.BattleView);
-        }
+
+    OnLoadProgress(current: number, total: number) {
+        console.log(current, '/', total)
+    }
+
+    OnLoadEnd(name: string) {
+
     }
 }

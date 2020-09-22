@@ -1,5 +1,5 @@
 namespace app {
-	export class BattleService extends ys.mvc.Service {
+	export class BattleService extends ys.Service {
 		public constructor() {
 			super();
 			ys.VS.GET.addEventListener(ys.VS.ON_JOIN_OK, this.onJoin, this);
@@ -11,9 +11,9 @@ namespace app {
 		private onJoin(e: egret.Event) {
 			if (e.type == ys.VS.ON_JOIN_OK) {
 				let list = e.data as MGOBE.types.PlayerInfo[]
-				this.InvokeMediator('', {});
+				// this.InvokeMediator('', {});
 			} else {
-				this.InvokeMediator('', {});
+				// this.InvokeMediator('', {});
 			}
 
 		}

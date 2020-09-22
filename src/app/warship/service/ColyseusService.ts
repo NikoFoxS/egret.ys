@@ -1,5 +1,5 @@
 module app {
-	export class ColyseusService extends ys.mvc.Service {
+	export class ColyseusService extends ys.Service {
 		public constructor() {
 			super()
 		}

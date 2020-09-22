@@ -22,8 +22,8 @@ namespace ys {
 		}
 	}
 
-	export class Application extends ys.View implements RES.PromiseTaskReporter {
-		private static VERSION = '20200815'
+	export class Application extends ys.Page {
+		private static VERSION = '2020-09-22'
 		public constructor(cfg: ys.Config) {
 			//使用VConsole
 			if (window['VConsole']) {
@@ -31,7 +31,7 @@ namespace ys {
 			}
 			//版本信息
 			let hello = 'Egret.ys by NikoFoxS | update:' + Application.VERSION;
-			if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+			if (window.navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
 				console.log('%c' + hello, 'font-size: 10px;font-weight: bold;text-decoration: underline;');
 			} else {
 				console.log(hello);
@@ -41,40 +41,25 @@ namespace ys {
 			}
 			super();
 			this.cfg = cfg;
-
 		}
-		
+
 		run() {
-			this.addMediator(ApplicationMediator);
+			this.AddScript(this, script.SetupScript);
+			this.AddScript(this, script.Loader);
 		}
 		public cfg: ys.Config;
-
-		onProgress?(current: number, total: number, resItem: RES.ResourceInfo | undefined): void {
-			this.onGroupProgress(current, total, resItem);
-		}
-		//--------------------------------
-
-		onGroupStart(name: string): void {
-
-		}
-		onGroupProgress(loaded: number, total: number, resItem: RES.ResourceInfo | undefined): void {
-
-		}
-		onGroupLoaded(name: string): void {
-
-		}
-
-
 	}
+}
 
+namespace script {
 
-	class ApplicationMediator extends ys.mvc.Mediator {
+	export class SetupScript extends ys.Script {
 		constructor() {
 			super();
 		}
 
-		Install() {
-			let v = this.GetView<Application>();
+		Install(): void {
+			let v = this.GetView<ys.Application>();
 
 			egret.lifecycle.addLifecycleListener((context) => {
 				context.onUpdate = () => {
@@ -96,51 +81,79 @@ namespace ys {
 
 				//安装服务
 				cfg.services && cfg.services.forEach(([k, v]) => {
-					ys.mvc.Facade.GET.installService(k, v);
+					ys.Facade.GET.installService(k, v);
 				})
 				//安装数据bucket
 				cfg.buckets && cfg.buckets.forEach(([k, v]) => {
-					ys.mvc.Facade.GET.installBucket(k, v);
+					ys.Facade.GET.installBucket(k, v);
 				})
 
 				ys.setup(cfg);
 
 				RES.registerVersionController(new ys.VersionController(cfg.versionFun));
 				(async () => {
-
 					await RES.loadConfig(cfg.resourceJSON, cfg.resourceRoot);//微信小游戏，不能带随机数。
-					var i = 0;
-					var len = v.cfg.groups.length;
-					if (len) {
-						while (i < len) {
-							await this.loadGroup(cfg.groups[i]);
-							i++;
-						}
-					} else {
-						v.onGroupLoaded('');
-					}
+					this.InvokeScript('start_load_groups', cfg.groups);
 				})();
 
 			}, this);
+		}
+		Uninstall(): void {
+		}
+	}
 
+	export class Loader extends ys.Script {
+		public constructor() {
+			super();
 		}
 
-		async loadGroup(name) {
-			try {
-				let v = this.GetView<Application>();
-				if (RES.isGroupLoaded(name)) {
-					v.onGroupLoaded(name);
-				} else {
-					v.onGroupStart(name);
-					await RES.loadGroup(name, 9999, v);
-					v.onGroupLoaded(name);
-				}
+		Install(): void {
 
-			} catch (e) {
-				console.warn(e);
+		}
+		Uninstall(): void {
+		}
+		/**列出需要关注的invoke */
+		ListInvoke(): any[] {
+			return ['start_load_groups'];
+		}
+		/**处理 invoke*/
+		OnInvoke(handler: number | string, data: any): void {
+			console.log('invoke',handler)
+			if (handler == 'start_load_groups') {
+				(async () => {
+					const groups: string[] = data;
+					const page = this.GetView<ys.Page>();
+					var i = 0;
+					var len = groups.length;
+					if (len) {
+						while (i < len) {
+							await this.loadGroup(groups[i]);
+							i++;
+						}
+						page.Init();
+					} else {
+						page.Init();
+					}
+				})();
 			}
 		}
 
+		async loadGroup(name) {
+			let page = this.GetView<ys.Page>();
+			try {
+				if (RES.isGroupLoaded(name)) {
+					page.OnLoadEnd(name);
+				} else {
+					page.OnLoadStart(name);
+					await RES.loadGroup(name, 9999, page);
+					page.OnLoadEnd(name);
+				}
+
+			} catch (e) {
+				console.warn('加载异常！');
+			}
+		}
+
+
 	}
 }
-

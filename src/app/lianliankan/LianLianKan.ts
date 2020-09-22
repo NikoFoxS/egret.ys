@@ -1,10 +1,18 @@
 module ys {
-	export class LianLianKan {
+	export class LianLianKan extends ys.Container {
 
 		private _xcount: number;
 		private _ycount: number;
 		public constructor() {
+			super();
 		}
+
+		public arr:number[][]=[
+			[1,1,0,0,2,2],
+			[1,1,0,0,2,2],
+			[1,1,0,0,2,2],
+			[1,1,0,0,2,2]
+		]
 
 		create(xCount, yCount) {
 			this._xcount = xCount;
@@ -34,18 +42,15 @@ module ys {
 			}
 		}
 
-		public 
-
 		/**
 		 * 判断二维数组有没有障碍物
 		 */
 		public isBlocked(x: number, y: number): boolean {
-			// if (!SceneCtrl.instance.Arr_erwei[y][x]) {
-			// 	return false;
-			// } else {
-			// 	return true;
-			// }
-			return
+			if (this.arr[y][x] == 0) {
+				return false;
+			} else {
+				return true;
+			}
 		}
 		/**
 		 * 水平方向
@@ -151,11 +156,9 @@ module ys {
 					if ((i == x1 && j == y1) || (i == x2 && j == y2)) {
 						continue;
 					}
-
 					if (this.isBlocked(i, j)) {
 						continue;
 					}
-
 					if (this.turn_once(x1, y1, i, j) && (this.horizon(i, j, x2, y2) || this.vertical(i, j, x2, y2))) {
 						this.createLine(x2, y2, i, j, this.g_x, this.g_y, x1, y1)
 						return true;
@@ -209,23 +212,23 @@ module ys {
 		 * 创建链接线
 		 */
 		public createLine(...num: number[]): void {
-			this.line = new egret.Shape();
-			this.line.graphics.lineStyle(5, 0xff0000);
-			this.line.graphics.moveTo(this.setPos(num[0]), this.setPos(num[1]));
-			this.line.graphics.lineTo(this.setPos(num[2]), this.setPos(num[3]));
-			if (num.length == 6) {
-				this.line.graphics.lineTo(this.setPos(num[4]), this.setPos(num[5]));
-			} else if (num.length == 8) {
-				this.line.graphics.lineTo(this.setPos(num[4]), this.setPos(num[5]));
-				this.line.graphics.lineTo(this.setPos(num[6]), this.setPos(num[7]));
-			}
-			this.line.graphics.endFill();
-			// SceneCtrl.instance.stage.addChild(this.line);
-			if (this.line.parent) {
-				setTimeout(() => {
-					// SceneCtrl.instance.stage.removeChild(this.line);
-				}, 300, this)
-			}
+			// this.line = new egret.Shape();
+			// this.line.graphics.lineStyle(5, 0xff0000);
+			// this.line.graphics.moveTo(this.setPos(num[0]), this.setPos(num[1]));
+			// this.line.graphics.lineTo(this.setPos(num[2]), this.setPos(num[3]));
+			// if (num.length == 6) {
+			// 	this.line.graphics.lineTo(this.setPos(num[4]), this.setPos(num[5]));
+			// } else if (num.length == 8) {
+			// 	this.line.graphics.lineTo(this.setPos(num[4]), this.setPos(num[5]));
+			// 	this.line.graphics.lineTo(this.setPos(num[6]), this.setPos(num[7]));
+			// }
+			// this.line.graphics.endFill();
+			// // SceneCtrl.instance.stage.addChild(this.line);
+			// if (this.line.parent) {
+			// 	setTimeout(() => {
+			// 		// SceneCtrl.instance.stage.removeChild(this.line);
+			// 	}, 300, this)
+			// }
 		}
 		public setPos(num: number): number {
 			return 30 + 80 * num;

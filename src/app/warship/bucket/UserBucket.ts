@@ -1,5 +1,5 @@
 namespace app {
-	export class UserBucket extends ys.mvc.Bucket {
+	export class UserBucket extends ys.Bucket {
 		public constructor() {
 			super();
 		}
