@@ -35,19 +35,12 @@ class Main extends ys.Application {
 
         super(cfg);
         //开发者可以在run之前，进行相应逻辑的判断。判断成功才进行run。
-        this.run();
+        this.once(egret.Event.ADDED_TO_STAGE, () => {
+            this.run();
+        }, this);
+
     }
 
-    // onGroupStart(name: string): void {
-    // }
-    // onGroupProgress(loaded: number, total: number, resItem: RES.ResourceInfo | undefined): void {
-    //     console.log(loaded, '/', total, resItem)
-    // }
-    // onGroupLoaded(name: string): void {
-    //     if (name == 'preload' || name == '') {
-    //         ys.showPage(OpenPage);
-    //     }
-    // }
 
     OnStart() {
         ys.showPage(OpenPage);

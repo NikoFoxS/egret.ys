@@ -74,29 +74,27 @@ namespace script {
 				// egret.ticker.resume();
 			}
 
-			v.once(egret.Event.ADDED_TO_STAGE, () => {
-				const cfg = v.cfg;
-				//设置接口为mock数据
-				ys.Ajax.mock = cfg.mock;
+			const cfg = v.cfg;
+			//设置接口为mock数据
+			ys.Ajax.mock = cfg.mock;
 
-				//安装服务
-				cfg.services && cfg.services.forEach(([k, v]) => {
-					ys.Facade.GET.installService(k, v);
-				})
-				//安装数据bucket
-				cfg.buckets && cfg.buckets.forEach(([k, v]) => {
-					ys.Facade.GET.installBucket(k, v);
-				})
+			//安装服务
+			cfg.services && cfg.services.forEach(([k, v]) => {
+				ys.Facade.GET.installService(k, v);
+			})
+			//安装数据bucket
+			cfg.buckets && cfg.buckets.forEach(([k, v]) => {
+				ys.Facade.GET.installBucket(k, v);
+			})
 
-				ys.setup(cfg);
+			ys.setup(cfg);
 
-				RES.registerVersionController(new ys.VersionController(cfg.versionFun));
-				(async () => {
-					await RES.loadConfig(cfg.resourceJSON, cfg.resourceRoot);//微信小游戏，不能带随机数。
-					this.InvokeScript('start_load_groups', cfg.groups);
-				})();
+			RES.registerVersionController(new ys.VersionController(cfg.versionFun));
+			(async () => {
+				await RES.loadConfig(cfg.resourceJSON, cfg.resourceRoot);//微信小游戏，不能带随机数。
+				this.InvokeScript('start_load_groups', cfg.groups);
+			})();
 
-			}, this);
 		}
 		Uninstall(): void {
 		}
@@ -118,7 +116,7 @@ namespace script {
 		}
 		/**处理 invoke*/
 		OnInvoke(handler: number | string, data: any): void {
-			console.log('invoke',handler)
+			console.log('invoke', handler)
 			if (handler == 'start_load_groups') {
 				(async () => {
 					const groups: string[] = data;
