@@ -36,14 +36,20 @@ namespace ys {
 		// uninstallMediator(mediator) {
 		// 	this.v.uninstallMediator(mediator);
 		// }
-		addView(ui:ys.UI)
-		{
+		addView(ui: ys.UI) {
 			this.v.addView(ui)
 		}
 
-		removeView(ui:ys.UI)
-		{
+		removeView(ui: ys.UI) {
 			this.v.removeView(ui);
+		}
+
+		addScript(sc) {
+			this.v.addScript(sc)
+		}
+
+		removeScript(sc) {
+			this.v.removeScript(sc);
 		}
 
 		installService(serName, Serviceclass): boolean {
@@ -69,12 +75,11 @@ namespace ys {
 		// invokeMediator(handler: any, data: any) {
 		// 	this.v.invokeMediator(handler, data);
 		// }
-		invokeScript(handler: any, data: any)
-		{
-			this.v.invokeScript(handler,data);
+		invokeScript(handler: any, data: any) {
+			this.v.invokeScript(handler, data);
 		}
 
-		invokeService(handler: any, data: any, serName: string) {
+		invokeService(handler: any, data: any, serName: string = 'main') {
 			this.c.invokeService(handler, data, serName);
 		}
 

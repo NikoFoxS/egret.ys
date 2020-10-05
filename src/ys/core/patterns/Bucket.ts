@@ -24,10 +24,14 @@ namespace ys {
 			this._data = JSON.parse(JSON.stringify(this._origin));
 		}
 		/**设置数据 */
-		SetData(json: any) {
+		SetData(json: any,update=false) {
 			if (json) {
 				//赋值
 				(<any>Object).assign(this._origin, json);
+			}
+			if(update)
+			{
+				this.UpdateData();
 			}
 		}
 

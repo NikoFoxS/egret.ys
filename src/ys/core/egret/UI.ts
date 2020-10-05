@@ -1,109 +1,85 @@
 namespace ys {
+
+	export class UIView {
+	}
+
+	export class UIStyle {
+		Init(view) {
+			throw new Error('必须重写Init')
+		}
+	}
+
 	export class UI extends ys.Container {
-		public constructor() {
-			super();
-			this._scripts = [];
-			this.once(egret.Event.REMOVED_FROM_STAGE, () => {
-				//删除脚本
-				this.RemoveScript();
-				//释放资源
-				this.release(this);
-				//
-				Facade.GET.removeView(this);
+		public data: any;
 
-			}, this);
-			Facade.GET.addView(this);
+		private _view;
+		public get view() {
+			return this._view;
 		}
 
-		private _scripts: ys.Script[];
-		public get scripts() {
-			return this._scripts;
-		}
-		/**添加脚本 */
-		protected AddScript<T extends ys.Script>(ui: ys.UI, ScriptClass: new () => T, param: any = {}) {
-			const sc = new ScriptClass();
-			sc.bind(ui);
-			sc.Install(param);
-			ui.scripts.push(sc);
-			console.log('添加脚本',egret.getQualifiedClassName(sc))
+		private _style;
+		public get style() {
+			return this._style;
 		}
 
-		protected RemoveScript() {
-			this._scripts.forEach(sc => {
-				sc.unbind();
-				sc.Uninstall();
-				console.log('移除脚本',egret.getQualifiedClassName(sc))
-			})
-			this._scripts = [];
-		}
-
-		/**释放资源到对象池 */
-		private release(con: ys.Container) {
-			let i = this.numChildren;
-			while (i--) {
-				let c = this.getChildAt(i);
-				if (c instanceof ys.Bitmap) {
-					ys.Bitmap.release(c);
-				} else if (c instanceof ys.TextField) {
-					ys.TextField.release(c);
-				} else if (c instanceof ys.Container) {
-					this.release(c);
-					ys.Container.release(c);
-				} else if (c instanceof ys.Shape) {
-					ys.Shape.release(c);
-				}
+		async LoadGroup(group: string, loadingTip: string = '') {
+			if (group != '') {
+				loadingTip.length && ys.showLoading(loadingTip);
+				await RES.loadGroup(group);
+				loadingTip.length && ys.hideLoading();
 			}
 		}
 
-		protected createUI(ui: ys.UI) {
-			//遍历可枚举的属性
-			Object.getOwnPropertyNames(ui).forEach(val => {
-				//当前实例的属性
-				// console.log(ui, val, ui.hasOwnProperty(val));
-				if (ui.hasOwnProperty(val)) {
-					if (val.indexOf('bm_') == 0) {
-						const res = val.replace('bm_', '');
-						const bm = ys.Bitmap.create(res);
-						ui.addChild(bm);
-						ui[val] = bm;
-						console.log('创建', val, bm);
-					} else if (val.indexOf('txt_') == 0) {
-						const txt = ys.TextField.create();
-						ui.addChild(txt);
-						ui[val] = txt;
-						console.log('创建TextField', val, txt);
-					} else if (val.indexOf('shape_') == 0) {
-						const s = ys.Shape.create();
-						ui.addChild(s);
-						ui[val] = s;
-						console.log('创建Shape', val, s);
-					} else if (val.indexOf('con_') == 0) {
-						const con = ys.Container.create();
-						ui.addChild(con);
-						ui[val] = con;
-						console.log('创建Container', val, con);
-					} else if (val.indexOf('cl_') == 0) {
-						const className = val.replace('cl_', '');
-						const MyClass = egret.getDefinitionByName(className);
-						const cla = new MyClass();
-						ui.addChild(cla);
-						ui[val] = cla;
-						console.log('创建自定义类', val, cla);
-					}
+		InitView(UIViewClass) {
+			const ui = new UIViewClass() as UIView;
+			//实例化显示对象
+			for (let val in ui) {
+				if (val.indexOf('bm_') == 0) {
+					const res = val.replace('bm_', '');
+					const bm = ys.Bitmap.create(res);
+					this.addChild(bm);
+					ui[val] = bm;
+					console.log('', RES.getRes(res))
+				} else if (val.indexOf('txt_') == 0) {
+					const txt = ys.TextField.create();
+					this.addChild(txt);
+					ui[val] = txt;
+				} else if (val.indexOf('shape_') == 0) {
+					const s = ys.Shape.create();
+					this.addChild(s);
+					ui[val] = s;
+				} else if (val.indexOf('con_') == 0) {
+					const con = ys.Container.create();
+					this.addChild(con);
+					ui[val] = con;
+				} else if (val.indexOf('class_') == 0) {
+					const className = val.replace('class_', '');
+					const MyClass = egret.getDefinitionByName(className);
+					const cla = new MyClass();
+					this.addChild(cla);
+					ui[val] = cla;
 				}
-			});
+			}
+			this._view = ui;
 		}
 
-		protected Start() {
-			this.createUI(this);
-			this.OnStart();
+		InitStyle(UIStyleClass) {
+			const style = new UIStyleClass() as UIStyle;
+			style.Init(this.view);
+			this._style = style;
 		}
 
-		Init() {
-			this.Start();
+		InitScript(ScriptClass: any, param?: any) {
+			const sc = new ScriptClass() as ys.Script;
+			sc.bind(this);
+			sc.Install(param);
+			this.once(egret.Event.REMOVED_FROM_STAGE, () => {
+				sc.unbind();
+				sc.Uninstall();
+			}, this);
 		}
 
-		OnStart() {
+		Start(param?: any) {
 
 		}
 

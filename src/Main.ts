@@ -1,4 +1,4 @@
-class Main extends ys.Application {
+class Main extends ys.Application implements RES.PromiseTaskReporter {
 
     public constructor() {
         /** 配置项 */
@@ -33,18 +33,17 @@ class Main extends ys.Application {
             return val;
         }
 
-        super(cfg);
+        super();
         //开发者可以在run之前，进行相应逻辑的判断。判断成功才进行run。
         this.once(egret.Event.ADDED_TO_STAGE, () => {
-            this.run();
+            this.run(cfg);
         }, this);
 
     }
 
 
-    OnStart() {
-        ys.showPage(OpenPage);
-        this.RemoveScript();
+    Start() {
+        ys.showPage(page.Open);
     }
 
     OnLoadStart(name: string) {
