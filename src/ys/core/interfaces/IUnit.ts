@@ -1,8 +1,8 @@
 namespace ys {
     export interface IUnit {
         /**当被安装 */
-        Install(): void;
+        OnRegister(): void;
         /**当被卸载 */
-        Uninstall(): void;
+        OnRemove(): void;
     }
 }

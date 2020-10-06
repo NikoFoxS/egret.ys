@@ -28,7 +28,8 @@ namespace ys {
 		OnLoadEnd(name: string);
 	}
 
-	export class Application extends ys.UI implements LoadingReporter, RES.PromiseTaskReporter {
+
+	export class Application extends ys.Container implements ys.LoadingReporter, RES.PromiseTaskReporter {
 		private static VERSION = '2020-10-04'
 		public constructor() {
 			super();
@@ -45,13 +46,74 @@ namespace ys {
 			if (!cfg.log) {
 				console.log = () => { };
 			}
-			this.InitScript(SetupScript, cfg);
-			this.InitScript(LoaderScript, cfg);
+
+			egret.lifecycle.addLifecycleListener((context) => {
+				context.onUpdate = () => {
+				}
+			})
+			egret.lifecycle.onPause = () => {
+				// egret.ticker.pause();
+			}
+			egret.lifecycle.onResume = () => {
+				// egret.ticker.resume();
+			}
+
+			//设置接口为mock数据
+			ys.Ajax.mock = cfg.mock;
+
+			//安装服务
+			cfg.services && cfg.services.forEach(([k, v]) => {
+				// ys.Facade.GET.installService(k, v);
+
+			})
+			//安装数据bucket
+			cfg.buckets && cfg.buckets.forEach(([k, v]) => {
+				// ys.Facade.GET.installBucket(k, v);
+			})
+
+			ys.setup(cfg);
+
+			RES.registerVersionController(new ys.VersionController(cfg.versionFun));
+			(async () => {
+				await RES.loadConfig(cfg.resourceJSON, cfg.resourceRoot);//微信小游戏，不能带随机数。
+				await this.load(cfg.groups);
+			})();
+
+		}
+
+		async load(groups: string[]) {
+			var i = 0;
+			var len = groups.length;
+			if (len) {
+				while (i < len) {
+					await this.loadGroup(groups[i]);
+					i++;
+				}
+				this.Start();
+			} else {
+				this.Start();
+			}
+		}
+
+		async loadGroup(name) {
+			try {
+				if (RES.isGroupLoaded(name)) {
+					this.OnLoadEnd(name);
+				} else {
+					this.OnLoadStart(name);
+					await RES.loadGroup(name, 9999, this);
+					this.OnLoadEnd(name);
+				}
+
+			} catch (e) {
+				console.warn('加载异常！');
+			}
 		}
 
 
-		onProgress?(current: number, total: number, resItem: RES.ResourceInfo | undefined): void {
-			this.OnLoadProgress(current, total)
+		onProgress?(current: number, total: number, resItem: RES.ResourceInfo | undefined): void
+		{
+			this.OnLoadProgress(current,total);
 		}
 
 		OnLoadStart(name: string) {
@@ -65,5 +127,13 @@ namespace ys {
 		OnLoadEnd(name: string) {
 
 		}
+
+		Start()
+		{
+
+		}
+
+
+
 	}
 }

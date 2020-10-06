@@ -11,9 +11,9 @@ module ys {
 		 * @param t 字符
 		 * @param size 字体大小
 		 * @param color 字体颜色
-		 * @param offsetWidth 宽度缩小多少。主要处理不规范的按钮地图
-		 * @param offsetX x方向偏移多少。主要处理不规范的按钮地图
-		 * @param offsetY y方向偏移多少。主要处理不规范的按钮地图
+		 * @param offsetWidth 宽度缩小多少。主要处理不规范的按钮底图
+		 * @param offsetX x方向偏移多少。主要处理不规范的按钮底图
+		 * @param offsetY y方向偏移多少。主要处理不规范的按钮底图
 		 */
 		public setLabel(t: string, size: number, color: number, offsetWidth = 0, offsetX = 0, offsetY = 0) {
 			if (this.bg) {

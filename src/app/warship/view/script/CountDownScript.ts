@@ -10,7 +10,7 @@ namespace script {
             this.current = 0;
             this.total = time;
 
-            this.bind(this);
+            this.Bind(this);
         }
 
         Reset()

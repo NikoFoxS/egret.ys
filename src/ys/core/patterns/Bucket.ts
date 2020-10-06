@@ -1,8 +1,7 @@
 namespace ys {
 	/**数据仓库，负责数据的储存和提取 */
-	export class Bucket extends Invoker implements IUnit, IBucket {
+	export class Bucket  implements IUnit, IBucket {
 		public constructor() {
-			super();
 			this._data = {};
 			this._origin = {};
 		}
@@ -17,28 +16,28 @@ namespace ys {
 		get data() {
 			return this._data;
 		}
-		
+
 		/**更新数据 */
 		UpdateData() {
 			//深拷贝parse和stringify会有一定的性能损失,所以等SetData都执行完了，再UpdateData。
 			this._data = JSON.parse(JSON.stringify(this._origin));
 		}
 		/**设置数据 */
-		SetData(json: any,update=false) {
+		SetData(json: any, update = false) {
 			if (json) {
 				//赋值
 				(<any>Object).assign(this._origin, json);
 			}
-			if(update)
-			{
+			if (update) {
 				this.UpdateData();
 			}
 		}
 
-		Install(): void {
+		OnRegister() {
 
 		}
-		Uninstall(): void {
+
+		OnRemove() {
 
 		}
 	}

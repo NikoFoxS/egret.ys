@@ -4,18 +4,19 @@ namespace ys {
 
 		//-----------------------------
 		public static release(t: ys.TextField): void {
-			if (!t) {
-				return;
-			}
-			txtPool.push(t);
+			// if (!t) {
+			// 	return;
+			// }
+			// txtPool.push(t);
 		}
 
 		public static create(): ys.TextField {
-			let t = txtPool.pop();
-			if (!t) {
-				t = new ys.TextField;
-			}
-			return t;
+			// let t = txtPool.pop();
+			// if (!t) {
+			// 	t = new ys.TextField;
+			// }
+			// return t;
+			return new ys.TextField();
 		}
 		//多语言
 		public static getLocale: Function = (t) => {

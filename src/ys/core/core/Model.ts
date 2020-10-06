@@ -5,30 +5,26 @@ namespace ys {
 		}
 		private bucketMap: any;
 
-		installBucket<T extends ys.Bucket>(bucName, buClass: new () => T): boolean {
+		RegisterBucket<T extends ys.Bucket>(bucName: any, buClass: new () => T): void {
 			if (!this.bucketMap[bucName]) {
 				const b: T = new buClass();
 				b.name = bucName;
 				this.bucketMap[bucName] = b;
-				b.Install();
-				ys.logger_log('<M>安装Bucket:', bucName, egret.getQualifiedClassName(buClass))
-				return true;
-			} else {
-				return false;
+				b.OnRegister();
 			}
 
 		}
 
-		getBucket(bucName: string): Bucket {
-			return this.bucketMap[bucName];
+		getBucket(bucName: any): Bucket {
+			return this.bucketMap[bucName ];
 		}
 
-		uninstallBucket(bucName): void {
+		RemoveBucket(bucName:any): void {
 			var b: IUnit = this.bucketMap[bucName];
 			if (b) {
-				ys.logger_log('<M>卸载Bucket:', bucName);
+				b.OnRemove();
+				this.bucketMap[bucName] = null;
 				delete this.bucketMap[bucName];
-				b.Uninstall();
 			}
 		}
 

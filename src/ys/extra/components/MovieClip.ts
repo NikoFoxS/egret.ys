@@ -9,6 +9,10 @@ namespace ys {
 		public static PLAY_OVER: string = "play_over";
 		public static FRAME_UPDATE: string = "frame_update";
 
+		public static create() {
+			return new ys.MovieClip();
+		}
+
 		public constructor() {
 			super();
 			this.once(egret.Event.REMOVED_FROM_STAGE, () => {
@@ -32,7 +36,7 @@ namespace ys {
 			}
 		}
 
-		public setFrames(clips: string[], fps: number,frame:number=0) {
+		public setFrames(clips: string[], fps: number, frame: number = 0) {
 			this._clips = clips;
 			this._fps = fps;
 			this._totalFrame = clips.length;

@@ -85,7 +85,8 @@ module ys {
 			s.cacheAsBitmap = true;
 			this.flower = s;
 
-			const la = ys.newLabel(ctn);
+			const la = new ys.TextField();// ys.newLabel(ctn);
+			ctn.addChild(la);
 			la.textColor = 0xffffff;
 			la.size = 25;
 			la.width = width;

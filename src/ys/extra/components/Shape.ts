@@ -3,18 +3,19 @@ namespace ys {
 	export class Shape extends egret.Shape {
 		//-----------------------------
 		public static release(s: ys.Shape): void {
-			if (!s) {
-				return;
-			}
-			shapPool.push(s);
+			// if (!s) {
+			// 	return;
+			// }
+			// shapPool.push(s);
 		}
 
 		public static create(): ys.Shape {
-			let s = shapPool.pop();
-			if (!s) {
-				s = new ys.Shape();
-			}
-			return s;
+			// let s = shapPool.pop();
+			// if (!s) {
+			// 	s = new ys.Shape();
+			// }
+			// return s;
+			return new ys.Shape();
 		}
 		//------------------------------
 		drawRec(width: number, height: number, color: number, radius: number = 0) {

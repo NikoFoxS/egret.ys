@@ -1,4 +1,4 @@
-class Main extends ys.Application implements RES.PromiseTaskReporter {
+class Main extends ys.Application {
 
     public constructor() {
         /** 配置项 */
@@ -13,13 +13,11 @@ class Main extends ys.Application implements RES.PromiseTaskReporter {
         cfg.height = 1334;
         //添加服务Service
         cfg.services = [
-            ['UserService', app.UserService],
-            ['BattleService', app.BattleService],
-            ['ColyseusService', app.ColyseusService]
+            [SERVICE.USER_INFO, service.UserInfo],
         ];
         //添加数据Bucket
         cfg.buckets = [
-            ['user', app.UserBucket]
+            [BUCKET.USER_INFO, bucket.UserInfo]
         ]
         cfg.mock = false;
         //对加载项进行处理
@@ -42,10 +40,6 @@ class Main extends ys.Application implements RES.PromiseTaskReporter {
     }
 
 
-    Start() {
-        ys.showPage(page.Open);
-    }
-
     OnLoadStart(name: string) {
 
     }
@@ -57,4 +51,9 @@ class Main extends ys.Application implements RES.PromiseTaskReporter {
     OnLoadEnd(name: string) {
 
     }
+
+    Start() {
+        ys.showPage(page.Open);
+    }
 }
+

@@ -8,3 +8,13 @@ namespace ys
         }
     }
 }
+
+namespace component{
+    export class Base extends ys.Container
+    {
+        constructor()
+        {
+            super();
+        }
+    }
+}

@@ -1,7 +1,14 @@
 module ys {
 	export class TextInput extends egret.TextField {
-		public constructor(w, h, size = 0) {
+		public static create() {
+			return new ys.TextInput();
+		}
+		
+		public constructor() {
 			super();
+		}
+
+		public create(w, h, size = 0) {
 			this.type = egret.TextFieldType.INPUT;
 			this.verticalAlign = egret.VerticalAlign.MIDDLE;
 			this.width = w;

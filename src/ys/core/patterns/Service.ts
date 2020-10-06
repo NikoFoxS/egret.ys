@@ -1,9 +1,18 @@
 namespace ys {
 
-	/**提供服务，服务完成后，通知界面脚本或者其他的service */
-	export class Service extends Invoker implements IInvoked {
+	export class Service implements IUnit, IInvoked {
 		public constructor() {
-			super();
+			this.invoker = new ys.Invoker();
+		}
+
+		protected invoker: ys.Invoker;
+
+		OnRegister() {
+
+		}
+
+		OnRemove() {
+
 		}
 
 		OnInvoke(handler: number | string, data: any): void {

@@ -5,29 +5,21 @@ module ys {
 		}
 
 		private serviceMap: any;
-		installService(name: string, serClass: any): boolean {
-			ys.logger_log('<C>安装Service:', name, egret.getQualifiedClassName(serClass));
-			if (!this.serviceMap[name]) {
-				this.serviceMap[name] = serClass;
-				ys.logger_log(this.serviceMap)
-				return true;
-			} else {
-				return false;
-			}
-
+		RegisterService(name: number, serClass: any): void {
+			const s: Service = new serClass();
+			this.serviceMap[name + ''] = s;
 		}
 
-		uninstallService(name): void {
-			ys.logger_log('<C>卸载Service:', name);
-			this.serviceMap[name] = null;
-			delete this.serviceMap[name];
+		RemvoeService(name): void {
+			const s: Service = this.serviceMap[name + ''];
+			s.OnRemove();
+			this.serviceMap[name + ''] = null;
+			delete this.serviceMap[name + ''];
 		}
 
-		invokeService(handler, data, serName) {
-			const serClass = this.serviceMap[serName];
-			if (serClass) {
-				ys.logger_log('<C>触发Service:', 'handler:', handler, 'data:', data, egret.getQualifiedClassName(serClass))
-				const s: Service = new serClass();
+		InvokeService(handler: number, data: any, serName: number) {
+			const s = this.serviceMap[serName + ''];
+			if (s) {
 				s && s.OnInvoke(handler, data);
 			}
 		}

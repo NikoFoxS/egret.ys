@@ -1,14 +1,4 @@
 namespace ys {
-	/**
-	 * 简化的puremvc.
-	 * 由于puremvc会创建过多的command，导致代码过多。
-	 * ys.mvc将Observer和command相关的功能删除。直接通过invoker来调用proxy和mediator
-	 * mediator调用invoker，通知proxy获取数据。
-	 * proxy获取数据后调用invoker，通知mediator更新数据。
-	 * mediator也可以调用invoker，通知mediator。
-	 * mediator中不能直接获取proxy。所以proxy获取数据后，必须封装好数据，通过invoker通知出去。
-	 * 通过key和value的映射，将MVC解耦合。
-	 */
 	export class Facade {
 		public constructor(mClass: any, vClass: any, cClass: any) {
 			this.m = new mClass();
@@ -28,60 +18,75 @@ namespace ys {
 		private v: View;
 		private c: Controller;
 
+		public get model()
+		{
+			return this.m;
+		}
 
-		// installMediator(ui, MediatorClass): ys.mvc.Mediator {
-		// 	return this.v.installMediator(ui, MediatorClass);
+		public get view()
+		{
+			return this.v;
+		}
+
+		public get controller()
+		{
+			return this.c;
+		}
+
+
+		// // installMediator(ui, MediatorClass): ys.mvc.Mediator {
+		// // 	return this.v.installMediator(ui, MediatorClass);
+		// // }
+
+		// // uninstallMediator(mediator) {
+		// // 	this.v.uninstallMediator(mediator);
+		// // }
+		// addView(ui: ys.UI) {
+		// 	this.v.addView(ui)
 		// }
 
-		// uninstallMediator(mediator) {
-		// 	this.v.uninstallMediator(mediator);
+		// removeView(ui: ys.UI) {
+		// 	this.v.removeView(ui);
 		// }
-		addView(ui: ys.UI) {
-			this.v.addView(ui)
-		}
 
-		removeView(ui: ys.UI) {
-			this.v.removeView(ui);
-		}
-
-		addScript(sc) {
-			this.v.addScript(sc)
-		}
-
-		removeScript(sc) {
-			this.v.removeScript(sc);
-		}
-
-		installService(serName, Serviceclass): boolean {
-			return this.c.installService(serName, Serviceclass);
-		}
-
-		uninstallService(serName) {
-			this.c.uninstallService(serName);
-		}
-
-		installBucket(bucName, BucketClass): boolean {
-			return this.m.installBucket(bucName, BucketClass);
-		}
-
-		uninstallBucket(bucName) {
-			this.m.uninstallBucket(bucName);
-		}
-
-		getBucket(bucName): ys.Bucket {
-			return this.m.getBucket(bucName);
-		}
-
-		// invokeMediator(handler: any, data: any) {
-		// 	this.v.invokeMediator(handler, data);
+		// addScript(sc) {
+		// 	this.v.addScript(sc)
 		// }
-		invokeScript(handler: any, data: any) {
-			this.v.invokeScript(handler, data);
-		}
 
-		invokeService(handler: any, data: any, serName: string = 'main') {
-			this.c.invokeService(handler, data, serName);
-		}
+		// removeScript(sc) {
+		// 	this.v.removeScript(sc);
+		// }
+
+		// installService(serName, Serviceclass): boolean {
+		// 	return this.c.installService(serName, Serviceclass);
+		// }
+
+		// uninstallService(serName) {
+		// 	this.c.uninstallService(serName);
+		// }
+
+		// installBucket(bucName, BucketClass): boolean {
+		// 	return this.m.installBucket(bucName, BucketClass);
+		// }
+
+		// uninstallBucket(bucName) {
+		// 	this.m.uninstallBucket(bucName);
+		// }
+
+		// getBucket(bucName): ys.Bucket {
+		// 	return this.m.getBucket(bucName);
+		// }
+
+		// // invokeMediator(handler: any, data: any) {
+		// // 	this.v.invokeMediator(handler, data);
+		// // }
+		// invokeScript(handler: any, data: any) {
+		// 	this.v.invokeScript(handler, data);
+		// }
+
+		// invokeService(handler: any, data: any, serName: string = 'main') {
+		// 	this.c.invokeService(handler, data, serName);
+		// }
 
 	}
 }
