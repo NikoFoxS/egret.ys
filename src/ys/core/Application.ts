@@ -30,7 +30,7 @@ namespace ys {
 
 
 	export class Application extends ys.Container implements ys.LoadingReporter, RES.PromiseTaskReporter {
-		private static VERSION = '2020-10-04'
+		private static VERSION = '2020-10-06'
 		public constructor() {
 			super();
 		}
