@@ -37,7 +37,8 @@ namespace page {
 
 		showHead() {
 			const head = this.bm_headimg_jpg;
-			this.anchor(head,0.5,0.5,true);
+			this.anchor(head, 0.5, 0.5, true);
+			this.scale(head, 0);
 			this.bindScript(head, script.ScaleShow, { time: 600, scale: 1 });
 			// this.anchor(head, 0.5, 0.5,true);
 			// egret.Tween.get(head).to({ scaleX: 1, scaleY: 1 }, 600, egret.Ease.backOut);
@@ -45,8 +46,8 @@ namespace page {
 
 		hideHead() {
 			const head = this.bm_headimg_jpg;
-			this.anchor(head,0.5,0.5,true);
-			this.bindScript(head, script.ScaleHide, { time: 600, scale: 0.5 });
+			this.anchor(head, 0.5, 0.5, true);
+			this.bindScript(head, script.ScaleHide, { time: 600, scale: 0 });
 			// egret.Tween.get(head).to({ scaleX: 0.5, scaleY: 0.5 }, 600, egret.Ease.backIn);
 		}
 
@@ -59,11 +60,15 @@ namespace page {
 		}
 
 		ListInvoke(): any[] {
-			return [];
+			return [INVOKE.ON_GET_USER_INFO];
 		}
 
 		OnInvoke(handler: number, data?: any): void {
-
+			switch (handler) {
+				case INVOKE.ON_GET_USER_INFO:
+						
+					break;
+			}
 		}
 
 		OnRegister(data?: any) {
@@ -72,6 +77,7 @@ namespace page {
 			head.touchEnabled = true;
 			head.addEventListener(egret.TouchEvent.TOUCH_TAP, v.hideHead, v);
 			v.showHead();
+			this.invoker.InvokeScript(INVOKE.GET_USER_INFO, {});
 		}
 
 		OnRemove() {

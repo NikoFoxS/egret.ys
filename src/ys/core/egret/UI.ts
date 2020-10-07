@@ -52,6 +52,18 @@ namespace ys {
 			}, this);
 		}
 
+		scale(d:egret.DisplayObject,scaleX,scaleY?)
+		{
+			if(scaleY)
+			{
+				d.scaleX = scaleX;
+				d.scaleY = scaleY;
+			}else
+			{
+				d.scaleX = d.scaleY = scaleX;
+			}
+		}
+
 		anchor(d: egret.DisplayObject, ax = 0.5, ay = 0.5, fix = false) {
 			const anx = d.anchorOffsetX;
 			const any = d.anchorOffsetY;

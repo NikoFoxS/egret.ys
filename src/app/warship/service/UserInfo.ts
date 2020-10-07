@@ -14,6 +14,17 @@ namespace service {
 
 		OnInvoke(handler: number | string, data: any): void {
 			// throw new Error('need override OnInvoke()')
+			switch(handler)
+			{
+				case INVOKE.GET_USER_INFO:
+				this.getUserInfo(data);
+				break;
+			}
+		}
+
+		private getUserInfo(data)
+		{
+			let a = new ys.Ajax();
 		}
 
 		// OnInvoke(handler: number | string, data: any): void {

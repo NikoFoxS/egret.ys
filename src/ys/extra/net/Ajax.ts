@@ -29,8 +29,7 @@ module ys {
 			return xhr;
 		}
 
-		public get mock()
-		{
+		public get mock() {
 			return Ajax.mock;
 		}
 
@@ -59,7 +58,7 @@ module ys {
 					self._responseText = x.responseText;
 					callback(x.status, x.responseText);
 				} else {
-					callback('error',{});
+					callback('error', '');
 				}
 			};
 			if (method == 'POST') {
@@ -70,7 +69,7 @@ module ys {
 
 		public post(url, data, callback, async = true) {
 			if (Ajax.mock) {
-				callback(null,{});
+				callback(null, {});
 				return;
 			}
 			var query = [];
@@ -90,6 +89,22 @@ module ys {
 				query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
 			}
 			this.send(url + (query.length ? '?' + query.join('&') : ''), callback, 'GET', null, async)
+		}
+
+		public postAsync(url, data) {
+			return new Promise((resolve, reject) => {
+				this.post(url, data, (status, responseText) => {
+					resolve(responseText);
+				});
+			})
+		}
+
+		public getAsync(url, data) {
+			return new Promise((resolve, reject) => {
+				this.get(url, data, (status, responseText) => {
+					resolve(responseText);
+				});
+			})
 		}
 	}
 }

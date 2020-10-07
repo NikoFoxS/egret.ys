@@ -3,6 +3,7 @@ namespace script {
         OnRegister(data?: any) {
             var v: egret.DisplayObject = this.target as egret.DisplayObject;
             var {time, scale} = data;
+            egret.Tween.removeTweens(v);
             egret.Tween.get(v).to({ scaleX: scale, scaleY: scale }, time, egret.Ease.backOut);
         }
 
@@ -15,6 +16,7 @@ namespace script {
         OnRegister(data?: any) {
             var v: egret.DisplayObject = this.target as egret.DisplayObject;
             var {time, scale} = data;
+            egret.Tween.removeTweens(v);
             egret.Tween.get(v).to({ scaleX: scale, scaleY: scale }, time, egret.Ease.backIn)
         }
 
