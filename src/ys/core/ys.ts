@@ -3,10 +3,6 @@ class YS {
 		return egret.MainContext.instance.stage;
 	}
 
-	static get main() {
-		return egret.MainContext.instance.stage.getChildAt(0) as egret.DisplayObjectContainer;
-	}
-
 	static get stageW() {
 		return YS.stage.stageWidth;
 	}
@@ -225,16 +221,6 @@ namespace ys {
 		layer && layer.addChild(s);
 		return s;
 	}
-
-	// export function newRectRound(w, h, color, cornerW, cornerH, layer?: egret.DisplayObjectContainer): ys.Shape {
-	// 	const rec = new ys.Shape();
-	// 	const g = rec.graphics;
-	// 	g.beginFill(color);
-	// 	g.drawRoundRect(0, 0, w, h, cornerW, cornerH);
-	// 	g.endFill();
-	// 	layer && layer.addChild(rec);
-	// 	return rec;
-	// }
 
 	export function newTextField(color, size, layer?: egret.DisplayObjectContainer): ys.TextField {
 		const t = new ys.TextField();

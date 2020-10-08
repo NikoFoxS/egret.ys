@@ -1,6 +1,6 @@
 namespace ys {
     export class Invoker {
-        InvokeService(handler: any, data: any, name: number) {
+        InvokeService(handler: any, data: any, name: any) {
             ys.Facade.GET.controller.InvokeService(handler, data, name);
         }
 
@@ -9,7 +9,7 @@ namespace ys {
         }
 
         GetBucket(bucName: any) {
-            return ys.Facade.GET.model.getBucket(bucName);
+            return ys.Facade.GET.model.GetBucket(bucName);
         }
     }
 }

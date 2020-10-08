@@ -6,6 +6,9 @@ namespace ys {
 
         private list: ys.IObserver[];
         public registerObserver(o: ys.IObserver) {
+            if (o instanceof ys.Script) {
+                console.log('registerScript::', o.className);
+            }
             this.list.push(o);
         }
 
@@ -20,6 +23,9 @@ namespace ys {
             for (var i = 0; i < this.list.length; i++) {
                 var o = this.list[i];
                 if (o.ListInvoke().indexOf(handler) != -1) {
+                    if (o instanceof ys.Script) {
+                        console.log('OnInvoke::', o.className, 'handler', handler, 'data', data);
+                    }
                     o.OnInvoke(handler, data);
                 }
 

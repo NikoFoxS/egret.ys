@@ -2,9 +2,16 @@ namespace ys {
 	/**数据仓库，负责数据的储存和提取 */
 	export class Bucket  implements IUnit, IBucket {
 		public constructor() {
+			this._className = egret.getQualifiedClassName(this);
 			this._data = {};
 			this._origin = {};
 		}
+
+		private _className:string;
+		public get className()
+		{
+			return this._className;
+		};
 
 		private bucName: string;
 		private _data: any;//get数据

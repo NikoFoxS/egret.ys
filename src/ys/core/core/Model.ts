@@ -11,15 +11,18 @@ namespace ys {
 				b.name = bucName;
 				this.bucketMap[bucName] = b;
 				b.OnRegister();
+				console.log('RegisterBucket::', b.className)
 			}
 
 		}
 
-		getBucket(bucName: any): Bucket {
-			return this.bucketMap[bucName ];
+		GetBucket(bucName: any): Bucket {
+			const buc: ys.Bucket = this.bucketMap[bucName];
+			console.log('GetBucket::', buc.className);
+			return buc;
 		}
 
-		RemoveBucket(bucName:any): void {
+		RemoveBucket(bucName: any): void {
 			var b: IUnit = this.bucketMap[bucName];
 			if (b) {
 				b.OnRemove();

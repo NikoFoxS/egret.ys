@@ -64,11 +64,13 @@ namespace ys {
 			//安装服务
 			cfg.services && cfg.services.forEach(([k, v]) => {
 				// ys.Facade.GET.installService(k, v);
+				ys.Facade.GET.controller.RegisterService(k,v);
 
 			})
 			//安装数据bucket
 			cfg.buckets && cfg.buckets.forEach(([k, v]) => {
 				// ys.Facade.GET.installBucket(k, v);
+				ys.Facade.GET.model.RegisterBucket(k,v);
 			})
 
 			ys.setup(cfg);

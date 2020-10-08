@@ -12,8 +12,9 @@ namespace service {
 
 		}
 
-		OnInvoke(handler: number | string, data: any): void {
+		OnInvoke(handler: any, data: any): void {
 			// throw new Error('need override OnInvoke()')
+			console.log('OnInvoke::',handler,data)
 			switch(handler)
 			{
 				case INVOKE.GET_USER_INFO:
@@ -24,7 +25,9 @@ namespace service {
 
 		private getUserInfo(data)
 		{
+
 			let a = new ys.Ajax();
+			this.invoker.InvokeScript(INVOKE.ON_GET_USER_INFO,{name:'niko'});
 		}
 
 		// OnInvoke(handler: number | string, data: any): void {

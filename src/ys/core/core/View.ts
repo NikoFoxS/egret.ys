@@ -5,11 +5,11 @@ namespace ys {
 		}
 
 		private subject: ys.Subject;
-		RegisterScript(script: ys.UIScript) {
+		RegisterScript(script: ys.Script) {
 			this.subject.registerObserver(script);
 		}
 
-		removeScript(script: ys.UIScript) {
+		removeScript(script: ys.Script) {
 			this.subject.removeObserver(script);
 		}
 

@@ -5,21 +5,23 @@ module ys {
 		}
 
 		private serviceMap: any;
-		RegisterService(name: number, serClass: any): void {
+		RegisterService(name: any, serClass: any): void {
 			const s: Service = new serClass();
-			this.serviceMap[name + ''] = s;
+			this.serviceMap[name] = s;
+			console.log('RegisterService::',s.className)
 		}
 
 		RemvoeService(name): void {
-			const s: Service = this.serviceMap[name + ''];
+			const s: Service = this.serviceMap[name];
 			s.OnRemove();
-			this.serviceMap[name + ''] = null;
-			delete this.serviceMap[name + ''];
+			this.serviceMap[name] = null;
+			delete this.serviceMap[name];
 		}
 
-		InvokeService(handler: number, data: any, serName: number) {
-			const s = this.serviceMap[serName + ''];
+		InvokeService(handler: number, data: any, serName: any) {
+			const s:Service = this.serviceMap[serName];
 			if (s) {
+				console.log('InvokeService::',s.className,'handler',handler,'data',data)
 				s && s.OnInvoke(handler, data);
 			}
 		}
