@@ -1,3 +1,44 @@
+class YS {
+	static get stage() {
+		return egret.MainContext.instance.stage;
+	}
+
+	static get main() {
+		return egret.MainContext.instance.stage.getChildAt(0) as egret.DisplayObjectContainer;
+	}
+
+	static get stageW() {
+		return YS.stage.stageWidth;
+	}
+
+	static get stageH() {
+		return YS.stage.stageHeight;
+	}
+
+	static get stageHalfW() {
+		return YS.stage.stageWidth * 0.5;
+	}
+
+	static get stageHalfH() {
+		return YS.stage.stageHeight * 0.5;
+	}
+
+	static get canvas() {
+		var player = <HTMLDivElement>document.querySelector(".egret-player");
+		return player && player.getElementsByTagName('canvas')[0] || null;
+	}
+
+	/**设计坐标缩放到DOM坐标的大小 */
+	static get ScaleCanvasToDomFactor() {
+		return 1 / egret.sys.DisplayList.$canvasScaleFactor;
+	}
+
+	static get ScaledDomToCanvasFactor() {
+		return egret.sys.DisplayList.$canvasScaleFactor;
+	}
+
+}
+
 namespace ys {
 
 	export class Context {

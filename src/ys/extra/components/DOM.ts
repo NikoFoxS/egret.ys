@@ -35,7 +35,7 @@ module ys {
 		}
 
 		get scale() {
-			return ys.Context.SCALE;
+			return 1/egret.sys.DisplayList.$canvasScaleFactor;
 		}
 
 		public set(x, y, w, h) {
