@@ -58,9 +58,6 @@ namespace ys {
 				// egret.ticker.resume();
 			}
 
-			//设置接口为mock数据
-			ys.Ajax.mock = cfg.mock;
-
 			//安装服务
 			cfg.services && cfg.services.forEach(([k, v]) => {
 				// ys.Facade.GET.installService(k, v);

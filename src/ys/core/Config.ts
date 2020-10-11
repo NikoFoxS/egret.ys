@@ -12,6 +12,5 @@ namespace ys {
         public versionFun: Function;
         public services: any[];
         public buckets: any[];
-        public mock: boolean;
     }
 }

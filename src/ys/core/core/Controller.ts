@@ -8,6 +8,7 @@ module ys {
 		RegisterService(name: any, serClass: any): void {
 			const s: Service = new serClass();
 			this.serviceMap[name] = s;
+			s.OnRegister();
 			console.log('RegisterService::',s.className)
 		}
 

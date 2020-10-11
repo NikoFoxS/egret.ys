@@ -29,7 +29,7 @@ namespace page {
 			const head = this.bm_headimg_jpg;
 			this.Anchor(head, 0.5, 0.5, true);
 			this.Scale(head, 0);
-			this.BindBehavior(head, behavior.ScaleShow, { time: 600, scale: 1 });
+			ys.Behavior.Bind(head, behavior.ScaleShow, { time: 600, scale: 1 });
 			// this.anchor(head, 0.5, 0.5,true);
 			// egret.Tween.get(head).to({ scaleX: 1, scaleY: 1 }, 600, egret.Ease.backOut);
 		}
@@ -37,7 +37,8 @@ namespace page {
 		hideHead() {
 			const head = this.bm_headimg_jpg;
 			this.Anchor(head, 0.5, 0.5, true);
-			this.BindBehavior(head, behavior.ScaleHide, { time: 600, scale: 0 });
+			// this.BindBehavior(head, behavior.ScaleHide, { time: 600, scale: 0 });
+			ys.Behavior.Bind(head, behavior.ScaleHide, { time: 600, scale: 0 });
 		}
 
 	}
@@ -54,11 +55,15 @@ namespace page {
 			const v = this.target as Layout;
 			const head = v.bm_headimg_jpg;
 			head.touchEnabled = true;
-			head.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getUserInfo, this);
+			// head.addEventListener(egret.TouchEvent.TOUCH_TAP, this.getUserInfo, this);
 
 			//移除事件
 			this.OnRemove = () => {
 				head.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.getUserInfo, this);
+			}
+			const clicker = new behavior.Clicker(head,10000); //ys.Behavior.Bind(head, behavior.Clicker) as behavior.Clicker;
+			clicker.onClick = () => {
+				this.getUserInfo();
 			}
 
 			//

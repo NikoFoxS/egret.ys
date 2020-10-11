@@ -4,8 +4,12 @@ module ys {
 	export class Ajax {
 		constructor() {
 		}
-		/**如果为true，ajax不会真正执行，会截断直接callback */
-		public static mock: boolean;
+
+		private static mock: ys.Mock;
+		public static setupMock(mock: ys.Mock) {
+			Ajax.mock = mock;
+		}
+
 		private xhr() {
 			if (typeof XMLHttpRequest !== 'undefined') {
 				return new XMLHttpRequest();
@@ -27,10 +31,6 @@ module ys {
 				}
 			}
 			return xhr;
-		}
-
-		public get mock() {
-			return Ajax.mock;
 		}
 
 		private _status: number = 200;
@@ -69,9 +69,14 @@ module ys {
 
 		public post(url, data, callback, async = true) {
 			if (Ajax.mock) {
-				callback(null, {});
-				return;
+				let res = Ajax.mock.response(url, data);
+				if (res) {
+					this._responseText = JSON.stringify(res);
+					callback(null, res);
+					return;
+				}
 			}
+
 			var query = [];
 			for (var key in data) {
 				query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
@@ -81,9 +86,14 @@ module ys {
 
 		public get(url, data, callback, async = true) {
 			if (Ajax.mock) {
-				callback(null);
-				return;
+				let res = Ajax.mock.response(url, data);
+				if (res) {
+					this._responseText = JSON.stringify(res);
+					callback(null, res);
+					return;
+				}
 			}
+
 			var query = [];
 			for (var key in data) {
 				query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
@@ -91,20 +101,20 @@ module ys {
 			this.send(url + (query.length ? '?' + query.join('&') : ''), callback, 'GET', null, async)
 		}
 
-		public postAsync(url, data) {
-			return new Promise((resolve, reject) => {
-				this.post(url, data, (status, responseText) => {
-					resolve(responseText);
-				});
-			})
-		}
+		// public postAsync(url, data) {
+		// 	return new Promise((resolve, reject) => {
+		// 		this.post(url, data, (status, responseText) => {
+		// 			resolve(responseText);
+		// 		});
+		// 	})
+		// }
 
-		public getAsync(url, data) {
-			return new Promise((resolve, reject) => {
-				this.get(url, data, (status, responseText) => {
-					resolve(responseText);
-				});
-			})
-		}
+		// public getAsync(url, data) {
+		// 	return new Promise((resolve, reject) => {
+		// 		this.get(url, data, (status, responseText) => {
+		// 			resolve(responseText);
+		// 		});
+		// 	})
+		// }
 	}
 }

@@ -42,11 +42,6 @@ namespace ys {
             })
         }
 
-        BindBehavior(target: egret.DisplayObject, ScriptClass, data: any) {
-            const sc = new ScriptClass() as ys.Behavior;
-            sc.Bind(target, data);
-        }
-
         Scale(d: egret.DisplayObject, scaleX, scaleY?) {
             if (scaleY) {
                 d.scaleX = scaleX;
