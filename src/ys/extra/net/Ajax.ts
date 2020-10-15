@@ -69,7 +69,7 @@ module ys {
 
 		public post(url, data, callback, async = true) {
 			if (Ajax.mock) {
-				let res = Ajax.mock.response(url, data);
+				let res = Ajax.mock.mock(url, data);
 				if (res) {
 					this._responseText = JSON.stringify(res);
 					callback(null, res);
@@ -86,7 +86,7 @@ module ys {
 
 		public get(url, data, callback, async = true) {
 			if (Ajax.mock) {
-				let res = Ajax.mock.response(url, data);
+				let res = Ajax.mock.mock(url, data);
 				if (res) {
 					this._responseText = JSON.stringify(res);
 					callback(null, res);

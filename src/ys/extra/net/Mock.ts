@@ -3,7 +3,7 @@ module ys {
 		public constructor() {
 		}
 
-		response(api, data): any {
+		mock(api, data): any {
 			let res;
 			switch(api)
 			{
