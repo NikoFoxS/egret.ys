@@ -1,77 +1,52 @@
-// namespace page {
-// 	class View extends ys.UIView {
-// 		public bm_headimg_jpg: ys.Bitmap = null;
-// 		public shape_bg: ys.Shape = null;
-// 	}
+namespace page {
+    //负责元素添加，会根据前缀自动创建相应的显示对象。
+    class UI {
+    }
 
-// 	class Style extends ys.UIStyle {
-// 		private v: any;
-// 		Init(view) {
-// 			this.v = view;
-// 			const v = this.v as View;
-// 			v.shape_bg.drawRec(100, 100, 0xff0000);
+    export class PageTemplate extends ys.UI {
+        constructor() {
+            super();
+        }
+        /**调用Start之前，会自动给data赋值 */
+        async Start() {
+            this.CreateDisplayObject(UI);
+            this.Script(Script);
+        }
 
-// 			const head = v.bm_headimg_jpg;
-// 			ys.layoutRight(head, 200);
-// 		}
+        /**布局 */
+        Layout() {
+            const data = this.data;
+            const ui = this.ui as UI;
+        }
 
-// 		public bottomHead() {
-// 			const v = this.v as View;
-// 			ys.layoutBottom(v.bm_headimg_jpg, 0);
-// 		}
+    }
 
-// 		public showRule() {
-// 		}
+    class Script extends ys.Script {
+        constructor() {
+            super();
+        }
 
-// 	}
+        OnRegister(data?: any) {
+            //添加事件
+            const page = this.target as PageTemplate;
+            const ui = page.ui;
 
-// 	class Script extends ys.Script {
-// 		constructor() {
-// 			super();
-// 		}
+            //移除事件
+            this.OnRemove = () => {
+            }
+        }
+        /**列出感兴趣的消息 */
+        ListInvoke(): any[] {
+            return [];
+        }
+        /**处理感兴趣的消息 */
+        OnInvoke(handler: number, data?: any): void {
+            switch (handler) {
+                default:
+                    break;
+            }
+        }
 
-// 		Install(): void {
-// 			let ui = this.GetView() as ys.UI;
-// 			const v = ui.view as View;
-// 			v.bm_headimg_jpg.touchEnabled = true;
-// 			// v.bm_headimg_jpg.alpha = 0.01;
-// 			v.bm_headimg_jpg.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-// 				// v.bm_headimg_jpg.y += 10;
-// 				const style = ui.style as Style;
-// 				style.bottomHead();
+    }
 
-// 			}, this);
-// 		}
-// 		Uninstall(): void {
-
-// 		}
-// 		/**列出需要关注的invoke */
-// 		ListInvoke(): any[] {
-// 			return [];
-// 		}
-// 		/**处理 invoke*/
-// 		OnInvoke(handler: number | string, data: any): void {
-
-// 		}
-// 	}
-
-// 	export class Play extends ys.UI {
-// 		public constructor() {
-// 			super();
-// 		}
-
-// 		async Start(data?:any) {
-// 			await this.LoadGroup('');
-// 			//view
-// 			this.InitView(View);
-// 			//layout
-// 			this.InitStyle(Style);
-// 			//script
-// 			this.InitScript(Script, data);
-// 		}
-
-// 	}
-// }
-
-
-
+}

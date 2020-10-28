@@ -13,15 +13,16 @@ class Main extends ys.Application {
         cfg.height = 1334;
         //添加服务Service
         cfg.services = [
-            [SERVICE.USER_INFO, service.UserInfo],
+            [NAME.S_USER, service.UserInfo],
         ];
         //添加数据Bucket
         cfg.buckets = [
-            [BUCKET.USER_INFO, bucket.UserInfo]
+            [NAME.B_USER, bucket.UserInfo]
         ]
         //对加载项进行处理
         cfg.versionFun = (url) => {
-            console.log('加载' + url);
+            console.log('loading ' + url);
+            //特殊处理加载
             return url;
         }
         //一般处理多语言。
@@ -48,11 +49,18 @@ class Main extends ys.Application {
     }
 
     OnLoadEnd(name: string) {
+        switch (name) {
+            case 'loading':
+                break;
 
+            case 'preload':
+                ys.showPage(page.Menu);
+                break;
+
+            case 'sharein':
+                break;
+        }
     }
 
-    Start() {
-        ys.showPage(page.Open);
-    }
 }
 

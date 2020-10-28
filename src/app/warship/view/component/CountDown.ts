@@ -1,4 +1,4 @@
-// namespace component
+// namespace comp
 // {
 //     class View extends ys.UIView {
 // 		public bm_headimg_jpg: ys.Bitmap = null;

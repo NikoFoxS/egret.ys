@@ -30,14 +30,14 @@ namespace ys {
 
 
 	export class Application extends ys.Container implements ys.LoadingReporter, RES.PromiseTaskReporter {
-		private static VERSION = '2020-10-06'
+		private static VERSION = '2020-10-28'
 		public constructor() {
 			super();
 		}
 
 		run(cfg: ys.Config) {
 			//使用VConsole
-			if (window['VConsole']) {
+			if (window && window['VConsole']) {
 				new window['VConsole']();
 			}
 			//版本信息
@@ -88,9 +88,9 @@ namespace ys {
 					await this.loadGroup(groups[i]);
 					i++;
 				}
-				this.Start();
+				// this.Start();
 			} else {
-				this.Start();
+				// this.Start();
 			}
 		}
 
@@ -127,10 +127,10 @@ namespace ys {
 
 		}
 
-		Start()
-		{
+		// Start()
+		// {
 
-		}
+		// }
 
 
 

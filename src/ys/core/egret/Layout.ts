@@ -8,8 +8,7 @@ namespace ys {
             const arr = Object.getOwnPropertyNames(layout);
             arr.forEach(val => {
                 if (val.indexOf('bm_') == 0) {
-                    const res = val.replace('bm_', '');
-                    const bm = ys.Bitmap.create(res);
+                    const bm = ys.Bitmap.create();
                     ui.addChild(bm);
                     layout[val] = bm;
                 } else if (val.indexOf('txt_') == 0) {
@@ -32,13 +31,14 @@ namespace ys {
                     const mc = ys.MovieClip.create();
                     ui.addChild(mc);
                     layout[val] = mc;
-                } else if (val.indexOf('cl_') == 0) {
-                    // const className = val.replace('cl_', '');
-                    // const MyClass = egret.getDefinitionByName(className);
-                    // const cla = new MyClass();
-                    // ui.addChild(cla);
-                    // this[val] = cla;
                 }
+                // else if (val.indexOf('cl_') == 0) {
+                // const className = val.replace('cl_', '');
+                // const MyClass = egret.getDefinitionByName(className);
+                // const cla = new MyClass();
+                // ui.addChild(cla);
+                // this[val] = cla;
+                // }
             })
         }
 
@@ -73,7 +73,7 @@ namespace ys {
 
         }
 
-        Style(d: egret.DisplayObject, style: string, width = ys.Context.STAGE_W, height = ys.Context.STAGE_H) {
+        Style(d: egret.DisplayObject, style: string, width = ys.Context.stageW, height = ys.Context.stageH) {
             //left:0;right:0;center:0;top:10,bottom:0;middle:0;ax:0;ay:0;width:100;height:100;scalex:1;scaley:1;
             style = style.replace(/,/ig, ';');//逗号分隔
             style = style.replace(/ /ig, ';');//空格分隔

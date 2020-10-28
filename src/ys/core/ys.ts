@@ -1,94 +1,65 @@
-class YS {
-	static get stage() {
-		return egret.MainContext.instance.stage;
-	}
-
-	static get stageW() {
-		return YS.stage.stageWidth;
-	}
-
-	static get stageH() {
-		return YS.stage.stageHeight;
-	}
-
-	static get stageHalfW() {
-		return YS.stage.stageWidth * 0.5;
-	}
-
-	static get stageHalfH() {
-		return YS.stage.stageHeight * 0.5;
-	}
-
-	static get canvas() {
-		var player = <HTMLDivElement>document.querySelector(".egret-player");
-		return player && player.getElementsByTagName('canvas')[0] || null;
-	}
-
-	/**设计坐标缩放到DOM坐标的大小 */
-	static get ScaleCanvasToDomFactor() {
-		return 1 / egret.sys.DisplayList.$canvasScaleFactor;
-	}
-
-	static get ScaledDomToCanvasFactor() {
-		return egret.sys.DisplayList.$canvasScaleFactor;
-	}
-
-}
-
 namespace ys {
 
 	export class Context {
 
-		static get STAGE() {
+		/**是否小尺寸手机 */
+		static get small_size_phone() {
+			return Context.stageW / Context.stageH > 750 / 1400;
+		}
+		/**舞台的实例 */
+		static get stage() {
 			return egret.MainContext.instance.stage;
 		}
-
-		static get MAIN() {
+		/**main容器 */
+		static get main() {
 			return egret.MainContext.instance.stage.getChildAt(0) as egret.DisplayObjectContainer;
 		}
-
-		static get STAGE_W() {
-			return Context.STAGE.stageWidth;
+		/**舞台宽 */
+		static get stageW() {
+			return Context.stage.stageWidth;
 		}
-
-		static get STAGE_H() {
-			return Context.STAGE.stageHeight;
+		/**舞台高 */
+		static get stageH() {
+			return Context.stage.stageHeight;
 		}
-
-		static get STAGE_W_HALF() {
-			return Context.STAGE.stageWidth * 0.5;
+		/**舞台半宽 */
+		static get stageHalfW() {
+			return Context.stage.stageWidth * 0.5;
 		}
-
-		static get STAGE_H_HALF() {
-			return Context.STAGE.stageHeight * 0.5;
+		/**舞台半高 */
+		static get stageHalfH() {
+			return Context.stage.stageHeight * 0.5;
 		}
-
-		static get CANVAS() {
+		/**egret的画布 */
+		static get canvas() {
 			var player = <HTMLDivElement>document.querySelector(".egret-player");
 			return player && player.getElementsByTagName('canvas')[0] || null;
 		}
 
-		/**设计坐标缩放到DOM坐标的大小，只支持固定宽和固定高 */
-		static get SCALE() {
-			return Context.STAGE.scaleMode == egret.StageScaleMode.FIXED_WIDTH ?
-				window.innerWidth / Context.STAGE_W : window.innerHeight / Context.STAGE_H;
+		/**canvas坐标缩放到DOM坐标 */
+		static get ScaleFactorCanvasToDom() {
+			return 1 / egret.sys.DisplayList.$canvasScaleFactor;
+		}
+		/** */
+		static get ScaledFactorDomToCanvas() {
+			return egret.sys.DisplayList.$canvasScaleFactor;
 		}
 
-	}
-
-	let showlogger: boolean;
-	export function logger_log(msg: any, ...arg: any[]) {
-		if (showlogger) {
-			if (arg.length) {
-				console.log(msg, arg);
-			} else {
-				console.log(msg);
+		static get isLocalhost() {
+			let b = false;
+			if (window) {
+				let link = window.location.href;
+				if (link.indexOf('192.168') != -1 || link.indexOf('127.0.0.1') != -1 || link.indexOf('localhost') != -1) {
+					b = true;
+				}
 			}
+			return b;
 		}
+
 	}
 
 	export function setup(cfg: ys.Config) {
-		const stage = ys.Context.STAGE;
+		const stage = ys.Context.stage;
 		//跨域设置
 		egret.ImageLoader.crossOrigin = 'anonymous';
 		//如果是PC
@@ -111,7 +82,9 @@ namespace ys {
 		//设置帧频
 		stage.frameRate = cfg.fps;
 
-		showlogger = cfg.log;
+		if (!cfg.log) {
+			console.log = () => { };
+		}
 
 		//如果是安卓的话，特殊处理输入框不能自动弹出问题
 		if (egret.Capabilities.os == "Android") {
@@ -173,8 +146,9 @@ namespace ys {
 		}
 
 		const page = <ys.UI>new PageClass();
-		ys.Context.MAIN.addChild(page);
-		page.Start(param);
+		page.data = param;
+		ys.Context.main.addChild(page);
+		page.Start();
 
 		function next(): void {
 			if (oldPage) {
@@ -238,15 +212,15 @@ namespace ys {
 	}
 
 	export function layoutRight(d: egret.DisplayObject, right) {
-		d.x = ys.Context.STAGE_W - d.width * d.scaleX + d.anchorOffsetX * d.scaleX - right;
+		d.x = ys.Context.stageW - d.width * d.scaleX + d.anchorOffsetX * d.scaleX - right;
 	}
 
 	export function layoutMiddleX(d: egret.DisplayObject, offset = 0) {
-		d.x = ys.Context.STAGE_W_HALF - d.width * 0.5 * d.scaleX + d.anchorOffsetX * d.scaleX + offset;
+		d.x = ys.Context.stageHalfW - d.width * 0.5 * d.scaleX + d.anchorOffsetX * d.scaleX + offset;
 	}
 
 	export function layoutMiddleY(d: egret.DisplayObject, offset = 0) {
-		d.y = ys.Context.STAGE_H_HALF - d.height * 0.5 * d.scaleY + d.anchorOffsetY * d.scaleY + offset;
+		d.y = ys.Context.stageHalfH - d.height * 0.5 * d.scaleY + d.anchorOffsetY * d.scaleY + offset;
 	}
 
 	export function layoutTop(d: egret.DisplayObject, top) {
@@ -254,7 +228,7 @@ namespace ys {
 	}
 
 	export function layoutBottom(d: egret.DisplayObject, bottom) {
-		d.y = ys.Context.STAGE_H - d.height * d.scaleY + d.anchorOffsetY * d.scaleY - bottom;
+		d.y = ys.Context.stageH - d.height * d.scaleY + d.anchorOffsetY * d.scaleY - bottom;
 	}
 	/**横向纵向同时居中 */
 	export function layoutCenter(d, offsetX = 0, offsetY = 0) {
@@ -299,7 +273,7 @@ namespace ys {
 		if (!popblock) {
 			const s = new egret.Shape();
 			s.graphics.beginFill(0x000000);
-			s.graphics.drawRect(0, 0, ys.Context.STAGE_W, ys.Context.STAGE_H);
+			s.graphics.drawRect(0, 0, ys.Context.stageW, ys.Context.stageH);
 			s.graphics.endFill();
 			s.cacheAsBitmap = true;
 			popblock = s;
@@ -308,10 +282,10 @@ namespace ys {
 			popblock.touchEnabled = true;
 		}
 		const block = popblock;
-		block.scaleX = ys.Context.STAGE_W / block.width;
-		block.scaleY = ys.Context.STAGE_H / block.height;
+		block.scaleX = ys.Context.stageW / block.width;
+		block.scaleY = ys.Context.stageH / block.height;
 		const layer = popLayer;
-		ys.Context.STAGE.addChild(layer);
+		ys.Context.stage.addChild(layer);
 
 		layer.addChild(block);
 		layer.addChild(d);

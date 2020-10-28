@@ -28,7 +28,7 @@ module ys {
 			}
 			const loading = Tips.loading;
 			loading.show(txt, step);
-			ys.Context.STAGE.addChild(loading);
+			ys.Context.stage.addChild(loading);
 			return loading;
 		}
 
@@ -45,7 +45,7 @@ module ys {
 			super();
 			const block = new egret.Shape();
 			block.graphics.beginFill(0x000000);
-			block.graphics.drawRect(0, 0, ys.Context.STAGE_W, ys.Context.STAGE_H);
+			block.graphics.drawRect(0, 0, ys.Context.stageW, ys.Context.stageH);
 			block.graphics.endFill();
 			block.cacheAsBitmap = true;
 			this.addChild(block);
@@ -131,17 +131,17 @@ module ys {
 				}
 			}).to({ r: 360 }, time);
 
-			ys.Context.STAGE.addEventListener(egret.Event.RESIZE, this.resize, this);
+			ys.Context.stage.addEventListener(egret.Event.RESIZE, this.resize, this);
 		}
 
 		public resize() {
 			const block = this.block;
-			block.scaleX = ys.Context.STAGE_W / block.width;
-			block.scaleY = ys.Context.STAGE_H / block.height;
+			block.scaleX = ys.Context.stageW / block.width;
+			block.scaleY = ys.Context.stageH / block.height;
 		}
 
 		public hide() {
-			ys.Context.STAGE.removeEventListener(egret.Event.RESIZE, this.resize, this);
+			ys.Context.stage.removeEventListener(egret.Event.RESIZE, this.resize, this);
 			egret.Tween.removeTweens(this.flower);
 			ys.removeDisplayObject(this);
 		}
@@ -249,8 +249,8 @@ module ys {
 			t.text = msg;
 			t.size = 35;
 			t.textColor = color;
-			if (t.textWidth > ys.Context.STAGE_W - padding) {
-				t.width = ys.Context.STAGE_W - padding;
+			if (t.textWidth > ys.Context.stageW - padding) {
+				t.width = ys.Context.stageW - padding;
 			} else {
 				t.width = t.textWidth;
 			}

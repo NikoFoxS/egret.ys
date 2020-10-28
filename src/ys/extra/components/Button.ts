@@ -59,6 +59,10 @@ module ys {
 	export class Button extends ButtonBase {
 		public constructor(res: string) {
 			super();
+			this.create(res);
+		}
+
+		public create(res: string) {
 			var bg = ys.newBitmap(res, this);
 			this.bg = bg;
 		}

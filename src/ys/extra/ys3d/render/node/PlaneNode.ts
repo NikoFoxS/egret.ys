@@ -23,7 +23,7 @@ module ys3d {
 			const projectMatix = cam.projectionMatrix;
 
 			let vertices = this.$geometry.vertices;
-			let ratio = devicePixelRatio * innerWidth / ys.Context.STAGE_W;
+			let ratio = devicePixelRatio * innerWidth / ys.Context.stageW;
 
 			let i = 0;
 			let len = vertices.length;

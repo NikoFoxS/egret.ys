@@ -3,19 +3,10 @@ module ys {
 	export class Bitmap extends egret.Bitmap {
 		//-----------------------------
 		public static release(bm: ys.Bitmap): void {
-			// if (!bm) {
-			// 	return;
-			// }
-			// bitmapPool.push(bm);
 		}
 
-		public static create(res: string = ''): ys.Bitmap {
-			// let bm = bitmapPool.pop();
-			// if (!bm) {
-			// 	bm = new ys.Bitmap(res);
-			// }
-			// return bm;
-			return new ys.Bitmap(res);
+		public static create(): ys.Bitmap {
+			return new ys.Bitmap();
 		}
 		//------------------------------
 		public constructor(res: string = '') {
@@ -29,6 +20,16 @@ module ys {
 		}
 
 		public create(res: string) {
+			if (res != '') {
+				this.texture = RES.getRes(res);
+			}
+		}
+
+		public async createByURL(url: string) {
+			await RES.getResByUrl(url);
+		}
+
+		public createByRes(res: string) {
 			if (res != '') {
 				this.texture = RES.getRes(res);
 			}

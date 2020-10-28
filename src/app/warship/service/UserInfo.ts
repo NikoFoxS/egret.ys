@@ -1,6 +1,6 @@
 namespace service {
 	class UserMock extends ys.Mock {
-		response(api, data): any {
+		mock(api, data): any {
 			let res;
 			switch (api) {
 				case 'https://a.h5sun.com/getuser/':
@@ -48,32 +48,8 @@ namespace service {
 			a.post('https://a.h5sun.com/getuser/', {}, (error, res) => {
 				console.log(a.responseJson);
 			})
-			// this.invoker.InvokeScript(INVOKE.ON_GET_USER_INFO, { name: 'niko' });
+			this.invoker.InvokeScript(INVOKE.ON_GET_USER_INFO, { name: 'niko' });
 		}
-
-		// OnInvoke(handler: number | string, data: any): void {
-		// 	switch (handler) {
-		// 		case CONST.SERVICE_GET_USER_DATA:
-		// 			this.getInfo(data);
-		// 			break;
-		// 	}
-		// }
-
-		// getInfo(data) {
-		// 	let a = new ys.Ajax();
-		// 	const api = ``;
-		// 	a.get(api, null, () => {
-		// 		let b = this.invoker.GetBucket('');
-		// 		if (b) {
-		// 			b.SetData({ name: 'username', sex: 'haha', age: 25 });
-		// 			b.UpdateData();
-		// 		}
-		// 	})
-		// }
-
-		// login()
-		// {
-
-		// }
+		
 	}
 }
