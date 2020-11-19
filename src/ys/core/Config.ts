@@ -11,6 +11,5 @@ namespace ys {
         public fps: number = 60;
         public versionFun: Function;
         public services: any[];
-        public buckets: any[];
     }
 }

@@ -12,13 +12,7 @@ class Main extends ys.Application {
         cfg.width = 750;
         cfg.height = 1334;
         //添加服务Service
-        cfg.services = [
-            [NAME.S_USER, service.UserInfo],
-        ];
-        //添加数据Bucket
-        cfg.buckets = [
-            [NAME.B_USER, bucket.UserInfo]
-        ]
+        cfg.services = [service.API];
         //对加载项进行处理
         cfg.versionFun = (url) => {
             console.log('loading ' + url);

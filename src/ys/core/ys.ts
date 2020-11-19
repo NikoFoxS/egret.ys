@@ -68,7 +68,11 @@ namespace ys {
 		}
 		stage.orientation = cfg.orientation;
 		stage.scaleMode = cfg.scaleMode;
+		console.log('stage', stage, cfg.width, cfg.height);
 		stage.setContentSize(cfg.width, cfg.height);
+		cfg.services.forEach(sClass => {
+			new sClass();
+		})
 
 		//防止PC端，滚动鼠标时，引起H5跟随滑动。
 		if (!egret.Capabilities.isMobile) {
@@ -145,10 +149,10 @@ namespace ys {
 			pages = {};
 		}
 
-		const page = <ys.UI>new PageClass();
+		const page = <ys.Page>new PageClass();
 		page.data = param;
 		ys.Context.main.addChild(page);
-		page.Start();
+		page.start();
 
 		function next(): void {
 			if (oldPage) {
@@ -165,75 +169,6 @@ namespace ys {
 			next();
 		}
 
-	}
-
-	//---------------------------
-	//显示对象创建 new开头
-	//---------------------------
-	export function newBitmap(res: string = '', layer?: egret.DisplayObjectContainer): ys.Bitmap {
-		const bm = new ys.Bitmap(res);
-		layer && layer.addChild(bm);
-		return bm;
-	}
-
-	export function newContainer(layer?: egret.DisplayObjectContainer): ys.Container {
-		const con = new ys.Container();
-		layer && layer.addChild(con);
-		return con;
-	}
-
-	export function newRect(w, h, color, radius = 0, layer?: egret.DisplayObjectContainer): ys.Shape {
-		const rec = new ys.Shape();
-		rec.drawRec(w, h, color, radius);
-		layer && layer.addChild(rec);
-		return rec;
-	}
-
-	export function newCircle(r, color, layer?: egret.DisplayObjectContainer): ys.Shape {
-		const s = new ys.Shape();
-		s.drawCirle(r, color);
-		layer && layer.addChild(s);
-		return s;
-	}
-
-	export function newTextField(color, size, layer?: egret.DisplayObjectContainer): ys.TextField {
-		const t = new ys.TextField();
-		t.textColor = color;
-		t.size = size;
-		layer && layer.addChild(t);
-		return t;
-	}
-
-	//---------------------------
-	//布局 layout开头
-	//---------------------------
-	export function layoutLeft(d: egret.DisplayObject, left) {
-		d.x = left + d.anchorOffsetX * d.scaleX;
-	}
-
-	export function layoutRight(d: egret.DisplayObject, right) {
-		d.x = ys.Context.stageW - d.width * d.scaleX + d.anchorOffsetX * d.scaleX - right;
-	}
-
-	export function layoutMiddleX(d: egret.DisplayObject, offset = 0) {
-		d.x = ys.Context.stageHalfW - d.width * 0.5 * d.scaleX + d.anchorOffsetX * d.scaleX + offset;
-	}
-
-	export function layoutMiddleY(d: egret.DisplayObject, offset = 0) {
-		d.y = ys.Context.stageHalfH - d.height * 0.5 * d.scaleY + d.anchorOffsetY * d.scaleY + offset;
-	}
-
-	export function layoutTop(d: egret.DisplayObject, top) {
-		d.y = top + d.anchorOffsetY * d.scaleY;
-	}
-
-	export function layoutBottom(d: egret.DisplayObject, bottom) {
-		d.y = ys.Context.stageH - d.height * d.scaleY + d.anchorOffsetY * d.scaleY - bottom;
-	}
-	/**横向纵向同时居中 */
-	export function layoutCenter(d, offsetX = 0, offsetY = 0) {
-		layoutMiddleX(d, offsetX);
-		layoutMiddleY(d, offsetY);
 	}
 
 	//---------------------------
@@ -317,8 +252,6 @@ namespace ys {
 		}, this);
 	}
 
-
-
 	//---------------------
 	//others
 	//---------------------
@@ -344,6 +277,7 @@ namespace ys {
 	export function removeDisplayObject(d: egret.DisplayObject): void {
 		d && d.parent && d.parent.removeChild(d);
 	}
+
 
 }
 

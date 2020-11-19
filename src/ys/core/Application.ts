@@ -29,10 +29,10 @@ namespace ys {
 	}
 
 
-	export class Application extends ys.Container implements ys.LoadingReporter, RES.PromiseTaskReporter {
-		private static VERSION = '2020-10-28'
+	export class Application extends ys.Component implements ys.LoadingReporter, RES.PromiseTaskReporter {
+		private static VERSION = '2020-11-18'
 		public constructor() {
-			super();
+			super(0,0);
 		}
 
 		run(cfg: ys.Config) {
@@ -58,18 +58,6 @@ namespace ys {
 				// egret.ticker.resume();
 			}
 
-			//安装服务
-			cfg.services && cfg.services.forEach(([k, v]) => {
-				// ys.Facade.GET.installService(k, v);
-				ys.Facade.GET.controller.RegisterService(k,v);
-
-			})
-			//安装数据bucket
-			cfg.buckets && cfg.buckets.forEach(([k, v]) => {
-				// ys.Facade.GET.installBucket(k, v);
-				ys.Facade.GET.model.RegisterBucket(k,v);
-			})
-
 			ys.setup(cfg);
 
 			RES.registerVersionController(new ys.VersionController(cfg.versionFun));
@@ -88,9 +76,8 @@ namespace ys {
 					await this.loadGroup(groups[i]);
 					i++;
 				}
-				// this.Start();
 			} else {
-				// this.Start();
+				this.OnLoadEnd('');
 			}
 		}
 
@@ -126,12 +113,6 @@ namespace ys {
 		OnLoadEnd(name: string) {
 
 		}
-
-		// Start()
-		// {
-
-		// }
-
 
 
 	}

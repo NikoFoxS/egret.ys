@@ -1,5 +1,0 @@
-enum INVOKE
-{
-    GET_USER_INFO,
-    ON_GET_USER_INFO,
-}
