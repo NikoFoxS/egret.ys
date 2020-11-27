@@ -28,6 +28,10 @@ module ys {
 
 		static layout(d: egret.DisplayObject, style: string, dWidth = 0, dHeight = 0, width: number = ys.Context.stageW, height: number = ys.Context.stageH) {
 			//left:0;right:0;center:0;top:10,bottom:0;middle:0;ax:0;ay:0;width:100;height:100;scalex:1;scaley:1;
+
+			//w:100;h:100;t:0;l:0;r:0;b:0;cx:0;cy:0
+			//ax:0.5;ay:0.5;sx:1;sy:1;ro:0;al:1
+
 			style = style.replace(/,/ig, ';');//逗号分隔
 			style = style.replace(/ /ig, ';');//空格分隔
 			style = style.replace(/\|/ig, ';');//竖线分隔
