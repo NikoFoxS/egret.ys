@@ -5,7 +5,7 @@ namespace ys {
 		}
 
 		notify(name, data?) {
-			ys.Subject.GET.notify(name, data)
+			ys.Subject.notify(name, data)
 		}
 	}
 }

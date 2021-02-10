@@ -11,6 +11,7 @@ class Main extends ys.Application {
         cfg.orientation = egret.OrientationMode.PORTRAIT;
         cfg.width = 750;
         cfg.height = 1334;
+        //添加服务Service
         //对加载项进行处理
         cfg.versionFun = (url) => {
             console.log('loading ' + url);

@@ -30,7 +30,7 @@ namespace ys {
 
 
 	export class Application extends egret.DisplayObjectContainer implements ys.LoadingReporter, RES.PromiseTaskReporter {
-		private static VERSION = '2020-10-28'
+		private static VERSION = '2021-02-10'
 		public constructor() {
 			super();
 		}
@@ -76,9 +76,8 @@ namespace ys {
 					await this.loadGroup(groups[i]);
 					i++;
 				}
-				// this.Start();
 			} else {
-				// this.Start();
+				this.OnLoadEnd('');
 			}
 		}
 
@@ -98,9 +97,8 @@ namespace ys {
 		}
 
 
-		onProgress?(current: number, total: number, resItem: RES.ResourceInfo | undefined): void
-		{
-			this.OnLoadProgress(current,total);
+		onProgress?(current: number, total: number, resItem: RES.ResourceInfo | undefined): void {
+			this.OnLoadProgress(current, total);
 		}
 
 		OnLoadStart(name: string) {

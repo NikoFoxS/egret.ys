@@ -1,56 +1,27 @@
 namespace ys {
 
-    class Inner {/**单例使用 */ }
-
     export class Subject {
-        /**
-         * 观察者列表
-         * */
-        public list: Observer[] = [];
 
-        constructor(inner: Inner) {
-            if (!(inner instanceof Inner)) {
-                throw new Error('cant new sun.Subject');
-            }
+        private static list: ys.Observer[] = [];
+        public static registerObserver(o: ys.Observer) {
+            Subject.list.push(o);
         }
 
-        private static _instance: Subject;
-        public static get GET(): Subject {
-            if (!Subject._instance) {
-                Subject._instance = new Subject(new Inner);
-            }
-            return Subject._instance;
-        }
-
-        /**
-         * 注册观察者
-         * */
-        public registerObserver(o: Observer) {
-            this.list.push(o);
-        }
-
-        /**
-         * 移除观察者
-         * */
-        public removeObserver(o: Observer) {
-            var idx = this.list.indexOf(o);
+        public static removeObserver(o: ys.Observer) {
+            var idx = Subject.list.indexOf(o);
             if (idx != -1) {
-                this.list.splice(idx, 1);
+                Subject.list.splice(idx, 1);
             }
         }
 
-        /**
-         * 向所有观察者派发消息
-         * */
-        public notify(name: any, data: any) {
-            for (var i = 0; i < this.list.length; i++) {
-                var o = this.list[i];
-                if (o.listNotification().indexOf(name) != -1) {
-                    o.onNotification(name, data);
+        public static notify(handler: number, data?: any) {
+            for (var i = 0; i < Subject.list.length; i++) {
+                var o = Subject.list[i];
+                if (o.listNotification().indexOf(handler) != -1) {
+                    o.onNotification(handler, data);
                 }
 
             }
         }
     }
 }
-
