@@ -11,14 +11,6 @@ class Main extends ys.Application {
         cfg.orientation = egret.OrientationMode.PORTRAIT;
         cfg.width = 750;
         cfg.height = 1334;
-        //添加服务Service
-        cfg.services = [
-            [NAME.S_USER, service.UserInfo],
-        ];
-        //添加数据Bucket
-        cfg.buckets = [
-            [NAME.B_USER, bucket.UserInfo]
-        ]
         //对加载项进行处理
         cfg.versionFun = (url) => {
             console.log('loading ' + url);
@@ -26,10 +18,10 @@ class Main extends ys.Application {
             return url;
         }
         //一般处理多语言。
-        ys.TextField.getLocale = (key) => {
-            const val = key;
-            return val;
-        }
+        // ys.TextField.getLocale = (key) => {
+        //     const val = key;
+        //     return val;
+        // }
 
         super();
         //开发者可以在run之前，进行相应逻辑的判断。判断成功才进行run。
@@ -54,7 +46,21 @@ class Main extends ys.Application {
                 break;
 
             case 'preload':
-                ys.showPage(page.Menu);
+                // ys.showPage(page.Menu);
+                // let con = new egret.DisplayObjectContainer();
+                // let bm = new egret.Bitmap(RES.getRes('headimg_jpg'));
+                // con.addChild(bm);
+                // this.addChild(con);
+
+                // console.log(con.width,con.height);
+
+                // setTimeout(function() {
+                //     console.log(con.width,con.height);
+                // }, 2000);
+
+                let page = new MenuPage();
+                this.addChild(page.view);
+
                 break;
 
             case 'sharein':
