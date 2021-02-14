@@ -1,12 +1,8 @@
 namespace ys {
-	export class Container extends egret.DisplayObjectContainer implements IProps{
+	export class Container extends egret.DisplayObjectContainer{
 		public constructor() {
 			super();
 		}
 
-		updateProp(prop:any):void
-		{
-
-		}
 	}
 }

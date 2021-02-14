@@ -4,25 +4,26 @@ module ys {
 			super();
 		}
 
-		
-		private _owner : any;
-		public get owner() : any {
-			return this._owner;
-		}
-		public set owner(v : any) {
-			this._owner = v;
-		}
-		
-
+		public owner: any;
+		public view: any;
 
 		/**发送通知 */
 		sendNotification(name, data?: any) {
-			// ys.Subject.GET.notify(name, data);
+			ys.Subject.notify(name, data);
 		}
 
-		//----- override
+		/**列出感兴趣的通知 */
+		listNotificationInterests() {
+			return [];
+		}
+
+		/**处理通知 */
+		onNotification(name, data) {
+
+		}
+
 		/**脚本被添加 */
-		onAdded(data?: any) {
+		onAdded() {
 
 		}
 
@@ -31,15 +32,7 @@ module ys {
 
 		}
 
-		/**列出感兴趣的通知 */
-		listNotificationInterests() {
-			return [];
-		}
-		
-		/**处理通知 */
-		onNotification(name, data) {
 
-		}
 
 	}
 }

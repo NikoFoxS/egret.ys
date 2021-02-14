@@ -1,13 +1,10 @@
 namespace ys {
-	export class Input extends egret.TextField implements IProps{
+	export class Input extends egret.TextField{
 		public constructor() {
 			super();
 			this.type = egret.TextFieldType.INPUT;
-		}
-
-		updateProp(prop:any):void
-		{
-
+			this.border = true;
+			this.borderColor = 0x000000;
 		}
 	}
 }

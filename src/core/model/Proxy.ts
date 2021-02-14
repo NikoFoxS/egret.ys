@@ -4,7 +4,7 @@ namespace ys {
 			super();
 		}
 
-		notify(name, data?) {
+		sendNotification(name, data?) {
 			ys.Subject.notify(name, data)
 		}
 	}

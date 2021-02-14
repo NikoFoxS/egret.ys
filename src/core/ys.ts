@@ -134,4 +134,92 @@ namespace ys {
 		d && d.parent && d.parent.removeChild(d);
 	}
 
+	export function showView(json): void {
+		try {
+			let v = new ys.Prefab();
+			v.json = json;
+			ys.Context.main.removeChildren();
+			ys.Context.main.addChild(v);
+			console.log(v);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	export function loadView(url: string): void {
+		RES.getResByUrl(url, (json) => {
+			ys.showView(json);
+		}, this, RES.ResourceItem.TYPE_JSON);
+	}
+
+	export function popView(url: string) {
+		RES.getResByUrl(url, (json) => {
+			let v = new ys.Prefab();
+			v.json = json;
+			// ys.Context.stage.addChild(v);
+			ys.Layout.centerX(v, 0, ys.Context.stageW);
+			ys.Layout.centerY(v, 9, ys.Context.stageH);
+			ys.popUp(v);
+		}, this, RES.ResourceItem.TYPE_JSON);
+
+	}
+
+	//---------------------------
+	//popup
+	//---------------------------
+	let popblock: egret.Shape;
+	let popLayer: egret.DisplayObjectContainer;
+	/**只负责弹层，会自动添加隔离遮罩 */
+	export function popUp(d: egret.DisplayObject, blockAlpha = 0.7, blockTween: boolean = true, blockTweeTime = 300) {
+		if (!popLayer) {
+			popLayer = new egret.DisplayObjectContainer();
+		}
+
+		if (!popblock) {
+			const s = new egret.Shape();
+			s.graphics.beginFill(0x000000);
+			s.graphics.drawRect(0, 0, ys.Context.stageW, ys.Context.stageH);
+			s.graphics.endFill();
+			s.cacheAsBitmap = true;
+			popblock = s;
+			popblock.alpha = blockAlpha;
+			popblock.cacheAsBitmap = true;
+			popblock.touchEnabled = true;
+		}
+		const block = popblock;
+		block.scaleX = ys.Context.stageW / block.width;
+		block.scaleY = ys.Context.stageH / block.height;
+		const layer = popLayer;
+		ys.Context.stage.addChild(layer);
+
+		layer.addChild(block);
+		layer.addChild(d);
+
+		block.alpha = blockAlpha;
+		blockAlpha == 0 && (blockTween = false);
+
+		if (layer.numChildren == 2 && blockTween) {
+			egret.Tween.removeTweens(block);
+			block.alpha = 0;
+			egret.Tween.get(block).to({ alpha: blockAlpha }, blockTweeTime);
+		}
+
+		d.once(egret.Event.REMOVED_FROM_STAGE, () => {
+			//remove后，numChildren不会马上-1
+			if (layer.numChildren == 2) {
+				if (blockTween) {
+					egret.Tween.get(block).to({ alpha: 0 }, blockTweeTime).call(() => {
+						ys.removeDisplayObject(layer);
+					});
+				} else {
+					ys.removeDisplayObject(layer);
+				}
+
+
+			} else {
+				layer.addChildAt(block, layer.numChildren - 3);
+			}
+		}, this);
+	}
+
 }

@@ -1,12 +1,13 @@
 module ys {
-	export class Scrollview extends egret.ScrollView implements IProps{
+	export class ScrollView extends egret.ScrollView{
 		public constructor() {
 			super();
 		}
 
-		updateProp(prop:any):void
+		$create():void
 		{
-
+			// this.setContent()
 		}
+
 	}
 }

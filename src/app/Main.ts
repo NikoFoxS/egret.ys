@@ -3,7 +3,7 @@ class Main extends ys.Application {
     public constructor() {
         /** 配置项 */
         var cfg = new ys.Config();
-        cfg.groups = ['preload'];//配置加载资源组
+        cfg.groups = ['preload',];//配置加载资源组
         cfg.resourceJSON = 'resource/default.res.json';//配置default.res.json的路径
         cfg.resourceRoot = 'resource/';//配置资源的路径
         cfg.log = true; //开启console.log
@@ -11,7 +11,6 @@ class Main extends ys.Application {
         cfg.orientation = egret.OrientationMode.PORTRAIT;
         cfg.width = 750;
         cfg.height = 1334;
-        //添加服务Service
         //对加载项进行处理
         cfg.versionFun = (url) => {
             console.log('loading ' + url);
@@ -39,28 +38,26 @@ class Main extends ys.Application {
 
     OnLoadProgress(current: number, total: number) {
         console.log(current, '/', total)
+        if (this.loading) {
+            this.loading.progress(current, total);
+        }
     }
 
+    private loading: LoadingUI;
     OnLoadEnd(name: string) {
         switch (name) {
             case 'loading':
+                this.loading = new LoadingUI();
+                this.addChild(this.loading);
                 break;
 
             case 'preload':
-                // ys.showPage(page.Menu);
-                // let con = new egret.DisplayObjectContainer();
-                // let bm = new egret.Bitmap(RES.getRes('headimg_jpg'));
-                // con.addChild(bm);
-                // this.addChild(con);
+                if (this.loading) {
+                    ys.removeDisplayObject(this.loading);
+                }
 
-                // console.log(con.width,con.height);
-
-                // setTimeout(function() {
-                //     console.log(con.width,con.height);
-                // }, 2000);
-
-                let page = new MenuPage();
-                this.addChild(page.view);
+                // ys.showView(RES.getRes('home_json'));
+                ys.loadView('resource/home.json')
 
                 break;
 

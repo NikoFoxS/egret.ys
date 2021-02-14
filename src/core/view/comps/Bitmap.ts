@@ -1,22 +1,19 @@
 module ys {
-	export class Bitmap extends egret.Bitmap implements IProps{
+	export class Bitmap extends egret.Bitmap {
 		public constructor() {
 			super();
 		}
 
-		updateProp(prop:any):void
-		{
+		public set src(v: string) {
+			if (v.indexOf('.') == -1) {
+				this.texture = RES.getRes(v);
+			} else {
+				RES.getResByUrl(v, (tex: egret.Texture) => {
+					this.texture = tex;
+				}, this, RES.ResourceItem.TYPE_IMAGE);
+			}
 
 		}
 
-		
-		public set tex(v : string) {
-			// this._tex = v;
-			this.texture = RES.getRes(v);
-			console.log('set tex',v)
-		}
-
-		
-		
 	}
 }

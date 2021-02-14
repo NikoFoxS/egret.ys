@@ -1,12 +1,7 @@
 module ys {
-	export class Text extends egret.TextField implements IProps{
+	export class Text extends egret.TextField{
 		public constructor() {
 			super();
-		}
-
-		updateProp(prop:any):void
-		{
-
 		}
 	}
 }

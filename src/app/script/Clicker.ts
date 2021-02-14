@@ -5,11 +5,11 @@ module script {
 		}
 
 		onAdded(): void {
-			let o = this.owner as ys.Bitmap;
+			let o = this.owner as egret.DisplayObject;
 			o.touchEnabled = true;
 			o.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-				console.log("click?")
-				ys.removeDisplayObject(o);
+				console.log("click?",o)
+				// ys.removeDisplayObject(o);
 			}, this)
 
 		}
