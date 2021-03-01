@@ -1,4 +1,168 @@
 module ys {
+
+	export class DOM {
+		public static top(): void {
+			document.documentElement.scrollTop = 0;
+			window.scrollTo(0, 0);
+		}
+
+		public static bili = window.innerWidth / 750;
+
+		public static createDomDiv() {
+			let tdiv = document.createElement("div");
+			tdiv.setAttribute('class', 'abs');
+			return tdiv;
+		}
+		public static createDomImage(url, w, h, x, y) {
+			let timg = document.createElement("img");
+			timg.setAttribute('class', 'abs');
+			timg.src = this.getFullurl(url);
+			timg.style.width = DOM.getFormat(w);
+			timg.style.height = DOM.getFormat(h);
+			timg.style.top = DOM.getFormat(y);
+			timg.style.left = DOM.getFormat(x);
+			return timg;
+		}
+		public static createDomButton(url, w, h, x, y) {
+			let tbtn = document.createElement("img");
+			tbtn.setAttribute('class', 'btn abs');
+			tbtn.src = this.getFullurl(url);
+			tbtn.style.width = DOM.getFormat(w);
+			tbtn.style.height = DOM.getFormat(h);
+			tbtn.style.top = DOM.getFormat(y);
+			tbtn.style.left = DOM.getFormat(x);
+
+			return tbtn;
+		}
+        /**
+         * 创建div按钮
+         * */
+		public static createDivButton(col, txt, w, h, x, y, bol = true, txtcol = "#ffffff") {
+			let tbtn = document.createElement("div");
+			if (bol) {
+				tbtn.setAttribute('class', 'btn abs dombtn');
+			} else {
+				tbtn.setAttribute('class', 'abs dombtn');
+				tbtn.style.transform = "translate(-50%,-50%)";
+			}
+			tbtn.style.backgroundColor = col;
+			tbtn.style.width = DOM.getFormat(w);
+			tbtn.style.height = DOM.getFormat(h);
+			tbtn.style.top = DOM.getFormat(y);
+			tbtn.style.left = DOM.getFormat(x);
+
+			let ttxt = document.createElement("p");
+			tbtn.appendChild(ttxt);
+			ttxt.innerHTML = txt;
+			ttxt.style.position = "absolute";
+			ttxt.style.top = DOM.getFormat(h / 2);
+			ttxt.style.left = DOM.getFormat(w / 2);
+			ttxt.style.textAlign = "center";
+			ttxt.style.color = txtcol;
+			ttxt.style.fontSize = DOM.getFormat(24);
+			ttxt.style.fontWeight = "bold";
+			ttxt.style.lineHeight = DOM.getFormat(h);
+			ttxt.style.verticalAlign = "middle";
+			ttxt.style.transform = "translate(-50%,-50%)";
+			ttxt.style.whiteSpace = "nowrap";
+			tbtn["txt"] = ttxt;
+
+			setTimeout(function () {
+				if (ttxt.clientWidth > DOM.bili * (w - 16)) {
+					ttxt.style.transform = "translate(-50%,-50%) scale(" + DOM.getZoom() * (w - 16) / ttxt.clientWidth + ")";
+				}
+
+			}.bind(this), 100);
+			return tbtn;
+		}
+
+        /**
+         * 创建div按钮 边框形
+         * */
+		public static createDivButtonBorder(col, txt, w, h, x, y) {
+			let tbtn = document.createElement("div");
+			tbtn.setAttribute('class', 'btn abs dombtnborder');
+			tbtn.style.borderColor = col;
+			tbtn.style.borderStyle = "solid";
+			tbtn.style.borderWidth = DOM.getFormat(2);
+			tbtn.style.borderRadius = DOM.getFormat(40);
+			tbtn.style.width = DOM.getFormat(w - 4);
+			tbtn.style.height = DOM.getFormat(h - 4);
+			tbtn.style.top = DOM.getFormat(y);
+			tbtn.style.left = DOM.getFormat(x);
+
+			let ttxt = document.createElement("p");
+			tbtn.appendChild(ttxt);
+			ttxt.innerHTML = txt;
+			ttxt.style.position = "absolute";
+			ttxt.style.top = DOM.getFormat(h / 2 - 2);
+			ttxt.style.left = DOM.getFormat(w / 2);
+			ttxt.style.textAlign = "center";
+			ttxt.style.color = col;
+			ttxt.style.fontSize = DOM.getFormat(24);
+			ttxt.style.lineHeight = DOM.getFormat(h);
+			ttxt.style.verticalAlign = "middle";
+			ttxt.style.transform = "translate(-50%,-50%)";
+
+			setTimeout(function () {
+				if (ttxt.clientWidth > DOM.bili * (w - 16)) {
+					ttxt.style.transform = "translate(-50%,-50%) scale(" + DOM.getZoom() * (w - 16) / ttxt.clientWidth + ")";
+				}
+			}.bind(this), 100);
+
+
+			return tbtn;
+		}
+        /**
+         * 创建文本标签
+         * */
+		public static createDomP(txt, size, col, w, h, x, y) {
+			let ttxt = document.createElement("p");
+			ttxt.setAttribute('class', 'abs');
+			ttxt.style.fontSize = DOM.getFormat(size);
+			ttxt.style.color = col;
+			ttxt.innerHTML = txt;
+			if (w) {
+				ttxt.style.width = DOM.getFormat(w);
+			}
+			ttxt.style.lineHeight = DOM.getFormat(h);
+			ttxt.style.top = DOM.getFormat(y);
+			ttxt.style.left = DOM.getFormat(x);
+			return ttxt;
+		}
+        /**
+         * 创建文本标签
+         * */
+		public static scaleTxt(txt, w) {
+			if (txt.clientWidth > DOM.getZoom() * w) {
+				txt.style.transform = "translate(-50%,0) scale(" + DOM.getZoom() * w / txt.clientWidth + ")";
+			}
+		}
+		private static getFullurl(url) {
+			if (url.indexOf("http") > -1) {
+				return url;
+			}
+			if (window['cdn_host']) {
+				return window['cdn_host'] + "resource/" + url;
+			} else {
+				return "resource/" + url;
+			}
+		}
+        /**
+         * 格式化数据
+         * @param   数值
+         * */
+		public static getFormat(value: any) {
+			return value * DOM.getZoom() + "px";
+		}
+        /**
+         * 获取缩放比例
+         * */
+		public static getZoom() {
+			return window.innerWidth / 750;
+		}
+	}
+
 	export class DomBase {
 		public constructor(tagName: string, position: string) {
 			this.element = document.createElement(tagName);
@@ -35,7 +199,7 @@ module ys {
 		}
 
 		get scale() {
-			return 1/egret.sys.DisplayList.$canvasScaleFactor;
+			return innerWidth / 750;
 		}
 
 		public set(x, y, w, h) {
@@ -49,6 +213,18 @@ module ys {
 			w *= this.scale;
 			h *= this.scale;
 			this.setStyle({ left: `${x}px`, top: `${y}px`, width: `${w}px`, height: `${h}px` }, true);
+		}
+
+		centerX(v, refW: number = ys.Context.stageW) {
+			this.x = (refW - this.width) * 0.5 + v;
+			let left = this.x * this.scale;
+			this.el.style.left = left + 'px';
+		}
+
+		centerY(v, refH: number = ys.Context.stageH) {
+			this.y = (refH - this.height) * 0.5 + v;
+			let top = this.y * this.scale;
+			this.el.style.top = top + 'px';
 		}
 
 		getDomSize(size: number) {
@@ -83,6 +259,7 @@ module ys {
 	export class DomDiv extends DomBase {
 		constructor(position?: string) {
 			super('div', position);
+			this.el.style.position = 'absolute';
 		}
 
 	}
@@ -157,6 +334,7 @@ module ys {
 			txt.style.verticalAlign = "middle";
 			txt.style.whiteSpace = "nowrap";
 			this.txt = txt;
+			txt.style.display = 'none';
 			// this.setStyle({ "background-color": `${color}`, "border-radius": this.getDomSize(borderRadius), "transform": `translate(-50%,-50%)` });
 			this.setStyle({ "background": `url(${src}) no-repeat`, "background-size": '100%', "transform": `translate(-50%,-50%)` })
 		}
@@ -171,6 +349,7 @@ module ys {
 			txt.style.lineHeight = this.getDomSize(this.height);
 			txt.style.transform = "translate(-50%,-50%)";
 			txt.style.margin = 'auto';
+			txt.style.display = 'block';
 		}
 		private txt: HTMLParagraphElement;
 

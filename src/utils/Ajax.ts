@@ -18,10 +18,7 @@ module ys {
 		constructor() {
 		}
 
-		private static mock: ys.Mock;
-		public static setupMock(mock: ys.Mock) {
-			Ajax.mock = mock;
-		}
+		static mock: Function;
 
 		private xhr() {
 			if (typeof XMLHttpRequest !== 'undefined') {
@@ -82,10 +79,12 @@ module ys {
 
 		public post(url, data, callback, async = true) {
 			if (Ajax.mock) {
-				let res = Ajax.mock.mock(url, data);
+				let res = Ajax.mock(url, data);
 				if (res) {
 					this._responseText = JSON.stringify(res);
-					callback(null, res);
+					setTimeout(function () {
+						callback(null, res);
+					}, 1000);
 					return;
 				}
 			}
@@ -99,10 +98,12 @@ module ys {
 
 		public get(url, data, callback, async = true) {
 			if (Ajax.mock) {
-				let res = Ajax.mock.mock(url, data);
+				let res = Ajax.mock(url, data);
 				if (res) {
 					this._responseText = JSON.stringify(res);
-					callback(null, res);
+					setTimeout(function () {
+						callback(null, res);
+					}, 1000);
 					return;
 				}
 			}

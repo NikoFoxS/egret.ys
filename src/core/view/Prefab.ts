@@ -34,13 +34,16 @@ module ys {
 		}
 
 		private async createViewByJson(json: any) {
-			if (json.hasOwnProperty("group")) {
-				let group = json.group;
-				if (group != '') {
-					await RES.loadGroup(group);
+			if (json) {
+				if (json.hasOwnProperty("group")) {
+					let group = json.group;
+					if (group != '') {
+						await RES.loadGroup(group);
+					}
 				}
+				this.createView(json);
 			}
-			this.createView(json);
+
 		}
 
 		private createChild(node: Node, parent: ys.Container): void {
@@ -64,13 +67,14 @@ module ys {
 			} else {
 				let d = new classDef();
 				if (parent) {
-					console.log(":::", d, prop)
+					// console.log(":::", d, prop)
 					this.attachProp(d, prop);
 					if (d instanceof ys.Script) {
 						//脚本特殊处理
 						d.owner = parent;
-						d.view = this;
+						// d.view = this;
 						d.onAdded();
+						d.$create && d.$create();
 						parent.once(egret.Event.REMOVED_FROM_STAGE, () => {
 							d.onRemove();
 						}, this);
@@ -106,11 +110,22 @@ module ys {
 				for (var key in prop) {
 					d[key] = prop[key];
 				}
+
 				if (prop.hasOwnProperty('var')) {
 					if (!this.vars) {
 						this.vars = {};
 					}
-					this.vars[prop.var] = d;
+					if (!this.vars.hasOwnProperty(prop.var)) {
+						this.vars[prop.var] = d;
+					} else {
+						console.warn('变量冲突', prop, prop.var);
+					}
+				}
+
+				if (prop.hasOwnProperty('binds')) {
+					let bd = new ys.Bind();
+					bd.owner = d;
+					bd.binds = prop.binds;
 				}
 			}
 

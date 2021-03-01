@@ -7,10 +7,11 @@ class Main extends ys.Application {
         cfg.resourceJSON = 'resource/default.res.json';//配置default.res.json的路径
         cfg.resourceRoot = 'resource/';//配置资源的路径
         cfg.log = true; //开启console.log
-        cfg.scaleMode = egret.Capabilities.isMobile ? egret.StageScaleMode.FIXED_WIDTH : egret.StageScaleMode.SHOW_ALL;
+        // cfg.scaleMode = egret.Capabilities.isMobile ? egret.StageScaleMode.FIXED_WIDTH : egret.StageScaleMode.SHOW_ALL;
+        cfg.scaleMode = egret.StageScaleMode.FIXED_WIDTH;
         cfg.orientation = egret.OrientationMode.PORTRAIT;
         cfg.width = 750;
-        cfg.height = 1334;
+        cfg.height = 1000;
         //对加载项进行处理
         cfg.versionFun = (url) => {
             console.log('loading ' + url);
@@ -24,6 +25,19 @@ class Main extends ys.Application {
         // }
 
         super();
+
+        ys.Model.set('token',"UYHIHUHGUIG123131dsfH");
+
+        ys.Ajax.mock = (url: string, data: any) => {
+            let res;
+            switch (url) {
+                case "https://www.baidu.com/home/xman/data/tipspluslist":
+                    res = { code: 0, data: { name: "name", score: 1234,headimageurl:"resource/home/paiping.png" } }
+                    break;
+            }
+            return res;
+        }
+
         //开发者可以在run之前，进行相应逻辑的判断。判断成功才进行run。
         this.once(egret.Event.ADDED_TO_STAGE, () => {
             this.run(cfg);

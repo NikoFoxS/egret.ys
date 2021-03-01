@@ -1,24 +1,35 @@
 module ys {
-	export class Script extends ys.Observer {
+	export class Script implements ys.IObserver {
 		public constructor() {
-			super();
+
 		}
 
-		public owner: any;
-		public view: any;
+		private _owner: egret.DisplayObject;
+		public get owner(): egret.DisplayObject {
+			return this._owner;
+		}
+		public set owner(v: egret.DisplayObject) {
+			this._owner = v;
+			ys.Subject.registerObserver(this);
+			v.once(egret.Event.REMOVED_FROM_STAGE, () => {
+				ys.Subject.removeObserver(this);
+				this._owner = null;
+			}, this);
+		}
 
-		/**发送通知 */
 		sendNotification(name, data?: any) {
 			ys.Subject.notify(name, data);
 		}
 
-		/**列出感兴趣的通知 */
-		listNotificationInterests() {
+		listNotification() {
 			return [];
 		}
 
-		/**处理通知 */
 		onNotification(name, data) {
+
+		}
+
+		$create(): void {
 
 		}
 

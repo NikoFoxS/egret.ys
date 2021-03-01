@@ -152,11 +152,18 @@ namespace ys {
 		}, this, RES.ResourceItem.TYPE_JSON);
 	}
 
+	export function loadGame(url: string): void {
+		RES.getResByUrl(url, (json) => {
+			let v = new ys.Prefab();
+			v.json = json;
+			ys.Context.stage.addChild(v);
+		}, this, RES.ResourceItem.TYPE_JSON);
+	}
+
 	export function popView(url: string) {
 		RES.getResByUrl(url, (json) => {
 			let v = new ys.Prefab();
 			v.json = json;
-			// ys.Context.stage.addChild(v);
 			ys.Layout.centerX(v, 0, ys.Context.stageW);
 			ys.Layout.centerY(v, 9, ys.Context.stageH);
 			ys.popUp(v);
@@ -220,6 +227,41 @@ namespace ys {
 				layer.addChildAt(block, layer.numChildren - 3);
 			}
 		}, this);
+	}
+
+	/** ≥min ＜max */
+	export function math_randomNumber(min: number, max: number): number {
+		if (max < min) {
+			var t = max;
+			max = min;
+			min = t;
+		}
+		return min + Math.random() * (max - min);
+	}
+	/** ≥min ＜max */
+	export function math_randomInt(min: number, max: number): number {
+		var num = math_randomNumber(min, max);
+		return parseInt(num + "");
+	}
+	/**数组随机 */
+	export function math_randomArr(arr: any[]): any {
+		return arr[Math.random() * arr.length | 0];
+	}
+
+	//测量
+	export function ui_checkWidthHeight(url: string) {
+		let bm = new ys.Bitmap();
+		if (url.indexOf(".")) {
+			RES.getResByUrl(url, (tex) => {
+				bm.texture = tex;
+				console.log(`{"src":"${url}","width":${bm.width},"height":${bm.height}}`)
+			}, this, RES.ResourceItem.TYPE_IMAGE)
+		}else
+		{
+			bm.texture = RES.getRes(url);
+			console.log(`{"src":"${url}","width":${bm.width},"height":${bm.height}}`)
+		}
+
 	}
 
 }
