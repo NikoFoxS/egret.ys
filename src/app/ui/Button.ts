@@ -29,7 +29,6 @@ module ui {
 			label.textAlign = 'center';
 			label.multiline = false;
 			this.addChild(label);
-
 		}
 	}
 }

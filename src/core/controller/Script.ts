@@ -1,7 +1,6 @@
 module ys {
 	export class Script implements ys.IObserver {
 		public constructor() {
-
 		}
 
 		private _owner: egret.DisplayObject;
@@ -13,6 +12,7 @@ module ys {
 			ys.Subject.registerObserver(this);
 			v.once(egret.Event.REMOVED_FROM_STAGE, () => {
 				ys.Subject.removeObserver(this);
+				this.onRemove();
 				this._owner = null;
 			}, this);
 		}

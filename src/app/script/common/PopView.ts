@@ -5,6 +5,7 @@ module script {
 		}
 
 		public json:string;
+		public class:string;
 
 		onAdded(): void {
 			let o = this.owner as egret.DisplayObject;
@@ -13,7 +14,10 @@ module script {
 				console.log("click?", o)
 				if(this.json)
 				{
-					ys.popView(this.json);
+					ys.popViewJson(this.json);
+				}else if(this.class)
+				{
+					ys.popViewClass(this.class);
 				}
 			}, this)
 

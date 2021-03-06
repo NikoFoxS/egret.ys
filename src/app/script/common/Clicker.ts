@@ -7,16 +7,19 @@ module script {
 		onAdded(): void {
 			let o = this.owner as egret.DisplayObject;
 			o.touchEnabled = true;
-			o.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
-				console.log("click?",o)
-				// ys.removeDisplayObject(o);
-			}, this)
+			o.addEventListener(egret.TouchEvent.TOUCH_TAP,this.click,this);
+		}
+
+		click()
+		{
 
 		}
 
 		onRemove():void
 		{
-			console.log('remove?')
+			let o = this.owner as egret.DisplayObject;
+			o.touchEnabled = false;
+			o.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.click,this);
 		}
 	}
 }

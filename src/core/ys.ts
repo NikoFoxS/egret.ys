@@ -160,12 +160,20 @@ namespace ys {
 		}, this, RES.ResourceItem.TYPE_JSON);
 	}
 
-	export function popView(url: string) {
+	export function popViewClass(vClass: string) {
+		let cl = egret.getDefinitionByName(vClass);
+		let v = new cl();
+		ys.Layout.centerX(v, 0, ys.Context.stageW);
+		ys.Layout.centerY(v, 0, ys.Context.stageH);
+		ys.popUp(v);
+	}
+
+	export function popViewJson(url: string) {
 		RES.getResByUrl(url, (json) => {
 			let v = new ys.Prefab();
 			v.json = json;
 			ys.Layout.centerX(v, 0, ys.Context.stageW);
-			ys.Layout.centerY(v, 9, ys.Context.stageH);
+			ys.Layout.centerY(v, 0, ys.Context.stageH);
 			ys.popUp(v);
 		}, this, RES.ResourceItem.TYPE_JSON);
 
@@ -256,8 +264,7 @@ namespace ys {
 				bm.texture = tex;
 				console.log(`{"src":"${url}","width":${bm.width},"height":${bm.height}}`)
 			}, this, RES.ResourceItem.TYPE_IMAGE)
-		}else
-		{
+		} else {
 			bm.texture = RES.getRes(url);
 			console.log(`{"src":"${url}","width":${bm.width},"height":${bm.height}}`)
 		}

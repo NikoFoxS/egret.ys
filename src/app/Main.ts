@@ -26,13 +26,13 @@ class Main extends ys.Application {
 
         super();
 
-        ys.Model.set('token',"UYHIHUHGUIG123131dsfH");
+        ys.Model.set('token', "UYHIHUHGUIG123131dsfH");
 
         ys.Ajax.mock = (url: string, data: any) => {
             let res;
             switch (url) {
                 case "https://www.baidu.com/home/xman/data/tipspluslist":
-                    res = { code: 0, data: { name: "name", score: 1234,headimageurl:"resource/home/paiping.png" } }
+                    res = { code: 0, data: { name: "name", score: 1234, headimageurl: "resource/home/paiping.png" } }
                     break;
             }
             return res;
@@ -82,3 +82,12 @@ class Main extends ys.Application {
 
 }
 
+
+let arr = [
+    { 
+        "alignment": "horizontal", 
+    "extent": [0.09999999403953552, 0, 0.15000000596046448], 
+    "transform": [0.9958736896514893, 0, -0.09074949473142624, 0, 0, 1, 0, 0, 0.09074949473142624, 0, 0.9958736896514893, 0, 0.010352609679102898, -0.11406554281711578, -0.04400862753391266, 1], 
+    "type": "plane", 
+    "identifier": "4E0E5A18-7235-446E-A371-8061B9F37240", 
+    "center": [3.7252867457482353e-10, 0, -0.02500000223517418] }]

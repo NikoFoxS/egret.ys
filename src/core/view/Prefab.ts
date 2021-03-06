@@ -75,9 +75,6 @@ module ys {
 						// d.view = this;
 						d.onAdded();
 						d.$create && d.$create();
-						parent.once(egret.Event.REMOVED_FROM_STAGE, () => {
-							d.onRemove();
-						}, this);
 					}
 					else {
 						if (parent instanceof ys.ScrollView) {
