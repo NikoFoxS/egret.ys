@@ -1,13 +1,12 @@
-class LoadingUI extends ys.Prefab {
+class LoadingUI extends ys.View {
 	public constructor() {
 		super();
 		const ui = {
-			type: "ys.Container",
 			prop: {},
 			child: [
 				{
-					type: "ys.Shape",
-					prop: { width: ys.Context.stageW, height: ys.Context.stageH, color: 0xcccccc }
+					type: "ys.Bitmap",
+					prop: {src:"loading-bg_jpg", width: ys.Context.stageW, height: ys.Context.stageH}
 				},
 				{
 					type: "ys.Text",
@@ -17,6 +16,9 @@ class LoadingUI extends ys.Prefab {
 		}
 
 		this.json = ui;
+
+		let t = this.getVar<ys.Text>('txt');
+		t.visible = false;
 	}
 
 	progress(current: number, total: number): void {

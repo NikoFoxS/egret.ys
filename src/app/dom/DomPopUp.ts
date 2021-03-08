@@ -1,12 +1,10 @@
 module ui {
-	export class PopUp extends ys.DomDiv {
+	export class DomPopUp extends ys.DomDiv {
 		public constructor() {
 			super();
 			this.el.setAttribute('class', 'darkbg');
-			// this.container = ys.DOM.createDomDiv();
+			window.scrollTo(0,0);
 		}
-
-		// private container:HTMLDivElement;
 
 		addChild(node:Node):void
 		{
@@ -18,6 +16,10 @@ module ui {
 			// close.setText('关闭', 0xffffff);
 			this.el.appendChild(close.el);
 			close.set(x, y, w, h);
+			close.el.addEventListener("click",()=>{
+				this.remove();
+			})
+			// document.addEventListener
 			return close;
 		}
 	}

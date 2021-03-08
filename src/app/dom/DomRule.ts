@@ -1,21 +1,20 @@
 module ui {
-	export class DomRule extends ui.PopUp{
+	export class DomRule extends ui.DomPopUp{
 		public constructor() {
 			super();
 
-			let close = this.addClose('resource/close.png',750*0.5,ys.Context.stageH - 100,76,76);
-			// close.add
+			let close = this.addClose('resource/close.png',750*0.5,ys.Context.stageH - 200,76,76);
 
 			let bg = new ys.DomDiv();
 			bg.set(0,0,600,740);
-			bg.el.style.borderRadius = `${ys.DOM.bili*20}px`;
+			bg.el.style.borderRadius = bg.getDomPx(20);// `${ys.DOM.bili*20}px`;
 			bg.el.style.backgroundColor = '#fff';
 			bg.centerX(0);
 			bg.centerY(0);
 
 			let div = new ys.DomDiv('relative');
 			div.set(0,0,600-40,700-40);
-			div.el.style.margin = `${ys.DOM.bili*20}px`;
+			div.el.style.margin = bg.getDomPx(20);//`${ys.DOM.bili*20}px`;
 			bg.el.appendChild(div.el);
 
 			this.el.appendChild(bg.el);

@@ -134,9 +134,9 @@ namespace ys {
 		d && d.parent && d.parent.removeChild(d);
 	}
 
-	export function showView(json): void {
+	export function showPage(json): void {
 		try {
-			let v = new ys.Prefab();
+			let v = new ys.View();
 			v.json = json;
 			ys.Context.main.removeChildren();
 			ys.Context.main.addChild(v);
@@ -146,37 +146,24 @@ namespace ys {
 		}
 	}
 
-	export function loadView(url: string): void {
+	export function loadPage(url: string): void {
 		RES.getResByUrl(url, (json) => {
-			ys.showView(json);
+			ys.showPage(json);
 		}, this, RES.ResourceItem.TYPE_JSON);
 	}
 
-	export function loadGame(url: string): void {
-		RES.getResByUrl(url, (json) => {
-			let v = new ys.Prefab();
-			v.json = json;
-			ys.Context.stage.addChild(v);
-		}, this, RES.ResourceItem.TYPE_JSON);
-	}
-
-	export function popViewClass(vClass: string) {
-		let cl = egret.getDefinitionByName(vClass);
-		let v = new cl();
-		ys.Layout.centerX(v, 0, ys.Context.stageW);
-		ys.Layout.centerY(v, 0, ys.Context.stageH);
+	export function popView(json: string) {
+		let v = new ys.View();
+		v.json = json;
 		ys.popUp(v);
+		return v;
 	}
 
-	export function popViewJson(url: string) {
-		RES.getResByUrl(url, (json) => {
-			let v = new ys.Prefab();
-			v.json = json;
-			ys.Layout.centerX(v, 0, ys.Context.stageW);
-			ys.Layout.centerY(v, 0, ys.Context.stageH);
-			ys.popUp(v);
-		}, this, RES.ResourceItem.TYPE_JSON);
-
+	export function newBitmap(src: string, con: egret.DisplayObjectContainer = null) {
+		let bm = new ys.Bitmap();
+		bm.src = src;
+		con && con.addChild(bm);
+		return bm;
 	}
 
 	//---------------------------

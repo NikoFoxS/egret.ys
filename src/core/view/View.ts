@@ -6,7 +6,7 @@ module ys {
 		group: string;
 	}
 
-	export class Prefab extends ys.Container {
+	export class View extends ys.Container {
 		constructor() {
 			super();
 		}
@@ -15,7 +15,6 @@ module ys {
 			return this.vars[name];
 		}
 
-		// public src: string = '';
 		public set src(src: string) {
 			if (src != '') {
 				if (src.indexOf(".json") == -1) {
@@ -23,7 +22,6 @@ module ys {
 				} else {
 					RES.getResByUrl(src, (json) => {
 						this.json = json;
-						// console.log(json)
 					}, this, RES.ResourceItem.TYPE_JSON);
 				}
 			}
@@ -67,30 +65,29 @@ module ys {
 			} else {
 				let d = new classDef();
 				if (parent) {
-					// console.log(":::", d, prop)
+					console.log(":::", d, prop)
 					this.attachProp(d, prop);
 					if (d instanceof ys.Script) {
 						//脚本特殊处理
 						d.owner = parent;
-						// d.view = this;
 						d.onAdded();
 						d.$create && d.$create();
 					}
 					else {
-						if (parent instanceof ys.ScrollView) {
-							//scrollView脚本特殊处理
-							parent.setContent(d);
-						} else if (parent instanceof ys.VScrollBar) {
-							//VScrollBar脚本特殊处理
-							parent.setContent(d, parent.width, parent.height);
-						}
-						else {
+						// if (parent instanceof ys.ScrollView) {
+						// 	//scrollView脚本特殊处理
+						// 	parent.setContent(d);
+						// } else if (parent instanceof ys.VScrollBar) {
+						// 	//VScrollBar脚本特殊处理
+						// 	parent.setContent(d, parent.width, parent.height);
+						// }
+						// else {
 							//默认显示对象
 							parent.addChild(d);
-						}
+						// }
 
-						//ys.Prefab会自动创建
-						if (node.type != 'ys.Prefab') {
+						//ys.View 会自动创建子项目
+						if (node.type != 'ys.View') {
 							this.createChild(node, d);
 						}
 						this.layout(d);

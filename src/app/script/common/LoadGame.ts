@@ -12,7 +12,7 @@ module script {
 			o.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
 				if(this.json)
 				{
-					ys.loadGame(this.json);
+					// ys.loadGame(this.json);
 					ys.Context.main.visible = false;
 				}
 			}, this)

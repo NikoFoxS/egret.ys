@@ -199,7 +199,16 @@ module ys {
 		}
 
 		get scale() {
-			return innerWidth / 750;
+			if(ys.Context.stage.scaleMode == egret.StageScaleMode.FIXED_HEIGHT)
+			{
+				return window.innerHeight / ys.Context.stageH;
+			}
+			return window.innerWidth / ys.Context.stageW;
+		}
+
+		getDomPx(px:number):string
+		{
+			return (px*this.scale)+'px';
 		}
 
 		public set(x, y, w, h) {
@@ -227,9 +236,9 @@ module ys {
 			this.el.style.top = top + 'px';
 		}
 
-		getDomSize(size: number) {
-			return (size * this.scale) + 'px';
-		}
+		// getDomPx(size: number) {
+		// 	return (size * this.scale) + 'px';
+		// }
 
 		public x;
 		public y;
@@ -281,12 +290,12 @@ module ys {
 			let txt = this.txt;
 			txt.innerHTML = t;
 			txt.style.color = color;
-			txt.style.fontSize = this.getDomSize(size);
-			txt.style.top = this.getDomSize(0);
-			txt.style.left = this.getDomSize(0);
-			txt.style.width = this.getDomSize(this.width);
-			txt.style.height = this.getDomSize(this.height);
-			txt.style.lineHeight = this.getDomSize(size * 1.5);
+			txt.style.fontSize = this.getDomPx(size);
+			txt.style.top = this.getDomPx(0);
+			txt.style.left = this.getDomPx(0);
+			txt.style.width = this.getDomPx(this.width);
+			txt.style.height = this.getDomPx(this.height);
+			txt.style.lineHeight = this.getDomPx(size * 1.5);
 			txt.style.wordWrap = 'break-word';
 			txt.style.margin = '0px';
 		}
@@ -297,7 +306,7 @@ module ys {
 	export class DomDivButton extends DomBase {
 		constructor(color, borderRadius, position?: string) {
 			super('div', position);
-			this.setStyle({ "background-color": `${color}`, "border-radius": this.getDomSize(borderRadius), "transform": `translate(-50%,-50%)` });
+			this.setStyle({ "background-color": `${color}`, "border-radius": this.getDomPx(borderRadius), "transform": `translate(-50%,-50%)` });
 
 			let txt = document.createElement("p");
 			this.el.appendChild(txt);
@@ -313,10 +322,10 @@ module ys {
 			let txt = this.txt;
 			txt.innerHTML = t;
 			txt.style.color = color;
-			txt.style.fontSize = this.getDomSize(size);
-			txt.style.top = this.getDomSize(this.height / 2);
-			txt.style.left = this.getDomSize(this.width / 2);
-			txt.style.lineHeight = this.getDomSize(this.height);
+			txt.style.fontSize = this.getDomPx(size);
+			txt.style.top = this.getDomPx(this.height / 2);
+			txt.style.left = this.getDomPx(this.width / 2);
+			txt.style.lineHeight = this.getDomPx(this.height);
 			txt.style.transform = "translate(-50%,-50%)";
 			txt.style.margin = 'auto';
 		}
@@ -335,7 +344,7 @@ module ys {
 			txt.style.whiteSpace = "nowrap";
 			this.txt = txt;
 			txt.style.display = 'none';
-			// this.setStyle({ "background-color": `${color}`, "border-radius": this.getDomSize(borderRadius), "transform": `translate(-50%,-50%)` });
+			// this.setStyle({ "background-color": `${color}`, "border-radius": this.getDomPx(borderRadius), "transform": `translate(-50%,-50%)` });
 			this.setStyle({ "background": `url(${src}) no-repeat`, "background-size": '100%', "transform": `translate(-50%,-50%)` })
 		}
 
@@ -343,10 +352,10 @@ module ys {
 			let txt = this.txt;
 			txt.innerHTML = t;
 			txt.style.color = color;
-			txt.style.fontSize = this.getDomSize(size);
-			txt.style.top = this.getDomSize(this.height / 2);
-			txt.style.left = this.getDomSize(this.width / 2);
-			txt.style.lineHeight = this.getDomSize(this.height);
+			txt.style.fontSize = this.getDomPx(size);
+			txt.style.top = this.getDomPx(this.height / 2);
+			txt.style.left = this.getDomPx(this.width / 2);
+			txt.style.lineHeight = this.getDomPx(this.height);
 			txt.style.transform = "translate(-50%,-50%)";
 			txt.style.margin = 'auto';
 			txt.style.display = 'block';

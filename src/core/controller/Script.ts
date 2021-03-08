@@ -1,6 +1,7 @@
 module ys {
 	export class Script implements ys.IObserver {
 		public constructor() {
+
 		}
 
 		private _owner: egret.DisplayObject;
@@ -21,6 +22,10 @@ module ys {
 			ys.Subject.notify(name, data);
 		}
 
+		$create(): void {
+
+		}
+
 		listNotification() {
 			return [];
 		}
@@ -29,20 +34,13 @@ module ys {
 
 		}
 
-		$create(): void {
-
-		}
-
-		/**脚本被添加 */
 		onAdded() {
 
 		}
 
-		/**脚本被移除 */
 		onRemove() {
 
 		}
-
 
 
 	}
